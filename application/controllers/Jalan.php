@@ -29,7 +29,7 @@ class Jalan extends CI_Controller{
         
         redirect('jalan','refresh');
         
-    }
+    } 
 
     function update($id){
         $data = [
