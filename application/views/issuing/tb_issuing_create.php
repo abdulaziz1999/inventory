@@ -11,13 +11,13 @@
 	    <tr><td>Tgl <?php echo form_error('tgl') ?></td>
             <td><input type="date" class="form-control" name="tgl" id="tgl" placeholder="Tgl" value="<?php echo $tgl; ?>" />
         </td>
-	    <tr><td>No Ref <?php echo form_error('no_ref') ?></td>
+	    <tr><td>No Invoice <?php echo form_error('no_ref') ?></td>
             <td><input type="text" class="form-control" name="no_ref" id="no_ref" placeholder="No Ref" value="<?php echo $no_ref; ?>" />
         </td>
-	    <tr><td>Picker <?php echo form_error('picker') ?></td>
+	    <tr><td>Penerima <?php echo form_error('picker') ?></td>
             <td><input type="text" class="form-control" name="picker" id="picker" placeholder="Picker" value="<?php echo $picker; ?>" />
         </td>
-	    <tr><td>Remarks <?php echo form_error('remarks') ?></td>
+	    <tr><td>Pemesan <?php echo form_error('remarks') ?></td>
             <td><input type="text" class="form-control" name="remarks" id="remarks" placeholder="Remarks" value="<?php echo $remarks; ?>" />
         </td>
 	    <input type="hidden" name="id_issuing" value="<?php echo $id_issuing; ?>" /> 

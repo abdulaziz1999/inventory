@@ -25,9 +25,9 @@
                 <tr>
                     <th width="80px">No</th>
 		    <th>Tgl</th>
-		    <th>No Ref</th>
+		    <th>No PO</th>
 		    <th>Supplier</th>
-		    <th>Remarks</th>
+		    <th>Pemesan</th>
 		    <th>Action</th>
                 </tr>
             </thead>

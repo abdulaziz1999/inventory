@@ -244,7 +244,7 @@
 								<a href="<?= base_url('tb_receiving'); ?>">
 									<i class="menu-icon fa fa-shopping-cart"></i>
 									<span class="menu-text">
-										Receiving/In
+										Barang Masuk
 										<span class="badge badge-info"></span>
 									</span>
 								</a>
@@ -254,7 +254,7 @@
 								<a href="<?= base_url('tb_issuing'); ?>">
 									<i class="menu-icon fa fa-truck"></i>
 									<span class="menu-text">
-									Issuing/Out
+									Barang Keluar
 									<span class="badge badge-info"></span>
 								</span>
 								</a>
@@ -270,11 +270,21 @@
 								</a>
 								<b class="arrow"></b>
 							</li>
+							<li class="<?php if($this->uri->segment(1) == 'min_stok'){ echo "active"; }else{ echo "";}?>">
+								<a href="<?= base_url('tb_stok'); ?>">
+									<i class="menu-icon fa fa-tag"></i>
+									<span class="menu-text">
+									Warning Stok
+									<span class="badge badge-danger"><?php echo $this->db->get('tb_stok')->num_rows();?></span>
+								</span>
+								</a>
+								<b class="arrow"></b>
+							</li>
 							<li class="<?php if($this->uri->segment(1) == 'laporan'){ echo "active open"; }elseif($this->uri->segment(1) == 'laporan_issuing'){ echo "active open"; }else{ echo "";}?>">
 					<a href="#"  class="dropdown-toggle">
 						<i class="menu-icon fa fa-print"></i>
 						<span class="menu-text">
-							Report
+							Laporan
 						</span>
 						<b class="arrow fa fa-angle-down"></b>
 					</a>
@@ -285,19 +295,19 @@
 						<li class="<?php if($this->uri->segment(1) == 'laporan'){ echo "active"; }else{ echo "";}?>">
 								<a href="<?= base_url('laporan'); ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
-									 Receiving
+									 Barang Masuk
 								</a><b class="arrow"></b>
 								<li class="<?php if($this->uri->segment(1) == 'laporan_issuing'){ echo "active"; }else{ echo "";}?>">
 									<a href="<?= base_url('laporan_issuing'); ?>">
 										<i class="menu-icon fa fa-caret-right"></i>
-									Issuing
+									Barang Keluar
 									</a>
 					</ul>
 				</li>
 					<li class="">
 						<a href="<?php echo base_url('login/logout'); ?>">
 							<i class="menu-icon fa fa-sign-out"></i>
-							<span class="menu-text">Logout </span>
+							<span class="menu-text">Keluar </span>
 						</a>
 
 						<b class="arrow"></b>
