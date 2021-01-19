@@ -29,6 +29,8 @@
                     <th>Kategori</th>
                     <th>Brand</th>
                     <th>Satuan</th>
+                    <th>Harga Beli</th>
+                    <th>Harga Jual</th>
                     <!-- <th>Gambar</th> -->
                     <th>Ket</th>
                     <th>Action</th>
@@ -47,6 +49,8 @@
                       <td><?php echo $this->db->get_where('tb_kategori',['id_kategori' => $tb_barang->kategori])->row()->nama_kategori; ?></td>
                       <td><?php echo $this->db->get_where('tb_brand',['id_brand' => $tb_barang->brand])->row()->nama_brand; ?></td>
                       <td><?php echo $this->db->get_where('tb_satuan',['id_satuan' => $tb_barang->satuan])->row()->nama_satuan; ?></td>
+                      <td><?php echo $tb_barang->cur_harga ?></td>
+                      <td><?php echo $tb_barang->harga ?></td>
                       <td><?php echo $tb_barang->ket ?></td>
                       <td style="text-align:center" width="140px">
                     <?php 
