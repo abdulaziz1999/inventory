@@ -67,14 +67,14 @@
                                 </tr>
                                 <tr>
                                     <td>Harga Beli <?php echo form_error('ket') ?></td>
-                                    <td><input type="text" class="form-control" name="harga_beli" id="ket"
+                                    <td><input type="number" class="form-control" name="harga_beli" id="ket"
                                             placeholder="Harga Beli" value="<?php echo $harga_beli; ?>"
                                             autocomplete="off" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Harga Jual <?php echo form_error('ket') ?></td>
-                                    <td><input type="text" class="form-control" name="harga_jual" id="ket"
+                                    <td><input type="number" class="form-control" name="harga_jual" id="ket"
                                             placeholder="Harga Jual" value="<?php echo $harga_jual; ?>"
                                             autocomplete="off" />
                                     </td>
