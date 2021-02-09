@@ -45,7 +45,6 @@ class Tb_barang extends CI_Controller
                     'kategori' => $row->kategori,
                     'brand' => $row->brand,
                     'satuan' => $row->satuan,
-                    // 'gambar' => $row->gambar,
                     'ket' => $row->ket,
 	    );
             $this->template->load('template','barang/tb_barang_read', $data);
@@ -67,7 +66,8 @@ class Tb_barang extends CI_Controller
                 'kategori' => set_value('kategori'),
                 'brand' => set_value('brand'),
                 'satuan' => set_value('satuan'),
-                // 'gambar' => set_value('gambar'),
+                'harga_beli' => set_value('harga_beli'),
+                'harga_jual' => set_value('harga_jual'),
                 'ket' => set_value('ket'),
                 'satuan' => @$this->db->get('tb_satuan'),
                 'brand' => @$this->db->get('tb_brand'),
@@ -92,6 +92,8 @@ class Tb_barang extends CI_Controller
                 'kategori' => $this->input->post('kategori',TRUE),
                 'brand' => $this->input->post('brand',TRUE),
                 'satuan' => $this->input->post('satuan',TRUE),
+                'harga_beli' => $this->input->post('harga_beli',TRUE),
+                'harga_jual' => $this->input->post('harga_jual',TRUE),
                 // 'gambar' => $this->input->post('gambar',TRUE),
                 'ket' => $this->input->post('ket',TRUE),
         );
@@ -125,7 +127,8 @@ class Tb_barang extends CI_Controller
                 'kategori' => set_value('kategori', $row->kategori),
                 'brand' => set_value('brand', $row->brand),
                 'satuan' => set_value('satuan', $row->satuan),
-                // 'gambar' => set_value('gambar', $row->gambar),
+                'harga_beli' => set_value('harga_beli', $row->harga_beli),
+                'harga_jual' => set_value('harga_jual', $row->harga_jual),
                 'ket' => set_value('ket', $row->ket),
                 'satuan' => @$this->db->get('tb_satuan'),
                 'brand' => @$this->db->get('tb_brand'),
@@ -154,6 +157,8 @@ class Tb_barang extends CI_Controller
                 'kategori' => $this->input->post('kategori',TRUE),
                 'brand' => $this->input->post('brand',TRUE),
                 'satuan' => $this->input->post('satuan',TRUE),
+                'harga_beli' => $this->input->post('harga_beli',TRUE),
+                'harga_jual' => $this->input->post('harga_jual',TRUE),
                 // 'gambar' => $this->input->post('gambar',TRUE),
                 'ket' => $this->input->post('ket',TRUE),
 	    );
