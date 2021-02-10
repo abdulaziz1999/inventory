@@ -34,6 +34,21 @@ class Tb_stok extends CI_Controller
         $this->template->load('template','stok/tb_stok_list', $data);
     }
 
+    public function warning()
+    {
+        $tb_stok = $this->Tb_stok_model->get_all();
+        $this->db->join('tb_barang tb','tb.id_barang = st.id_barang');
+                $this->db->where("`stok` <= min_stok");
+        $count = $this->db->get('tb_stok st')->num_rows();
+        $data = array(
+            'tb_stok_data'  => $tb_stok
+        );
+
+        $this->template->load('template','stok/tb_stok_warning', $data);
+        // $this->output->enable_profiler(TRUE);
+        
+    }
+
     public function read($id) 
     {
         $row = $this->Tb_stok_model->get_by_id($id);
