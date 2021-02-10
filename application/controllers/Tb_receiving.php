@@ -93,15 +93,15 @@ class Tb_receiving extends CI_Controller
 
         if ($row) {
             $data = array(
-                'button' => 'Update',
-                'action' => site_url('tb_receiving/update_action'),
-                'id_receiving' => set_value('id_receiving', $row->id_receiving),
-                'b_receiving' => $this->db->get_where('tb_receiving_item',['id_receiving' => $row->id_receiving]),
-                'tgl' => set_value('tgl', $row->tgl),
-                'no_ref' => set_value('no_ref', $row->no_ref),
-                'supplier' => set_value('supplier', $row->supplier),
-                'remarks' => set_value('remarks', $row->remarks),
-                'barang' => $this->db->get('tb_barang')->result(),
+                'button'        => 'Update',
+                'action'        => site_url('tb_receiving/update_action'),
+                'id_receiving'  => set_value('id_receiving', $row->id_receiving),
+                'b_receiving'   => $this->db->get_where('tb_receiving_item',['id_receiving' => $row->id_receiving]),
+                'tgl'           => set_value('tgl', $row->tgl),
+                'no_ref'        => set_value('no_ref', $row->no_ref),
+                'supplier'      => set_value('supplier', $row->supplier),
+                'remarks'       => set_value('remarks', $row->remarks),
+                'barang'        => $this->db->get('tb_barang')->result(),
 	    );
             $this->template->load('template','receiving/tb_receiving_form', $data);
         } else {
@@ -152,10 +152,10 @@ class Tb_receiving extends CI_Controller
         $this->db->update('tb_stok', $data2, ['id_barang' =>$id->id_barang]);
 
         if($this->db->affected_rows() > 0){
-            $this->session->set_flashdata('sukses', "Amanah Berhasil Ditambahkan");
+            $this->session->set_flashdata('sukses', "Barang Masuk Berhasil Ditambahkan");
             redirect($_SERVER['HTTP_REFERER']);
         }else{
-            $this->session->set_flashdata('error', "Amanah Gagal Ditambahkan");
+            $this->session->set_flashdata('gagal', "Barang Masuk Gagal Ditambahkan");
             redirect($_SERVER['HTTP_REFERER']);
         }
 
