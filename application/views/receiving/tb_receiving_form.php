@@ -5,46 +5,49 @@
             <div class='box'>
                 <div class='box-header'>
 
-                    <h3 class='box-title'>TB_RECEIVING</h3>
+                    <h3 class='box-title'>Detail Barang Masuk</h3>
                     <div class='box box-primary'>
-                        <form action="<?php echo $action; ?>" method="post">
+                        <form action="<?= $action; ?>" method="post">
                             <table class='table table-bordered'>
                                 <tr>
-                                    <td>Tgl <?php echo form_error('tgl') ?></td>
+                                    <td>Tanggal <?= form_error('tgl') ?></td>
                                     <td><input type="date" class="form-control" name="tgl" id="tgl" placeholder="Tgl"
-                                            value="<?php echo $tgl; ?>" />
+                                            value="<?= $tgl; ?>" />
                                     </td>
                                 <tr>
-                                    <td>No PO <?php echo form_error('no_ref') ?></td>
+                                    <td>No PO <?= form_error('no_ref') ?></td>
                                     <td><input type="text" class="form-control" name="no_ref" id="no_ref"
-                                            placeholder="No Ref" value="<?php echo $no_ref; ?>" />
+                                            placeholder="No Ref" value="<?= $no_ref; ?>" />
                                     </td>
                                 <tr>
-                                    <td>Supplier <?php echo form_error('supplier') ?></td>
+                                    <td>Supplier <?= form_error('supplier') ?></td>
                                     <td><input type="text" class="form-control" name="supplier" id="supplier"
-                                            placeholder="Supplier" value="<?php echo $supplier; ?>" />
+                                            placeholder="Supplier" value="<?= $supplier; ?>" />
                                     </td>
                                 <tr>
-                                    <td>Pemesan <?php echo form_error('remarks') ?></td>
+                                    <td>Pemesan <?= form_error('remarks') ?></td>
                                     <td><input type="text" class="form-control" name="remarks" id="remarks"
-                                            placeholder="Remarks" value="<?php echo $remarks; ?>" />
+                                            placeholder="Remarks" value="<?= $remarks; ?>" />
                                     </td>
-                                    <input type="hidden" name="id_receiving" value="<?php echo $id_receiving; ?>" />
+                                    <input type="hidden" name="id_receiving" value="<?= $id_receiving; ?>" />
                                 <tr>
-                                    <td colspan='2'><button type="submit"
-                                            class="btn btn-sm btn-round btn-primary"><?php echo $button ?></button>
-                                        <a href="<?php echo site_url('tb_receiving') ?>"
-                                            class="btn btn-sm btn-round btn-default">Kembali</a>
+                                    <td colspan='2'>
+                                        <div class="btn-group btn-corner">
+                                            <button type="submit" class="btn btn-sm btn-primary"><?= $button ?></button>
+                                            <a href="<?= site_url('tb_receiving') ?>"
+                                                class="btn btn-sm btn-default">Kembali</a>
+                                        </div>
                                     </td>
                                 </tr>
 
                             </table>
                         </form>
-
-                        <button type="button" class="btn btn-sm btn-round btn-primary" data-toggle="modal"
-                            data-target="#myModal" class="btn btn-primary round btn-sm">tambah</button>
-                        <a href="<?php echo site_url('tb_receiving/report_rev_supplier/') ?><?= $this->uri->segment(3)?>"
-                            class="btn btn-sm btn-round btn-warning fa fa-print" target="_blank">Print</a>
+                        <div class="btn-group btn-corner">
+                            <a href="#" class="btn btn-sm btn-primary" data-toggle="modal"
+                                data-target="#myModal">Tambah</a>
+                            <a href="<?= site_url('tb_receiving/report_rev_supplier/') ?><?= $this->uri->segment(3)?>"
+                                class="btn btn-sm btn-warning fa fa-print" target="_blank">Print</a>
+                        </div>
                         <br><br>
                         <table class="table table-bordered table-striped" id="mytable">
                             <thead>
@@ -62,12 +65,12 @@
                           {
                               ?>
                                 <tr>
-                                    <td><?php echo ++$start ?></td>
-                                    <td><?php echo $this->db->get_where('tb_barang',['id_barang' => $tb_receiving->id_barang])->row()->nama_barang; ?>
+                                    <td><?= ++$start ?></td>
+                                    <td><?= $this->db->get_where('tb_barang',['id_barang' => $tb_receiving->id_barang])->row()->nama_barang; ?>
                                     </td>
-                                    <td><?php echo $tb_receiving->jumlah ?></td>
+                                    <td><?= $tb_receiving->jumlah ?></td>
                                     <td>
-                                        <?php echo anchor(site_url('tb_receiving/deleteitem/'.$tb_receiving->id_item),'<i class="fa fa-trash-o red"></i>','title="delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); ?>
+                                        <?= anchor(site_url('tb_receiving/deleteitem/'.$tb_receiving->id_item),'<i class="fa fa-trash-o red"></i>','title="delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); ?>
                                     </td>
 
                                 </tr>
