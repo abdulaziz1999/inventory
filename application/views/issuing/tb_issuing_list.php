@@ -20,7 +20,7 @@
                     <?php echo anchor(site_url('tb_issuing/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-primary btn-sm"'); ?> -->
                 </div><!-- /.box-header -->
                 <div class='box-body'>
-                    <table class="table table-bordered table-striped" id="mytable">
+                    <table class="table table-striped" id="mytable">
                         <thead>
                             <tr>
                                 <th width="80px">No</th>
@@ -43,14 +43,16 @@
                                 <td><?php echo $tb_issuing->no_ref ?></td>
                                 <td><?php echo $tb_issuing->picker ?></td>
                                 <td><?php echo $tb_issuing->remarks ?></td>
-                                <td style="text-align:center" width="140px">
-                                    <?php 
-			echo anchor(site_url('tb_issuing/read/'.$tb_issuing->id_issuing),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-info btn-sm btn-round')); 
-			echo '  '; 
-			echo anchor(site_url('tb_issuing/update/'.$tb_issuing->id_issuing),'<i class="fa fa-pencil-square-o"></i>',array('title'=>'edit','class'=>'btn btn-success btn-sm btn-round')); 
-			echo '  '; 
-			echo anchor(site_url('tb_issuing/delete/'.$tb_issuing->id_issuing),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-danger btn-sm btn-round" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
-			?>
+                                <td style="text-align:center" width="300px">
+                                    <div class="btn-group btn-corner">
+                                        <?php 
+                                    echo anchor(site_url('tb_issuing/read/'.$tb_issuing->id_issuing),'<i class="fa fa-eye"></i> Detail',array('title'=>'detail','class'=>'btn btn-info btn-sm')); 
+                                    echo '  '; 
+                                    echo anchor(site_url('tb_issuing/update/'.$tb_issuing->id_issuing),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-success btn-sm')); 
+                                    echo '  '; 
+                                    echo anchor(site_url('tb_issuing/delete/'.$tb_issuing->id_issuing),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+                                    ?>
+                                    </div>
                                 </td>
                             </tr>
                             <?php
