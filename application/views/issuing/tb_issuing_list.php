@@ -33,7 +33,7 @@
                         </thead>
                         <tbody>
                             <?php
-            $start = 0;
+            $start = 0; 
             foreach ($tb_issuing_data as $tb_issuing)
             {
                 ?>
@@ -47,9 +47,9 @@
                                     <div class="btn-group btn-corner">
                                         <?php 
                                     echo anchor(site_url('tb_issuing/read/'.$tb_issuing->id_issuing),'<i class="fa fa-eye"></i> Detail',array('title'=>'detail','class'=>'btn btn-info btn-sm')); 
-                                    echo '  '; 
+                                    echo '&nbsp;&nbsp;'; 
                                     echo anchor(site_url('tb_issuing/update/'.$tb_issuing->id_issuing),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-success btn-sm')); 
-                                    echo '  '; 
+                                    echo '&nbsp;&nbsp;'; 
                                     echo anchor(site_url('tb_issuing/delete/'.$tb_issuing->id_issuing),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
                                     ?>
                                     </div>
