@@ -10,38 +10,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <link rel="icon" href="<?= base_url()?>/assets/images/foto/berkah.png" type="image/ico/png" />
     <!-- bootstrap & fontawesome -->
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="<?= base_url()?>assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<?= base_url()?>assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 
     <!-- page specific plugin styles -->
 
     <!-- text fonts -->
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/fonts.googleapis.com.css" />
+    <link rel="stylesheet" href="<?= base_url()?>assets/css/fonts.googleapis.com.css" />
 
     <!-- ace styles -->
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/ace.min.css" class="ace-main-stylesheet"
+    <link rel="stylesheet" href="<?= base_url()?>assets/css/ace.min.css" class="ace-main-stylesheet"
         id="main-ace-style" />
 
     <!--[if lte IE 9]>
-			<link rel="stylesheet" href="<?php echo base_url()?>aceadmin/assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
+			<link rel="stylesheet" href="<?= base_url()?>aceadmin/assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
 		<![endif]-->
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/ace-skins.min.css" />
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="<?= base_url()?>assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="<?= base_url()?>assets/css/ace-rtl.min.css" />
 
     <!--[if lte IE 9]>
-		  <link rel="stylesheet" href="<?php echo base_url()?>aceadmin/assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="<?= base_url()?>aceadmin/assets/css/ace-ie.min.css" />
 		<![endif]-->
 
     <!-- inline styles related to this page -->
 
     <!-- ace settings handler -->
-    <script src="<?php echo base_url()?>assets/js/ace-extra.min.js"></script>
+    <script src="<?= base_url()?>assets/js/ace-extra.min.js"></script>
 
     <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
 
     <!--[if lte IE 8]>
-		<script src="<?php echo base_url()?>aceadmin/assets/js/html5shiv.min.js"></script>
-		<script src="<?php echo base_url()?>aceadmin/assets/js/respond.min.js"></script>
+		<script src="<?= base_url()?>aceadmin/assets/js/html5shiv.min.js"></script>
+		<script src="<?= base_url()?>aceadmin/assets/js/respond.min.js"></script>
 	<![endif]-->
 </head>
 
@@ -86,7 +86,7 @@
 
                                     <li>
                                         <a href="#" class="clearfix">
-                                            <img src="<?php echo base_url()?>assets/images/avatars/avatar4.png"
+                                            <img src="<?= base_url()?>assets/images/avatars/avatar4.png"
                                                 class="msg-photo" alt="Bob's Avatar" />
                                             <span class="msg-body">
                                                 <span class="msg-title">
@@ -104,7 +104,7 @@
 
                                     <li>
                                         <a href="#" class="clearfix">
-                                            <img src="<?php echo base_url()?>assets/images/avatars/avatar2.png"
+                                            <img src="<?= base_url()?>assets/images/avatars/avatar2.png"
                                                 class="msg-photo" alt="Kate's Avatar" />
                                             <span class="msg-body">
                                                 <span class="msg-title">
@@ -161,7 +161,7 @@
                             <li class="divider"></li>
 
                             <li>
-                                <a href="<?php echo base_url('login/logout'); ?>">
+                                <a href="<?= base_url('login/logout'); ?>">
                                     <i class="ace-icon fa fa-power-off"></i>
                                     Logout
                                 </a>
@@ -245,8 +245,7 @@
                         <i class="menu-icon fa fa-briefcase"></i>
                         <span class="menu-text">
                             Master Barang
-                            <span
-                                class="badge badge-success"><?php echo $this->db->get('tb_barang')->num_rows();?></span>
+                            <span class="badge badge-success"><?= $this->db->get('tb_barang')->num_rows();?></span>
                         </span>
                     </a>
                     <b class="arrow"></b>
@@ -271,22 +270,24 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
-                <li class="<?php if($this->uri->segment(1) == 'tb_stok'){ echo "active"; }else{ echo "";}?>">
+                <li
+                    class="<?php if($this->uri->segment(1) == 'tb_stok' && $this->uri->segment(2) == ''){ echo "active"; }else{ echo "";}?>">
                     <a href="<?= base_url('tb_stok'); ?>">
                         <i class="menu-icon fa fa-table"></i>
                         <span class="menu-text">
                             Stok
-                            <span class="badge badge-info"><?php echo $this->db->get('tb_stok')->num_rows();?></span>
+                            <span class="badge badge-info"><?= $this->db->get('tb_stok')->num_rows();?></span>
                         </span>
                     </a>
                     <b class="arrow"></b>
                 </li>
-                <li class="<?php if($this->uri->segment(1) == 'min_stok'){ echo "active"; }else{ echo "";}?>">
-                    <a href="<?= base_url('tb_stok'); ?>">
+                <li class="<?php if($this->uri->segment(2) == 'warning'){ echo "active"; }else{ echo "";}?>">
+                    <a href="<?= base_url('tb_stok/warning'); ?>">
                         <i class="menu-icon fa fa-tag"></i>
                         <span class="menu-text">
                             Warning Stok
-                            <span class="badge badge-danger"><?php echo $this->db->get('tb_stok')->num_rows();?></span>
+                            <span
+                                class="badge badge-danger"><?= $this->db->join('tb_barang tb','tb.id_barang = st.id_barang')->where("`stok` <= min_stok")->get('tb_stok st')->num_rows();?></span>
                         </span>
                     </a>
                     <b class="arrow"></b>
@@ -318,7 +319,7 @@
                     </ul>
                 </li>
                 <li class="">
-                    <a href="<?php echo base_url('login/logout'); ?>">
+                    <a href="<?= base_url('login/logout'); ?>">
                         <i class="menu-icon fa fa-sign-out"></i>
                         <span class="menu-text">Keluar </span>
                     </a>
@@ -339,7 +340,7 @@
 
 
                 <div class="page-content">
-                    <?php echo $contents;?>
+                    <?= $contents;?>
                 </div><!-- /.page-content -->
             </div>
         </div><!-- /.main-content -->
@@ -378,33 +379,38 @@
     <!-- basic scripts -->
 
     <!--[if !IE]> -->
-    <script src="<?php echo base_url()?>assets/js/jquery-2.1.4.min.js"></script>
+    <script src="<?= base_url()?>assets/js/jquery-2.1.4.min.js"></script>
 
     <!-- <![endif]-->
 
     <!--[if IE]>
-<script src="<?php echo base_url()?>aceadmin/assets/js/jquery-1.11.3.min.js"></script>
+<script src="<?= base_url()?>aceadmin/assets/js/jquery-1.11.3.min.js"></script>
 <![endif]-->
     <script type="text/javascript">
     if ('ontouchstart' in document.documentElement) document.write(
-        "<script src='<?php echo base_url()?>assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        "<script src='<?= base_url()?>assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
     </script>
-    <script src="<?php echo base_url()?>assets/js/bootstrap.min.js"></script>
+    <script src="<?= base_url()?>assets/js/bootstrap.min.js"></script>
 
     <!-- page specific plugin scripts -->
-    <script src="<?php echo base_url()?>assets/js/jquery.dataTables.min.js"></script>
-    <script src="<?php echo base_url()?>assets/js/jquery.dataTables.bootstrap.min.js"></script>
-    <script src="<?php echo base_url()?>assets/js/dataTables.buttons.min.js"></script>
-    <script src="<?php echo base_url()?>assets/js/buttons.flash.min.js"></script>
-    <script src="<?php echo base_url()?>assets/js/buttons.html5.min.js"></script>
-    <script src="<?php echo base_url()?>assets/js/buttons.print.min.js"></script>
-    <script src="<?php echo base_url()?>assets/js/buttons.colVis.min.js"></script>
-    <script src="<?php echo base_url()?>assets/js/dataTables.select.min.js"></script>
+    <script src="<?= base_url()?>assets/js/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url()?>assets/js/jquery.dataTables.bootstrap.min.js"></script>
+    <script src="<?= base_url()?>assets/js/dataTables.buttons.min.js"></script>
+    <script src="<?= base_url()?>assets/js/buttons.flash.min.js"></script>
+    <script src="<?= base_url()?>assets/js/buttons.html5.min.js"></script>
+    <script src="<?= base_url()?>assets/js/buttons.print.min.js"></script>
+    <script src="<?= base_url()?>assets/js/buttons.colVis.min.js"></script>
+    <script src="<?= base_url()?>assets/js/dataTables.select.min.js"></script>
 
     <!-- ace scripts -->
-    <script src="<?php echo base_url()?>assets/js/ace-elements.min.js"></script>
-    <script src="<?php echo base_url()?>assets/js/ace.min.js"></script>
+    <script src="<?= base_url()?>assets/js/ace-elements.min.js"></script>
+    <script src="<?= base_url()?>assets/js/ace.min.js"></script>
 
+    <script>
+    setTimeout(function() {
+        $(".alert").fadeOut("slow");
+    }, 5000);
+    </script>
     <?php if($this->uri->segment(2) == "update"):?>
     <script>
     function myFunction() {
@@ -486,7 +492,7 @@
             buttons: [
 
             ],
-            ajax: '<?php echo base_url('') ?>laporan/ajax/<?= $this->input->get('s', TRUE) ."/". $this->input->get('e', TRUE) ?>',
+            ajax: '<?= base_url('') ?>laporan/ajax/<?= $this->input->get('s', TRUE) ."/". $this->input->get('e', TRUE) ?>',
             scrollY: 250,
             info: false,
             deferRender: true,
@@ -506,7 +512,7 @@
             buttons: [
 
             ],
-            ajax: '<?php echo base_url('') ?>laporan_issuing/ajax/<?= $this->input->get('s', TRUE) ."/". $this->input->get('e', TRUE) ?>',
+            ajax: '<?= base_url('') ?>laporan_issuing/ajax/<?= $this->input->get('s', TRUE) ."/". $this->input->get('e', TRUE) ?>',
             scrollY: 250,
             info: false,
             deferRender: true,
@@ -562,7 +568,7 @@
 
 
                 $.fn.dataTable.Buttons.defaults.dom.container.className =
-                'dt-buttons btn-overlap btn-group btn-overlap';
+                    'dt-buttons btn-overlap btn-group btn-overlap';
 
                 new $.fn.dataTable.Buttons(myTable, {
                     buttons: [{
