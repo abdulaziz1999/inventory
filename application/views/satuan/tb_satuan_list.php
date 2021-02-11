@@ -40,14 +40,16 @@
                                 <td><?php echo ++$start ?></td>
                                 <td><?php echo $tb_satuan->nama_satuan ?></td>
                                 <td><?php echo $tb_satuan->ket ?></td>
-                                <td style="text-align:center" width="140px">
-                                    <?php 
-                  echo anchor(site_url('tb_satuan/read/'.$tb_satuan->id_satuan),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-info btn-sm btn-round')); 
-                  echo '  '; 
-                  echo anchor(site_url('tb_satuan/update/'.$tb_satuan->id_satuan),'<i class="fa fa-pencil-square-o"></i>',array('title'=>'edit','class'=>'btn btn-success btn-sm btn-round')); 
-                  echo '  '; 
-                  //echo anchor(site_url('tb_satuan/delete/'.$tb_satuan->id_satuan),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-danger btn-sm btn-round" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
-                  ?>
+                                <td style="text-align:center" width="300px">
+                                    <div class="btn-group btn-corner">
+                                        <?php 
+                                            echo anchor(site_url('tb_satuan/read/'.$tb_satuan->id_satuan),'<i class="fa fa-eye"></i> Detail',array('title'=>'detail','class'=>'btn btn-info btn-sm')); 
+                                            echo '  ';  
+                                            echo anchor(site_url('tb_satuan/update/'.$tb_satuan->id_satuan),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-success btn-sm')); 
+                                            echo '  '; 
+                                            //echo anchor(site_url('tb_satuan/delete/'.$tb_satuan->id_satuan),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+                                        ?>
+                                    </div>
                                 </td>
                             </tr>
                             <?php
