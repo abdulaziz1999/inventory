@@ -94,7 +94,6 @@ class Tb_barang extends CI_Controller
                 'satuan' => $this->input->post('satuan',TRUE),
                 'harga_beli' => $this->input->post('harga_beli',TRUE),
                 'harga_jual' => $this->input->post('harga_jual',TRUE),
-                // 'gambar' => $this->input->post('gambar',TRUE),
                 'ket' => $this->input->post('ket',TRUE),
         );
 
@@ -111,6 +110,43 @@ class Tb_barang extends CI_Controller
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('tb_barang'));
         }
+    }
+
+    public function save() 
+    {
+        $kode = $this->Tb_barang_model->kode();
+        $scan = $this->db->get_where('tb_data_scan',['kode' => $this->input->post('kode',TRUE)])->row();
+        $cekKode = $this->db->get_where('tb_barang',['kode_barcode' => $this->input->post('kode',TRUE)])->num_rows();
+        if($cekKode == 1){
+            $this->session->set_flashdata('gagal', 'Data Barang Sudah Ada');
+            redirect(site_url('tb_barang'));
+        }else{
+            $data = array(
+                'part_number' => $kode,
+                'nama_barang' => $scan->nama_barang,
+                'kategori' => '',
+                'brand' => '',
+                'satuan' => '',
+                'harga_beli' => $scan->harga,
+                'harga_jual' => '',
+                'ket' => '',
+                'kode_barcode' =>$scan->kode
+        );
+
+        $this->Tb_barang_model->insert($data);
+        
+        $this->db->select_max('id_barang','idmax');
+        $idmax = $this->db->get('tb_barang')->row()->idmax;
+        $data1 = [
+            'id_barang' => $idmax,
+            'stok'      => ''
+        ];
+            $this->db->insert('tb_stok',$data1);
+            
+            $this->session->set_flashdata('sukses', 'Data Barang Berhasil di Input');
+            redirect(site_url('tb_barang'));
+    }
+        
     }
     
     public function update($id) 
