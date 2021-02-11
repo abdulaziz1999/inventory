@@ -69,7 +69,7 @@
 
             <div class="navbar-buttons navbar-header pull-right" role="navigation">
                 <ul class="nav ace-nav">
-                    <li class="green dropdown-modal">
+                    <!-- <li class="green dropdown-modal">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
                             <span class="badge badge-success">2</span>
@@ -129,7 +129,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
 
                     <li class="light-blue dropdown-modal">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
@@ -208,8 +208,11 @@
 
                     <b class="arrow"></b>
                 </li>
-                <li
-                    class="<?php if($this->uri->segment(1) == 'tb_kategori'){ echo "active open"; }elseif($this->uri->segment(1) == 'tb_brand'){ echo "active open"; }elseif($this->uri->segment(1) == 'tb_satuan'){ echo "active open"; }else{ echo "";}?>">
+                <li class="<?php if($this->uri->segment(1) == 'tb_kategori'){ echo "active open"; }
+                    elseif($this->uri->segment(1) == 'tb_brand'){ echo "active open"; }
+                    elseif($this->uri->segment(1) == 'tb_satuan'){ echo "active open"; }
+                    elseif($this->uri->segment(1) == 'tb_unit'){ echo "active open"; }
+                    else{ echo "";}?>">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-desktop"></i>
                         <span class="menu-text">
@@ -228,16 +231,25 @@
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Kategori
                             </a><b class="arrow"></b>
+                        </li>
                         <li class="<?php if($this->uri->segment(1) == 'tb_brand'){ echo "active"; }else{ echo "";}?>">
                             <a href="<?= base_url('tb_brand'); ?>">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Merk/Brand
                             </a><b class="arrow"></b>
+                        </li>
                         <li class="<?php if($this->uri->segment(1) == 'tb_satuan'){ echo "active"; }else{ echo "";}?>">
                             <a href="<?= base_url('tb_satuan'); ?>">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Satuan
-                            </a>
+                            </a><b class="arrow"></b>
+                        </li>
+                        <li class="<?php if($this->uri->segment(1) == 'tb_unit'){ echo "active"; }else{ echo "";}?>">
+                            <a href="<?= base_url('tb_unit'); ?>">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Unit
+                            </a><b class="arrow"></b>
+                        </li>
                     </ul>
                 </li>
                 <li class="<?php if($this->uri->segment(1) == 'tb_barang'){ echo "active"; }else{ echo "";}?>">
@@ -292,6 +304,14 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+                <li class="">
+                    <a href="#">
+                        <i class="menu-icon fa fa-folder-open"></i>
+                        <span class="menu-text">Stok Opname </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
                 <li
                     class="<?php if($this->uri->segment(1) == 'laporan'){ echo "active open"; }elseif($this->uri->segment(1) == 'laporan_issuing'){ echo "active open"; }else{ echo "";}?>">
                     <a href="#" class="dropdown-toggle">
@@ -326,7 +346,6 @@
 
                     <b class="arrow"></b>
                 </li>
-
             </ul><!-- /.nav-list -->
 
             <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
@@ -354,19 +373,6 @@
                     </span>
 
                     &nbsp; &nbsp;
-                    <span class="action-buttons">
-                        <a href="">
-                            <i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
-                        </a>
-
-                        <a href="#">
-                            <i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
-                        </a>
-
-                        <a href="#">
-                            <i class="ace-icon fa fa-rss-square orange bigger-150"></i>
-                        </a>
-                    </span>
                 </div>
             </div>
         </div>
