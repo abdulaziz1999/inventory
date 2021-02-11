@@ -58,6 +58,7 @@
                                 <th>Satuan</th>
                                 <th>Harga Beli</th>
                                 <th>Harga Jual</th>
+                                <th>Unit</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -83,14 +84,17 @@
                                 </td>
                                 <td><?= $tb_barang->harga_beli ?></td>
                                 <td><?= $tb_barang->harga_jual ?></td>
+                                <td>
+                                    <?= @$this->db->get_where('tb_unit',['id_unit' => $tb_barang->unit_id])->row()->nama_unit; ?>
+                                </td>
                                 <td width="300px" class="text-center">
                                     <div class="btn-group btn-corner">
                                         <?php 
-                                        echo anchor(site_url('tb_barang/read/'.$tb_barang->id_barang),'<i class="fa fa-eye"></i> <b>Detail</b>',array('title'=>'detail','class'=>'btn btn-sm btn-info')); 
-                                        echo '&nbsp'; 
-                                        echo anchor(site_url('tb_barang/update/'.$tb_barang->id_barang),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-sm btn-success')); 
-                                        echo '&nbsp&nbsp'; 
-                                        echo anchor(site_url('tb_barang/delete/'.$tb_barang->id_barang),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+                                            echo anchor(site_url('tb_barang/read/'.$tb_barang->id_barang),'<i class="fa fa-eye"></i> <b>Detail</b>',array('title'=>'detail','class'=>'btn btn-sm btn-info')); 
+                                            echo '&nbsp'; 
+                                            echo anchor(site_url('tb_barang/update/'.$tb_barang->id_barang),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-sm btn-success')); 
+                                            echo '&nbsp&nbsp'; 
+                                            echo anchor(site_url('tb_barang/delete/'.$tb_barang->id_barang),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
                                         ?>
                                     </div>
                                 </td>
