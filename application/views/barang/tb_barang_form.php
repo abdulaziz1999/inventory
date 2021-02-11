@@ -87,6 +87,19 @@
                                     <input type="hidden" name="id_barang" value="<?php echo $id_barang; ?>" />
                                 </tr>
                                 <tr>
+                                    <td>Unit <?php echo form_error('unit') ?></td>
+                                    <td>
+                                        <select class="form-control" name="unit_id" id="unit_id">
+                                            <option value="" selected disabled>----Pilih Unit----</option>
+                                            <?php foreach($unit->result() as $k):?>
+                                            <option
+                                                <?php if($this->uri->segment(2) == 'update'){if($idunit == $k->id_unit) { echo 'selected';}}?>
+                                                value="<?= $k->id_unit?>"><?= $k->nama_unit?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td colspan='2'>
                                         <button type="submit" id="btnu" onclick="myFunction()"
                                             class="btn btn-sm btn-round btn-primary"><?php echo $button ?></button>
