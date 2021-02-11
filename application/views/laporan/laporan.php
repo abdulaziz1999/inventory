@@ -31,21 +31,30 @@
                                             name="e" value="<?= $this->input->get('e', TRUE) ?>">
                                     </div>
                                 </div>
+                                <!-- <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label>Kategori</label>
+                                        <select name="kategori" id=""
+                                            class="form-control form-control-sm form-control-alternative">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div> -->
                                 <div class="col-lg-4 text-left">
                                     <div class="form-group">
                                         <label style="color: white">-</label><br>
-                                        <button type="submit"
-                                            class="btn tampil btn-sm btn-round btn-primary">Tampil</button>
-                                        <a href="<?php echo site_url('laporan') ?>"
-                                            class="btn btn-sm btn-round btn-default">Reset</a>
-                                        <?php if($this->input->get('s') == true):?>
-                                        <a href="<?php echo site_url('laporan/receiving_report/') ?><?= $this->input->get('s')?>/<?= $this->input->get('e')?>"
-                                            class="btn btn-sm btn-round btn-warning fa fa-print"
-                                            target="_blank">Print</a>
-                                        <?php endif;?>
+                                        <div class="btn-group btn-corner">
+                                            <button type="submit" class="btn tampil btn-sm btn-primary">Tampil</button>
+                                            <a href="<?php echo site_url('laporan') ?>"
+                                                class="btn btn-sm btn-default">Reset</a>
+                                            <?php if($this->input->get('s') == true):?>
+                                            <a href="<?php echo site_url('laporan/receiving_report/') ?><?= $this->input->get('s')?>/<?= $this->input->get('e')?>"
+                                                class="btn btn-sm btn-warning fa fa-print" target="_blank">Print</a>
+                                            <?php endif;?>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4"></div>
+                                <div class="col-lg-2"></div>
                             </div>
                         </form>
                     </div><!-- /.box-body -->
