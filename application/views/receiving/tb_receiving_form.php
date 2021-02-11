@@ -49,6 +49,30 @@
                                 class="btn btn-sm btn-warning fa fa-print" target="_blank">Print</a>
                         </div>
                         <br><br>
+                        <form action="#" method="post">
+                            <input name="kode" id="myTextField" class="form-control" type="text" autocomplete="off">
+                            <button type="submit" class="btn btn-sm btn-round btn-block btn-success">
+                                <i class="fa fa-barcode"></i> Save
+                            </button>
+                        </form>
+                        <br>
+                        <?php if($this->session->flashdata('sukses')):?>
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <i class="ace-icon fa fa-times"></i>
+                            </button>
+                            <strong><i class="ace-icon fa fa-check"></i> Sukses </strong>
+                            <?= $this->session->flashdata('sukses')?>
+                        </div>
+                        <?php elseif($this->session->flashdata('gagal')):?>
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <i class="ace-icon fa fa-times"></i>
+                            </button>
+                            <strong><i class="ace-icon fa fa-times"></i> Gagal </strong>
+                            <?= $this->session->flashdata('gagal')?>
+                        </div>
+                        <?php endif;?>
                         <table class="table table-bordered table-striped" id="mytable">
                             <thead>
                                 <tr>
@@ -137,3 +161,7 @@
         </div>
     </div>
 </div>
+
+<script>
+document.getElementById("myTextField").focus();
+</script>
