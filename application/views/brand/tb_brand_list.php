@@ -37,14 +37,16 @@
                             <tr>
                                 <td><?php echo ++$start ?></td>
                                 <td><?php echo $tb_brand->nama_brand ?></td>
-                                <td style="text-align:center" width="140px">
-                                    <?php 
-			echo anchor(site_url('tb_brand/read/'.$tb_brand->id_brand),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-sm btn-round btn-info btn-sm')); 
-			echo '  '; 
-			echo anchor(site_url('tb_brand/update/'.$tb_brand->id_brand),'<i class="fa fa-pencil-square-o"></i>',array('title'=>'edit','class'=>'btn btn-sm btn-round btn-success btn-sm')); 
-			echo '  '; 
-			//echo anchor(site_url('tb_brand/delete/'.$tb_brand->id_brand),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-sm btn-round btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
-			?>
+                                <td style="text-align:center" width="300px">
+                                    <div class="btn-group btn-corner">
+                                        <?php 
+                                            echo anchor(site_url('tb_brand/read/'.$tb_brand->id_brand),'<i class="fa fa-eye"></i> Detail',array('title'=>'detail','class'=>'btn btn-sm btn-info')); 
+                                            echo '  '; 
+                                            echo anchor(site_url('tb_brand/update/'.$tb_brand->id_brand),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-sm btn-success')); 
+                                            echo '  '; 
+                                            //echo anchor(site_url('tb_brand/delete/'.$tb_brand->id_brand),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-sm btn-danger" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+                                        ?>
+                                    </div>
                                 </td>
                             </tr>
                             <?php
