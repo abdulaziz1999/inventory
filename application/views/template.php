@@ -498,7 +498,7 @@
             buttons: [
 
             ],
-            ajax: '<?= base_url('') ?>laporan/ajax/<?= $this->input->get('s', TRUE) ."/". $this->input->get('e', TRUE) ?>',
+            ajax: '<?= base_url('') ?>laporan/ajax/<?= $this->input->get('s', TRUE) ."/". $this->input->get('e', TRUE)."/".$this->input->get('u', TRUE) ?>',
             scrollY: 250,
             info: false,
             deferRender: true,
@@ -518,7 +518,7 @@
             buttons: [
 
             ],
-            ajax: '<?= base_url('') ?>laporan_issuing/ajax/<?= $this->input->get('s', TRUE) ."/". $this->input->get('e', TRUE) ?>',
+            ajax: '<?= base_url('') ?>laporan_issuing/ajax/<?= $this->input->get('s', TRUE) ."/". $this->input->get('e', TRUE)."/".$this->input->get('u', TRUE) ?>',
             scrollY: 250,
             info: false,
             deferRender: true,
