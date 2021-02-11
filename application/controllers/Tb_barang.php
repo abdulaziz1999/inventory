@@ -72,6 +72,7 @@ class Tb_barang extends CI_Controller
                 'satuan'        => @$this->db->get('tb_satuan'),
                 'brand'         => @$this->db->get('tb_brand'),
                 'kategori'      => @$this->db->get('tb_kategori'),
+                'unit'          => @$this->db->get('tb_unit'),
                 'kode'          => $this->Tb_barang_model->kode()
     );
     
@@ -95,6 +96,7 @@ class Tb_barang extends CI_Controller
                 'harga_beli'    => $this->input->post('harga_beli',TRUE),
                 'harga_jual'    => $this->input->post('harga_jual',TRUE),
                 'ket'           => $this->input->post('ket',TRUE),
+                'unit_id'       => $this->input->post('unit_id',TRUE),
         );
 
         $this->Tb_barang_model->insert($data);
@@ -169,9 +171,11 @@ class Tb_barang extends CI_Controller
                 'satuan'        => @$this->db->get('tb_satuan'),
                 'brand'         => @$this->db->get('tb_brand'),
                 'kategori'      => @$this->db->get('tb_kategori'),
+                'unit'          => @$this->db->get('tb_unit'),
                 'idkategori'    => @$this->db->get_where('tb_barang',['id_barang' => $this->uri->segment(3)])->row()->kategori,
                 'idbrand'       => @$this->db->get_where('tb_barang',['id_barang' => $this->uri->segment(3)])->row()->brand,
-                'idsatuan'      => @$this->db->get_where('tb_barang',['id_barang' => $this->uri->segment(3)])->row()->satuan
+                'idsatuan'      => @$this->db->get_where('tb_barang',['id_barang' => $this->uri->segment(3)])->row()->satuan,
+                'idunit'        => @$this->db->get_where('tb_barang',['id_barang' => $this->uri->segment(3)])->row()->unit_id
 	    );
             $this->template->load('template','barang/tb_barang_form', $data);
         } else {
@@ -196,6 +200,7 @@ class Tb_barang extends CI_Controller
                 'harga_beli'    => $this->input->post('harga_beli',TRUE),
                 'harga_jual'    => $this->input->post('harga_jual',TRUE),
                 'ket'           => $this->input->post('ket',TRUE),
+                'unit_id'       => $this->input->post('unit_id',TRUE),
 	    );
             // print_r($data);
             $this->Tb_barang_model->update($this->input->post('id_barang', TRUE), $data);
