@@ -34,15 +34,15 @@
                                 <div class="col-lg-4 text-left">
                                     <div class="form-group">
                                         <label style="color: white">-</label><br>
-                                        <button type="submit"
-                                            class="btn tampil btn-sm  btn-round btn-primary">Tampil</button>
-                                        <a href="<?php echo site_url('laporan') ?>"
-                                            class="btn btn-sm btn-round btn-default">Reset</a>
-                                        <?php if($this->input->get('s') == true):?>
-                                        <a href="<?php echo site_url('laporan_issuing/issuing_report/') ?><?= $this->input->get('s')?>/<?= $this->input->get('e')?>"
-                                            class="btn btn-sm btn-round btn-warning fa fa-print"
-                                            target="_blank">Print</a>
-                                        <?php endif;?>
+                                        <div class="btn-group btn-corner">
+                                            <button type="submit" class="btn tampil btn-sm  btn-primary">Tampil</button>
+                                            <a href="<?php echo site_url('laporan') ?>"
+                                                class="btn btn-sm btn-default">Reset</a>
+                                            <?php if($this->input->get('s') == true):?>
+                                            <a href="<?php echo site_url('laporan_issuing/issuing_report/') ?><?= $this->input->get('s')?>/<?= $this->input->get('e')?>"
+                                                class="btn btn-sm btn-warning fa fa-print" target="_blank">Print</a>
+                                            <?php endif;?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6"></div>
