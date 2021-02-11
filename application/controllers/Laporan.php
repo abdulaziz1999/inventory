@@ -16,7 +16,7 @@ class Laporan extends CI_Controller{
     function index(){
         $start = $this->input->get('s', TRUE);
         $end = $this->input->get('e', TRUE);
-
+        $data['unit'] = @$this->db->get('tb_unit');
         if($start && $end != NULL){
 
         }else{
@@ -24,10 +24,10 @@ class Laporan extends CI_Controller{
             $end = date('Y-m-d h:i:s');
         }
 
-        $this->template->load('template', 'laporan/laporan');
+        $this->template->load('template', 'laporan/laporan',$data);
     }
 
-    function ajax($s, $e){
+    function ajax($s, $e, $u){
         $draw 	= intval($this->input->get("draw"));
         $start 	= intval($this->input->get("start"));
         $length = intval($this->input->get("length"));
@@ -40,6 +40,7 @@ class Laporan extends CI_Controller{
                 $this->db->join('tb_receiving r2','r.id_receiving = r2.id_receiving');
                 $this->db->where('tgl >=', $s);
                 $this->db->where('tgl <=', $e);
+                $this->db->where('unit_id =', $u);
         $get =	$this->db->get('tb_barang');
 
         $data = array();

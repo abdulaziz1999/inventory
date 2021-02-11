@@ -16,7 +16,7 @@ class Laporan_issuing extends CI_Controller{
     function index(){
         $start = $this->input->get('s', TRUE);
         $end = $this->input->get('e', TRUE);
-
+        $data['unit'] = @$this->db->get('tb_unit');
         if($start && $end != NULL){
 
         }else{
@@ -24,18 +24,23 @@ class Laporan_issuing extends CI_Controller{
             $end = date('Y-m-d h:i:s');
         }
 
-        $this->template->load('template', 'laporan/laporan_issuing');
+        $this->template->load('template', 'laporan/laporan_issuing',$data);
     }
 
-    function ajax($s, $e){
+    function ajax($s, $e, $u){
         $draw 	= intval($this->input->get("draw"));
         $start 	= intval($this->input->get("start"));
         $length = intval($this->input->get("length"));
                
+        $this->db->join('tb_stok st','tb_barang.id_barang = st.id_barang');
+        $this->db->join('tb_satuan s','tb_barang.satuan = s.id_satuan');
+        $this->db->join('tb_kategori k','tb_barang.kategori = k.id_kategori');
+        $this->db->join('tb_brand br','tb_barang.brand = br.id_brand');
         $this->db->join('tb_issuing_item i','tb_barang.id_barang = i.id_barang');
-         $this->db->join('tb_issuing i2','i.id_issuing = i2.id_issuing');
+        $this->db->join('tb_issuing i2','i.id_issuing = i2.id_issuing');
         $this->db->where('tgl >=', $s);
 		$this->db->where('tgl <=', $e);
+		$this->db->where('unit_id =', $u);
         $get =	$this->db->get('tb_barang');
 
         $data = array();

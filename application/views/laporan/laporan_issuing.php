@@ -13,7 +13,7 @@
         <div class='col-xs-12'>
             <div class='box'>
                 <div class='box-header'>
-                    <h3 class='box-title'>Laporan Issuing</h3>
+                    <h3 class='box-title'>Laporan Barang Keluar</h3>
                     <div class='box box-primary'>
                         <form action="" method="get">
                             <div class="row">
@@ -31,6 +31,19 @@
                                             name="e" value="<?= $this->input->get('e', TRUE) ?>">
                                     </div>
                                 </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label>Unit</label>
+                                        <select class="form-control" name="u" id="unit_id">
+                                            <option value="" selected disabled>----Pilih Unit----</option>
+                                            <?php foreach($unit->result() as $k):?>
+                                            <option
+                                                <?php if($this->input->get('u', TRUE) == $k->id_unit) { echo 'selected';}?>
+                                                value="<?= $k->id_unit?>"><?= $k->nama_unit?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-lg-4 text-left">
                                     <div class="form-group">
                                         <label style="color: white">-</label><br>
@@ -45,7 +58,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6"></div>
+                                <div class="col-lg-2"></div>
                             </div>
                         </form>
                     </div><!-- /.box-body -->
