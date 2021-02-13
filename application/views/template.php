@@ -247,12 +247,6 @@
                                 Satuan
                             </a><b class="arrow"></b>
                         </li>
-                        <li class="<?php if($this->uri->segment(1) == 'tb_unit'){ echo "active"; }else{ echo "";}?>">
-                            <a href="<?= base_url('tb_unit'); ?>">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Unit
-                            </a><b class="arrow"></b>
-                        </li>
                         <li class="<?php if($this->uri->segment(1) == 'tb_suplier'){ echo "active"; }else{ echo "";}?>">
                             <a href="<?= base_url('tb_suplier'); ?>">
                                 <i class="menu-icon fa fa-caret-right"></i>
@@ -269,6 +263,12 @@
                             <a href="<?= base_url('tb_proyek'); ?>">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Nama Proyek
+                            </a><b class="arrow"></b>
+                        </li>
+                        <li class="<?php if($this->uri->segment(1) == 'tb_unit'){ echo "active"; }else{ echo "";}?>">
+                            <a href="<?= base_url('tb_unit'); ?>">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Unit
                             </a><b class="arrow"></b>
                         </li>
                     </ul>
@@ -448,6 +448,9 @@
     setTimeout(function() {
         $(".alert").fadeOut("slow");
     }, 5000);
+    $(document).ready(function() {
+        $("#mytable").dataTable();
+    });
     /* Tanpa Rupiah */
     var tanpa_rupiah = document.getElementById('tanpa-rupiah');
     tanpa_rupiah.addEventListener('keyup', function(e) {
@@ -542,7 +545,18 @@
     document.getElementById("tanpa-rupiah2").value = rupiah2;
 
     //-----------------------------
+    function sum() {
+        var bil1 = document.getElementById('tanpa-rupiah').value;
+        var bila1 = bil1.replace(".", "");
+        var result = bila1 * 0.1;
+        var result1 = parseInt(bila1) + parseInt(result);
+        console.log(result1);
+        // if (!isNaN(result1)) {
+        //     document.getElementById('tanpa-rupiah2').value = result1;
+        // }
+    }
     </script>
+
 
 
     <?php if($this->uri->segment(2) == "update"):?>
