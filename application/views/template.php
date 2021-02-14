@@ -547,13 +547,24 @@
     //-----------------------------
     function sum() {
         var bil1 = document.getElementById('tanpa-rupiah').value;
-        var bila1 = bil1.replace(".", "");
-        var result = bila1 * 0.1;
+        var bila1 = bil1.replace(".", "").replace(".", "").replace(".", "").replace(".", "").replace(".", "").replace(
+            ".", "").replace(".", "").replace(".", "").replace(".", "").replace(".", "").replace(".", "").replace(
+            ".", "").replace(".", "");
+        var result = parseInt(bila1) * 10 / 100;
         var result1 = parseInt(bila1) + parseInt(result);
-        console.log(result1);
-        // if (!isNaN(result1)) {
-        //     document.getElementById('tanpa-rupiah2').value = result1;
-        // }
+        // console.log(result + "+" + bila1 + "=" + result1);
+        if (!isNaN(result1)) {
+            let number_string = result1.toString(),
+                sisa = number_string.length % 3,
+                rupiah = number_string.substr(0, sisa),
+                ribuan = number_string.substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            document.getElementById('tanpa-rupiah2').value = rupiah;
+        }
     }
     </script>
 
@@ -571,62 +582,104 @@
     <script src="<?= base_url()?>assets/js/highcharts.js" type="text/javascript"></script>
     <script type="text/javascript">
     var chart1; // globally available
-    $(document).ready(function() {
-        chart1 = new Highcharts.Chart({
-            chart: {
-                renderTo: 'container',
-                type: 'line'
-            },
-            title: {
-                text: 'Item Barang Berdasarkan Kategori'
-            },
-            xAxis: {
-                categories: ['Kategori']
-            },
-            yAxis: {
-                title: {
-                    text: 'Jumlah Item'
-                }
-            },
-            series: [
-                <?php $data = $this->Admin_model->grap_kategori();
-								foreach($data as $row):?> {
-                    name: '<?= $row->nama_kategori?>',
-                    data: [<?= $row->stok?>],
-                },
-                <?php endforeach;?>
-            ]
-        });
-    });
+    // $(document).ready(function() {
+    //     chart1 = new Highcharts.Chart({
+    //         chart: {
+    //             renderTo: 'container',
+    //             type: 'line'
+    //         },
+    //         title: {
+    //             text: 'Item Barang Berdasarkan Kategori'
+    //         },
+    //         xAxis: {
+    //             categories: ['Kategori']
+    //         },
+    //         yAxis: {
+    //             title: {
+    //                 text: 'Jumlah Item'
+    //             }
+    //         },
+    //         series: [
+    //             <?php //$data = $this->Admin_model->grap_kategori();
+    // 							foreach($data as $row):?> {
+    //                 name: '<?php //$row->nama_kategori?>',
+    //                 data: [<?php //$row->stok?>],
+    //             },
+    //             <?php //endforeach;?>
+    //         ]
+    //     });
+    // });
     </script>
     <script src="<?= base_url()?>assets/js/highcharts.js" type="text/javascript"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script type="text/javascript">
     var chart1; // globally available
     $(document).ready(function() {
         chart1 = new Highcharts.Chart({
             chart: {
+                backgroundColor: {
+                    linearGradient: [0, 0, 500, 500],
+                    stops: [
+                        [0, 'rgb(255, 255, 255)'],
+                        [1, 'rgb(240, 240, 255)']
+                    ]
+                },
                 renderTo: 'container1',
-                type: 'pie'
+                type: 'line'
+
             },
+            colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572',
+                '#FF9655', '#FFF263', '#6AF9C4'
+            ],
             title: {
-                text: 'Item Barang Berdasarkan Brand'
+                text: 'Purchase and Sales Statistics'
+            },
+            subtitle: {
+                text: 'Statistik Pembelian dan Penjualan Barang'
             },
             xAxis: {
-                categories: ['Brand']
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+                    'Nov', 'Dec'
+                ]
             },
             yAxis: {
                 title: {
-                    text: 'Jumlah Item'
+                    text: 'Jumlah Barang'
                 }
             },
-            series: [
-                <?php $data = $this->Admin_model->grap_brand();
-								foreach($data as $row):?> {
-                    name: '<?= $row->nama_brand?>',
-                    data: [<?= $row->stok?>],
-                },
-                <?php endforeach;?>
-            ]
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                }
+            },
+            series: [{
+                name: 'Penjualan',
+                data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+            }, {
+                name: 'Pembelian',
+                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+            }],
+
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
         });
     });
     </script>
