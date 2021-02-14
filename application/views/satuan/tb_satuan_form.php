@@ -7,23 +7,27 @@
 
                     <h3 class='box-title'>TB_SATUAN</h3>
                     <div class='box box-primary'>
-                        <form action="<?php echo $action; ?>" method="post">
+                        <form action="<?= $action; ?>" method="post">
                             <table class='table table-bordered'>
                                 <tr>
-                                    <td>Nama Satuan <?php echo form_error('nama_satuan') ?></td>
+                                    <td>Nama Satuan <?= form_error('nama_satuan') ?></td>
                                     <td><input type="text" class="form-control" name="nama_satuan" id="nama_satuan"
-                                            placeholder="Nama Satuan" value="<?php echo $nama_satuan; ?>" />
+                                            placeholder="Nama Satuan" value="<?= $nama_satuan; ?>" />
                                     </td>
                                 <tr>
-                                    <td>Ket <?php echo form_error('ket') ?></td>
+                                    <td>Ket <?= form_error('ket') ?></td>
                                     <td><input type="text" class="form-control" name="ket" id="ket" placeholder="Ket"
-                                            value="<?php echo $ket; ?>" />
+                                            value="<?= $ket; ?>" />
                                     </td>
-                                    <input type="hidden" name="id_satuan" value="<?php echo $id_satuan; ?>" />
+                                    <input type="hidden" name="id_satuan" value="<?= $id_satuan; ?>" />
                                 <tr>
-                                    <td colspan='2'><button type="submit"
-                                            class="btn btn-primary"><?php echo $button ?></button>
-                                        <a href="<?php echo site_url('tb_satuan') ?>" class="btn btn-default">Cancel</a>
+                                    <td colspan='2'>
+                                        <div class="btn-group btn-corner">
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                style="margin-right:3px;"><?= $button ?></button>
+                                            <a href="<?= site_url('tb_satuan') ?>"
+                                                class="btn btn-danger btn-sm">Kembali</a>
+                                        </div>
                                     </td>
                                 </tr>
 
