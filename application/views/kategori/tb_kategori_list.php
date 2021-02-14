@@ -30,10 +30,10 @@
                         </thead>
                         <tbody>
                             <?php
-            $start = 0;
-            foreach ($tb_kategori_data as $tb_kategori)
-            {
-                ?>
+                        $start = 0;
+                        foreach ($tb_kategori_data as $tb_kategori)
+                        {
+                            ?>
                             <tr>
                                 <td><?php echo ++$start ?></td>
                                 <td><?php echo $tb_kategori->nama_kategori ?></td>
@@ -50,8 +50,8 @@
                                 </td>
                             </tr>
                             <?php
-            }
-            ?>
+                        }
+                        ?>
                         </tbody>
                     </table>
                 </div><!-- /.box-body -->
