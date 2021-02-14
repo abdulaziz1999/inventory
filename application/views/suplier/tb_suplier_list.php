@@ -4,7 +4,7 @@
             <i class="ace-icon fa fa-home home-icon"></i>
             <a href="<?= base_url('admin'); ?>">Dashboard</a>
         </li>
-        <li class="active">suplier</li>
+        <li class="active">Supplier</li>
     </ul>
 </div>
 <!-- Main content -->
@@ -12,19 +12,19 @@
     <div class='row'>
         <div class='col-xs-12'>
             <div class='box'>
-                <div class='box-header'>
-                    <h3 class='box-title'>suplier Barang</h3>
-                    <?= anchor('tb_suplier/create/','Create',array('class'=>'btn btn-sm btn-round btn-primary btn-sm'));?><br><br>
+                <div class='box-header'><br>
+                    <?= anchor('tb_suplier/create/','Tambah',array('class'=>'btn btn-sm btn-round btn-primary btn-sm'));?>
                     <!-- <?= anchor(site_url('tb_suplier/excel'), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-primary btn-sm"'); ?>
                     <?= anchor(site_url('tb_suplier/word'), '<i class="fa fa-file-word-o"></i> Word', 'class="btn btn-primary btn-sm"'); ?>
                     <?= anchor(site_url('tb_suplier/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-primary btn-sm"'); ?> -->
+                    <h3 class="table-header text-center"><strong>Tabel Supplier Barang</strong></h3>
                 </div><!-- /.box-header -->
                 <div class='box-body'>
                     <table class="table table-striped" id="mytable">
                         <thead>
                             <tr>
                                 <th width="80px">No</th>
-                                <th>Nama suplier</th>
+                                <th>Nama Supplier</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -54,14 +54,6 @@
             ?>
                         </tbody>
                     </table>
-                    <script src="<?= base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
-                    <script src="<?= base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
-                    <script src="<?= base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
-                    <script type="text/javascript">
-                    $(document).ready(function() {
-                        $("#mytable").dataTable();
-                    });
-                    </script>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
