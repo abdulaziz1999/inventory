@@ -133,7 +133,8 @@
 
                     <li class="light-blue dropdown-modal">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                            <img class="nav-user-photo" src="<?= $this->session->userdata('foto') ?>" />
+                            <img class="nav-user-photo"
+                                src="http://ace.jeka.by/assets/images/avatars/profile-pic.jpg" />
                             <span class="user-info">
                                 <small>Welcome,</small>
                                 <?= $this->session->userdata('nama') ?>
@@ -152,7 +153,7 @@
                             </li>
 
                             <li>
-                                <a href="<?= base_url('profil'); ?>">
+                                <a href="<?= base_url('profile'); ?>">
                                     <i class="ace-icon fa fa-user"></i>
                                     Profile
                                 </a>
@@ -449,9 +450,41 @@
         $(".alert").fadeOut("slow");
     }, 5000);
     $(document).ready(function() {
-        $("#mytable").dataTable();
+        $("#mytable").DataTable();
     });
-    /* Tanpa Rupiah */
+    </script>
+
+    <?php if($this->uri->segment(1) == "tb_barang" && $this->uri->segment(2) == "create" || $this->uri->segment(1) == "tb_barang" && $this->uri->segment(2) == "update"):?>
+    <script>
+    // let bilangan = document.getElementById("tanpa-rupiah").value;
+
+    // // Solisi
+    // let number_string = bilangan.toString(),
+    //     sisa = number_string.length % 3,
+    //     rupiah = number_string.substr(0, sisa),
+    //     ribuan = number_string.substr(sisa).match(/\d{3}/gi);
+
+    // if (ribuan) {
+    //     separator = sisa ? '.' : '';
+    //     rupiah += separator + ribuan.join('.');
+    // }
+    // document.getElementById("tanpa-rupiah").value = rupiah;
+
+    // // ------------------------------------------------------------------
+    // let bilangan2 = document.getElementById("tanpa-rupiah2").value;
+
+    // // Solisi
+    // let number_string2 = bilangan2.toString(),
+    //     sisa2 = number_string2.length % 3,
+    //     rupiah2 = number_string2.substr(0, sisa2),
+    //     ribuan2 = number_string2.substr(sisa2).match(/\d{3}/gi);
+
+    // if (ribuan2) {
+    //     separator2 = sisa2 ? '.' : '';
+    //     rupiah2 += separator2 + ribuan2.join('.');
+    // }
+    // document.getElementById("tanpa-rupiah2").value = rupiah2;
+    //-----------------------------------
     var tanpa_rupiah = document.getElementById('tanpa-rupiah');
     tanpa_rupiah.addEventListener('keyup', function(e) {
         tanpa_rupiah.value = formatRupiah(this.value);
@@ -469,17 +502,6 @@
     tanpa_rupiah2.addEventListener('keydown', function(event) {
         limitCharacter(event);
     });
-
-    /* Dengan Rupiah */
-    // var dengan_rupiah = document.getElementById('dengan-rupiah');
-    // dengan_rupiah.addEventListener('keyup', function(e) {
-    //     dengan_rupiah.value = formatRupiah(this.value, 'Rp. ');
-    // });
-
-    // dengan_rupiah.addEventListener('keydown', function(event) {
-    //     limitCharacter(event);
-    // });
-
     /* Fungsi */
     function formatRupiah(bilangan, prefix) {
         var number_string = bilangan.replace(/[^,\d]/g, '').toString(),
@@ -512,38 +534,6 @@
             // return false;
         }
     }
-    </script>
-
-    <script>
-    let bilangan = document.getElementById("tanpa-rupiah").value;
-
-    // Solisi
-    let number_string = bilangan.toString(),
-        sisa = number_string.length % 3,
-        rupiah = number_string.substr(0, sisa),
-        ribuan = number_string.substr(sisa).match(/\d{3}/gi);
-
-    if (ribuan) {
-        separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-    }
-    document.getElementById("tanpa-rupiah").value = rupiah;
-
-    // ------------------------------------------------------------------
-    let bilangan2 = document.getElementById("tanpa-rupiah2").value;
-
-    // Solisi
-    let number_string2 = bilangan2.toString(),
-        sisa2 = number_string2.length % 3,
-        rupiah2 = number_string2.substr(0, sisa2),
-        ribuan2 = number_string2.substr(sisa2).match(/\d{3}/gi);
-
-    if (ribuan2) {
-        separator2 = sisa2 ? '.' : '';
-        rupiah2 += separator2 + ribuan2.join('.');
-    }
-    document.getElementById("tanpa-rupiah2").value = rupiah2;
-
     //-----------------------------
     function sum() {
         var bil1 = document.getElementById('tanpa-rupiah').value;
@@ -567,8 +557,7 @@
         }
     }
     </script>
-
-
+    <?php endif;?>
 
     <?php if($this->uri->segment(2) == "update"):?>
     <script>
@@ -611,10 +600,6 @@
     // });
     </script>
     <script src="<?= base_url()?>assets/js/highcharts.js" type="text/javascript"></script>
-    <script src="https://code.highcharts.com/modules/series-label.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script type="text/javascript">
     var chart1; // globally available
     $(document).ready(function() {
@@ -638,7 +623,7 @@
                 text: 'Purchase and Sales Statistics'
             },
             subtitle: {
-                text: 'Statistik Pembelian dan Penjualan Barang'
+                text: ''
             },
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
@@ -724,175 +709,11 @@
     <!-- inline scripts related to this page -->
     <script type="text/javascript">
     jQuery(function($) {
-        //initiate dataTables plugin
-        var myTable =
-            $('#dynamic-table')
-            //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-            .DataTable({
-                bAutoWidth: false,
-                "aoColumns": [{
-                        "bSortable": false
-                    },
-                    null, null, null, null, null,
-                    {
-                        "bSortable": false
-                    }
-                ],
-                "aaSorting": [],
-
-
-                //"bProcessing": true,
-                //"bServerSide": true,
-                //"sAjaxSource": "http://127.0.0.1/table.php"	,
-
-                //,
-                //"sScrollY": "200px",
-                //"bPaginate": false,
-
-                //"sScrollX": "100%",
-                //"sScrollXInner": "120%",
-                //"bScrollCollapse": true,
-                //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
-                //you may want to wrap the table inside a "div.dataTables_borderWrap" element
-
-                //"iDisplayLength": 50
-
-
-                select: {
-                    style: 'multi'
-                }
-            });
-
-        $.fn.dataTable.Buttons.defaults.dom.container.className =
-            'dt-buttons btn-overlap btn-group btn-overlap';
-
-        new $.fn.dataTable.Buttons(myTable, {
-            buttons: [{
-                    "extend": "colvis",
-                    "text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
-                    "className": "btn btn-white btn-primary btn-bold",
-                    columns: ':not(:first):not(:last)'
-                },
-                {
-                    "extend": "copy",
-                    "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
-                    "className": "btn btn-white btn-primary btn-bold"
-                },
-                {
-                    "extend": "csv",
-                    "text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
-                    "className": "btn btn-white btn-primary btn-bold"
-                },
-                {
-                    "extend": "excel",
-                    "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
-                    "className": "btn btn-white btn-primary btn-bold"
-                },
-                {
-                    "extend": "pdf",
-                    "text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
-                    "className": "btn btn-white btn-primary btn-bold"
-                },
-                {
-                    "extend": "print",
-                    "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
-                    "className": "btn btn-white btn-primary btn-bold",
-                    autoPrint: false,
-                    message: 'This print was produced using the Print button for DataTables'
-                }
-            ]
-        });
-        myTable.buttons().container().appendTo($('.tableTools-container'));
-
-        //style the message box
-        var defaultCopyAction = myTable.button(1).action();
-        myTable.button(1).action(function(e, dt, button, config) {
-            defaultCopyAction(e, dt, button, config);
-            $('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
-        });
-
-
-        var defaultColvisAction = myTable.button(0).action();
-        myTable.button(0).action(function(e, dt, button, config) {
-
-            defaultColvisAction(e, dt, button, config);
-
-
-            if ($('.dt-button-collection > .dropdown-menu').length == 0) {
-                $('.dt-button-collection')
-                    .wrapInner(
-                        '<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
-                    .find('a').attr('href', '#').wrap("<li />")
-            }
-            $('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
-        });
-
-        ////
-
-        setTimeout(function() {
-            $($('.tableTools-container')).find('a.dt-button').each(function() {
-                var div = $(this).find(' > div').first();
-                if (div.length == 1) div.tooltip({
-                    container: 'body',
-                    title: div.parent().text()
-                });
-                else $(this).tooltip({
-                    container: 'body',
-                    title: $(this).text()
-                });
-            });
-        }, 500);
-
-
-
-
-
-        myTable.on('select', function(e, dt, type, index) {
-            if (type === 'row') {
-                $(myTable.row(index).node()).find('input:checkbox').prop('checked', true);
-            }
-        });
-        myTable.on('deselect', function(e, dt, type, index) {
-            if (type === 'row') {
-                $(myTable.row(index).node()).find('input:checkbox').prop('checked', false);
-            }
-        });
-
-
-
-
-        /////////////////////////////////
-        //table checkboxes
-        $('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
-
-        //select/deselect all rows according to table header checkbox
-        $('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]')
-            .eq(0).on('click', function() {
-                var th_checked = this.checked; //checkbox inside "TH" table header
-
-                $('#dynamic-table').find('tbody > tr').each(function() {
-                    var row = this;
-                    if (th_checked) myTable.row(row).select();
-                    else myTable.row(row).deselect();
-                });
-            });
-
-        //select/deselect a row when the checkbox is checked/unchecked
-        $('#dynamic-table').on('click', 'td input[type=checkbox]', function() {
-            var row = $(this).closest('tr').get(0);
-            if (this.checked) myTable.row(row).deselect();
-            else myTable.row(row).select();
-        });
-
-
-
         $(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
             e.stopImmediatePropagation();
             e.stopPropagation();
             e.preventDefault();
         });
-
-
 
         //And for the first simple table, which doesn't have TableTools or dataTables
         //select/deselect all rows according to table header checkbox
@@ -917,8 +738,6 @@
             else $row.removeClass(active_class);
         });
 
-
-
         /********************************/
         //add tooltip for small view action buttons in dropdown menu
         $('[data-rel="tooltip"]').tooltip({
@@ -939,9 +758,6 @@
             return 'left';
         }
 
-
-
-
         /***************/
         $('.show-details-btn').on('click', function(e) {
             e.preventDefault();
@@ -950,23 +766,6 @@
                 'fa-angle-double-up');
         });
         /***************/
-
-
-
-
-
-        /**
-        //add horizontal scrollbars to a simple table
-        $('#simple-table').css({'width':'2000px', 'max-width': 'none'}).wrap('<div style="width: 1000px;" />').parent().ace_scroll(
-          {
-        	horizontal: true,
-        	styleClass: 'scroll-top scroll-dark scroll-visible',//show the scrollbars on top(default is bottom)
-        	size: 2000,
-        	mouseWheelLock: true
-          }
-        ).css('padding-top', '12px');
-        */
-
 
     })
     </script>
