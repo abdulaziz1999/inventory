@@ -17,7 +17,7 @@
                                     </td>
                                     <input type="hidden" name="id_kategori" value="<?php echo $id_kategori; ?>" />
                                 <tr>
-                                    <td colspan='2'>
+                                    <td colspan="2">
                                         <div class="btn-group btn-corner">
                                             <button type="submit" class="btn btn-primary btn-sm"
                                                 style="margin-right:3px;"><?= $button ?></button>
