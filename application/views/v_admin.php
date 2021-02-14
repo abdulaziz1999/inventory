@@ -89,10 +89,11 @@
 		</div> -->
              <div class="hr hr32 hr-line"></div>
              <div class="row">
-                 <div class="col-sm-6">
+                 <div class="col-sm-12">
                      <div class="widget-box transparent">
                          <div class="widget-header widget-header-flat">
-                             <h4 class="widget-title lighter"><i class="ace-icon fa fa-bar-chart-o"></i>Brand</h4>
+                             <h4 class="widget-title lighter"><i class="ace-icon fa fa-bar-chart-o"></i>Statistik
+                                 Pembelian & Penjualan</h4>
                              <div class="widget-toolbar">
                                  <a href="#" data-action="collapse"><i class="ace-icon fa fa-chevron-up"></i></a>
                              </div>
@@ -104,7 +105,7 @@
                          </div>
                      </div>
                  </div>
-                 <div class="col-sm-6">
+                 <!-- <div class="col-sm-6">
                      <div class="widget-box transparent">
                          <div class="widget-header widget-header-flat">
                              <h4 class="widget-title lighter"><i class="ace-icon fa fa-bar-chart-o"></i>Kategori</h4>
@@ -118,7 +119,7 @@
                              </div>
                          </div>
                      </div>
-                 </div>
+                 </div> -->
              </div>
              <div class="hr hr32 hr-line"></div>
              <div class="row">
