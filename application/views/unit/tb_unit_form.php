@@ -18,10 +18,10 @@
                                 <tr>
                                     <td colspan='2'>
                                         <div class="btn-group btn-corner">
-                                            <button type="submit"
-                                                class="btn btn-primary btn-sm"><?php echo $button ?></button>&nbsp;&nbsp;
-                                            <a href="<?php echo site_url('tb_unit')?>"
-                                                class="btn btn-default btn-sm">Cancel</a>
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                style="margin-right:3px;"><?= $button ?></button>
+                                            <a href="<?= site_url('tb_unit') ?>"
+                                                class="btn btn-danger btn-sm">Kembali</a>
                                         </div>
                                     </td>
                                 </tr>
