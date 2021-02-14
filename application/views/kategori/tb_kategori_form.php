@@ -12,14 +12,18 @@
                                 <tr>
                                     <td>Nama Kategori <?php echo form_error('nama_kategori') ?></td>
                                     <td><input type="text" class="form-control" name="nama_kategori" id="nama_kategori"
-                                            placeholder="Nama Kategori" value="<?php echo $nama_kategori; ?>" />
+                                            autocomplete="off" placeholder="Nama Kategori"
+                                            value="<?php echo $nama_kategori; ?>" />
                                     </td>
                                     <input type="hidden" name="id_kategori" value="<?php echo $id_kategori; ?>" />
                                 <tr>
-                                    <td colspan='2'><button type="submit"
-                                            class="btn btn-primary"><?php echo $button ?></button>
-                                        <a href="<?php echo site_url('tb_kategori') ?>"
-                                            class="btn btn-default">Cancel</a>
+                                    <td colspan='2'>
+                                        <div class="btn-group btn-corner">
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                style="margin-right:3px;"><?= $button ?></button>
+                                            <a href="<?= site_url('tb_kategori') ?>"
+                                                class="btn btn-danger btn-sm">Kembali</a>
+                                        </div>
                                     </td>
                                 </tr>
 
