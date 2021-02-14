@@ -7,18 +7,22 @@
 
                     <h3 class='box-title'>TB_BRAND</h3>
                     <div class='box box-primary'>
-                        <form action="<?php echo $action; ?>" method="post">
+                        <form action="<?= $action; ?>" method="post">
                             <table class='table table-bordered'>
                                 <tr>
-                                    <td>Nama Brand <?php echo form_error('nama_brand') ?></td>
+                                    <td>Nama Brand <?= form_error('nama_brand') ?></td>
                                     <td><input type="text" class="form-control" name="nama_brand" id="nama_brand"
-                                            placeholder="Nama Brand" value="<?php echo $nama_brand; ?>" />
+                                            autocomplete="off" placeholder="Nama Brand" value="<?= $nama_brand; ?>" />
                                     </td>
-                                    <input type="hidden" name="id_brand" value="<?php echo $id_brand; ?>" />
+                                    <input type="hidden" name="id_brand" value="<?= $id_brand; ?>" />
                                 <tr>
-                                    <td colspan='2'><button type="submit"
-                                            class="btn btn-primary"><?php echo $button ?></button>
-                                        <a href="<?php echo site_url('tb_brand') ?>" class="btn btn-default">Cancel</a>
+                                    <td colspan='2'>
+                                        <div class="btn-group btn-corner">
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                style="margin-right:3px;"><?= $button ?></button>
+                                            <a href="<?= site_url('tb_brand') ?>"
+                                                class="btn btn-danger btn-sm">Kembali</a>
+                                        </div>
                                     </td>
                                 </tr>
 
