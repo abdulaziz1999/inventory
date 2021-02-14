@@ -12,12 +12,12 @@
     <div class='row'>
         <div class='col-xs-12'>
             <div class='box'>
-                <div class='box-header'>
-                    <h3 class='box-title'>TB_SATUAN LIST </h3>
-                    <?php echo anchor('tb_satuan/create/','Create',array('class'=>'btn btn-sm btn-round btn-primary'));?><br><br>
-                    <!-- <?php echo anchor(site_url('tb_satuan/excel'), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-primary btn-sm"'); ?>
-		<?php echo anchor(site_url('tb_satuan/word'), '<i class="fa fa-file-word-o"></i> Word', 'class="btn btn-primary btn-sm"'); ?> 
-		<?php echo anchor(site_url('tb_satuan/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-primary btn-sm"'); ?> -->
+                <div class='box-header'><br>
+                    <?= anchor('tb_satuan/create/','Tambah',array('class'=>'btn btn-sm btn-round btn-primary'));?>
+                    <!-- <?= anchor(site_url('tb_satuan/excel'), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-primary btn-sm"'); ?>
+                    <?= anchor(site_url('tb_satuan/word'), '<i class="fa fa-file-word-o"></i> Word', 'class="btn btn-primary btn-sm"'); ?> 
+                    <?= anchor(site_url('tb_satuan/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-primary btn-sm"'); ?> -->
+                    <h3 class="table-header text-center"><strong>Tabel Satuan Barang</strong></h3>
                 </div><!-- /.box-header -->
                 <div class='box-body'>
 
@@ -37,9 +37,9 @@
             {
                 ?>
                             <tr>
-                                <td><?php echo ++$start ?></td>
-                                <td><?php echo $tb_satuan->nama_satuan ?></td>
-                                <td><?php echo $tb_satuan->ket ?></td>
+                                <td><?= ++$start ?></td>
+                                <td><?= $tb_satuan->nama_satuan ?></td>
+                                <td><?= $tb_satuan->ket ?></td>
                                 <td style="text-align:center" width="300px">
                                     <div class="btn-group btn-corner">
                                         <?php 
@@ -57,14 +57,6 @@
             ?>
                         </tbody>
                     </table>
-                    <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
-                    <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
-                    <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
-                    <script type="text/javascript">
-                    $(document).ready(function() {
-                        $("#mytable").dataTable();
-                    });
-                    </script>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
