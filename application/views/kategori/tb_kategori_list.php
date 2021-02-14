@@ -13,10 +13,10 @@
         <div class='col-xs-12'>
             <div class='box'>
                 <div class='box-header'><br>
-                    <?php echo anchor('tb_kategori/create/','Tambah',array('class'=>'btn btn-sm btn-round btn-primary btn-sm'));?>
-                    <!-- <?php echo anchor(site_url('tb_kategori/excel'), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-primary btn-sm"'); ?>
-                    <?php echo anchor(site_url('tb_kategori/word'), '<i class="fa fa-file-word-o"></i> Word', 'class="btn btn-primary btn-sm"'); ?>
-                    <?php echo anchor(site_url('tb_kategori/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-primary btn-sm"'); ?> -->
+                    <?= anchor('tb_kategori/create/','Tambah',array('class'=>'btn btn-sm btn-round btn-primary btn-sm'));?>
+                    <!-- <?= anchor(site_url('tb_kategori/excel'), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-primary btn-sm"'); ?>
+                    <?= anchor(site_url('tb_kategori/word'), '<i class="fa fa-file-word-o"></i> Word', 'class="btn btn-primary btn-sm"'); ?>
+                    <?= anchor(site_url('tb_kategori/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-primary btn-sm"'); ?> -->
                     <h3 class="table-header text-center"><strong>Tabel Kategori Barang</strong></h3>
                 </div><!-- /.box-header -->
                 <div class='box-body'>
@@ -35,8 +35,8 @@
                         {
                             ?>
                             <tr>
-                                <td><?php echo ++$start ?></td>
-                                <td><?php echo $tb_kategori->nama_kategori ?></td>
+                                <td><?= ++$start ?></td>
+                                <td><?= $tb_kategori->nama_kategori ?></td>
                                 <td style="text-align:center" width="300px">
                                     <div class="btn-group btn-corner">
                                         <?php 
