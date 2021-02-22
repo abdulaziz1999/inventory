@@ -24,13 +24,24 @@ class Tb_barang extends CI_Controller
 
     public function index()
     {
+        $kategori   = $this->input->get('k', TRUE);
+        $unit       = $this->input->get('u', TRUE);
         $tb_barang = $this->Tb_barang_model->get_all();
 
-        $data = array(
-            'tb_barang_data' => $tb_barang,
-            'kode' => $this->Tb_barang_model->kode()
-        );
-        // print_r($data['kode']);
+        $data['kode']           = $this->Tb_barang_model->kode();
+        $data['unit']           = @$this->db->get('tb_unit');
+        $data['kategori']       = @$this->db->get('tb_kategori');
+
+        if($kategori == TRUE && $unit == TRUE){
+            $this->db->where(['kategori' => $kategori,'unit_id' => $unit]);                           
+        }elseif($kategori == TRUE && $unit == FALSE){
+            $this->db->where(['kategori' => $kategori]);                                                
+        }elseif($kategori == FALSE && $unit == TRUE){
+            $this->db->where(['unit_id' => $unit]);                                                
+        }
+        $data['tb_barang_data'] = @$this->db->get('tb_barang')->result();
+        // $this->output->enable_profiler(TRUE);
+
         $this->template->load('template','barang/tb_barang_list', $data);
     }
 
@@ -41,11 +52,16 @@ class Tb_barang extends CI_Controller
             $data = array(
                     'id_barang'     => $row->id_barang,
                     'part_number'   => $row->part_number,
+                    'kode_barcode'  => $row->kode_barcode,
                     'nama_barang'   => $row->nama_barang,
                     'kategori'      => $row->kategori,
                     'brand'         => $row->brand,
                     'satuan'        => $row->satuan,
+                    'harga_beli'    => $row->harga_beli,
+                    'harga_jual'    => $row->harga_jual,
                     'ket'           => $row->ket,
+                    'unit_id'       => $row->unit_id,
+                    'min_stok'      => $row->min_stok,
 	    );
             $this->template->load('template','barang/tb_barang_read', $data);
         } else {
@@ -58,10 +74,11 @@ class Tb_barang extends CI_Controller
     {
         $kode = $this->Tb_barang_model->kode();
         $data = array(
-                'button'        => 'Create',
+                'button'        => '<i class="fa fa-plus"></i> Tambah',
                 'action'        => site_url('tb_barang/create_action'),
                 'id_barang'     => set_value('id_barang'),
                 'part_number'   => set_value('part_number'),
+                'kode_barcode'  => set_value('kode_barcode'),
                 'nama_barang'   => set_value('nama_barang'),
                 'kategori'      => set_value('kategori'),
                 'brand'         => set_value('brand'),
@@ -69,6 +86,8 @@ class Tb_barang extends CI_Controller
                 'harga_beli'    => set_value('harga_beli'),
                 'harga_jual'    => set_value('harga_jual'),
                 'ket'           => set_value('ket'),
+                'unit_id'       => set_value('unit_id'),
+                'min_stok'      => set_value('min_stok'),
                 'satuan'        => @$this->db->get('tb_satuan'),
                 'brand'         => @$this->db->get('tb_brand'),
                 'kategori'      => @$this->db->get('tb_kategori'),
@@ -81,24 +100,22 @@ class Tb_barang extends CI_Controller
     
     public function create_action() 
     {
-        $this->_rules();
         $kode = $this->Tb_barang_model->kode();
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->create();
-        } else {
             $data = array(
                 'part_number'   => $kode,
                 'nama_barang'   => $this->input->post('nama_barang',TRUE),
+                'kode_barcode'  => $this->input->post('kode_barcode',TRUE),
                 'kategori'      => $this->input->post('kategori',TRUE),
                 'brand'         => $this->input->post('brand',TRUE),
                 'satuan'        => $this->input->post('satuan',TRUE),
-                'harga_beli'    => $this->input->post('harga_beli',TRUE),
-                'harga_jual'    => $this->input->post('harga_jual',TRUE),
+                'harga_beli'    => str_replace('.','',$this->input->post('harga_beli',TRUE)),
+                'harga_jual'    => str_replace('.','',$this->input->post('harga_jual',TRUE)),
                 'ket'           => $this->input->post('ket',TRUE),
+                'min_stok'      => $this->input->post('min_stok',TRUE),
                 'unit_id'       => $this->input->post('unit_id',TRUE),
         );
-
+        // print_r($data);
         $this->Tb_barang_model->insert($data);
         
         $this->db->select_max('id_barang','idmax');
@@ -111,7 +128,6 @@ class Tb_barang extends CI_Controller
             
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('tb_barang'));
-        }
     }
 
     public function save() 
@@ -157,10 +173,11 @@ class Tb_barang extends CI_Controller
 
         if ($row) {
             $data = array(
-                'button'        => 'Update',
+                'button'        => '<i class="fa fa-pencil"></i> Update',
                 'action'        => site_url('tb_barang/update_action'),
                 'id_barang'     => set_value('id_barang', $row->id_barang),
                 'part_number'   => set_value('part_number', $row->part_number),
+                'kode_barcode'  => set_value('kode_barcode', $row->kode_barcode),
                 'nama_barang'   => set_value('nama_barang', $row->nama_barang),
                 'kategori'      => set_value('kategori', $row->kategori),
                 'brand'         => set_value('brand', $row->brand),
@@ -168,6 +185,8 @@ class Tb_barang extends CI_Controller
                 'harga_beli'    => set_value('harga_beli', $row->harga_beli),
                 'harga_jual'    => set_value('harga_jual', $row->harga_jual),
                 'ket'           => set_value('ket', $row->ket),
+                'min_stok'      => set_value('min_stok',$row->min_stok),
+                'unit_id'       => set_value('unit_id',$row->unit_id),
                 'satuan'        => @$this->db->get('tb_satuan'),
                 'brand'         => @$this->db->get('tb_brand'),
                 'kategori'      => @$this->db->get('tb_kategori'),
@@ -186,27 +205,25 @@ class Tb_barang extends CI_Controller
     
     public function update_action() 
     {
-        $this->_rules();
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->update($this->input->post('id_barang', TRUE));
-        } else {
+        
             $data = array(
                 'part_number'   => $this->input->post('part_number',TRUE),
+                'kode_barcode'  => $this->input->post('kode_barcode',TRUE),
                 'nama_barang'   => $this->input->post('nama_barang',TRUE),
                 'kategori'      => $this->input->post('kategori',TRUE),
                 'brand'         => $this->input->post('brand',TRUE),
                 'satuan'        => $this->input->post('satuan',TRUE),
-                'harga_beli'    => $this->input->post('harga_beli',TRUE),
-                'harga_jual'    => $this->input->post('harga_jual',TRUE),
+                'harga_beli'    => str_replace('.','',$this->input->post('harga_beli',TRUE)),
+                'harga_jual'    => str_replace('.','',$this->input->post('harga_jual',TRUE)),
                 'ket'           => $this->input->post('ket',TRUE),
+                'min_stok'      => $this->input->post('min_stok',TRUE),
                 'unit_id'       => $this->input->post('unit_id',TRUE),
 	    );
             // print_r($data);
             $this->Tb_barang_model->update($this->input->post('id_barang', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('tb_barang'));
-        }
+        
     }
     
     public function delete($id) 
@@ -229,10 +246,15 @@ class Tb_barang extends CI_Controller
     public function _rules() 
     {
 	$this->form_validation->set_rules('nama_barang', 'nama_barang', 'trim|required');
+	$this->form_validation->set_rules('kode_barcode', 'kode_barcode', 'trim|required');
 	$this->form_validation->set_rules('kategori', 'kategori', 'trim|required');
 	$this->form_validation->set_rules('brand', 'brand', 'trim|required');
 	$this->form_validation->set_rules('satuan', 'satuan', 'trim|required');
+	$this->form_validation->set_rules('harga_beli', 'harga_beli', 'trim|required');
+	$this->form_validation->set_rules('harga_jual', 'harga_jual', 'trim|required');
 	$this->form_validation->set_rules('ket', 'ket', 'trim|required');
+	$this->form_validation->set_rules('unit_id', 'unit_id', 'trim|required');
+	$this->form_validation->set_rules('min_stok', 'min_stok', 'trim|required');
 	$this->form_validation->set_rules('id_barang', 'id_barang', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
