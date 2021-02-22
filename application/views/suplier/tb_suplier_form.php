@@ -5,7 +5,7 @@
             <div class='box'>
                 <div class='box-header'>
 
-                    <h3 class='box-title'>TB_suplier</h3>
+                <h3 class="table-header text-center"><strong>Tambah Supplier Barang</strong></h3>
                     <div class='box box-primary'>
                         <form action="<?= $action; ?>" method="post">
                             <table class='table table-bordered'>
