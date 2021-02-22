@@ -38,13 +38,12 @@ class Tb_user extends CI_Controller
         $row = $this->Tb_user_model->get_by_id($id);
         if ($row) {
             $data = array(
-		'id_user' => $row->id_user,
-		'nama_user' => $row->nama_user,
-		'password' => $row->password,
-		'hak_akses' => $row->hak_akses,
-		'avatar' => $row->avatar,
+		'id_pengguna' => $row->id_pengguna,
+		'nama' => $row->nama,
+		'username' => $row->username,
+		'level' => $row->level,
 	    );
-            $this->template->load('template','tb_user_read', $data);
+            $this->template->load('template','user/tb_user_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('tb_user'));
@@ -56,13 +55,12 @@ class Tb_user extends CI_Controller
         $data = array(
             'button' => 'Create',
             'action' => site_url('tb_user/create_action'),
-	    'id_user' => set_value('id_user'),
-	    'nama_user' => set_value('nama_user'),
-	    'password' => set_value('password'),
-	    'hak_akses' => set_value('hak_akses'),
-	    'avatar' => set_value('avatar'),
+            'id_pengguna' => set_value('id_pengguna'),
+            'nama' => set_value('nama'),
+            'username' => set_value('username'),
+            'level' => set_value('level'),
 	);
-        $this->template->load('template','tb_user_form', $data);
+        $this->template->load('template','user/tb_user_form', $data);
     }
     
     public function create_action() 
@@ -73,10 +71,9 @@ class Tb_user extends CI_Controller
             $this->create();
         } else {
             $data = array(
-		'nama_user' => $this->input->post('nama_user',TRUE),
-		'password' => $this->input->post('password',TRUE),
-		'hak_akses' => $this->input->post('hak_akses',TRUE),
-		'avatar' => $this->input->post('avatar',TRUE),
+		'nama' => $this->input->post('nama',TRUE),
+		'username' => $this->input->post('username',TRUE),
+		'level' => $this->input->post('level',TRUE),
 	    );
 
             $this->Tb_user_model->insert($data);
@@ -93,13 +90,12 @@ class Tb_user extends CI_Controller
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('tb_user/update_action'),
-		'id_user' => set_value('id_user', $row->id_user),
-		'nama_user' => set_value('nama_user', $row->nama_user),
-		'password' => set_value('password', $row->password),
-		'hak_akses' => set_value('hak_akses', $row->hak_akses),
-		'avatar' => set_value('avatar', $row->avatar),
+                'id_pengguna' => set_value('id_pengguna', $row->id_pengguna),
+                'nama' => set_value('nama', $row->nama),
+                'username' => set_value('username', $row->username),
+                'level' => set_value('level', $row->level),
 	    );
-            $this->template->load('template','tb_user_form', $data);
+            $this->template->load('template','user/tb_user_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('tb_user'));
@@ -111,16 +107,15 @@ class Tb_user extends CI_Controller
         $this->_rules();
 
         if ($this->form_validation->run() == FALSE) {
-            $this->update($this->input->post('id_user', TRUE));
+            $this->update($this->input->post('id_pengguna', TRUE));
         } else {
             $data = array(
-		'nama_user' => $this->input->post('nama_user',TRUE),
-		'password' => $this->input->post('password',TRUE),
-		'hak_akses' => $this->input->post('hak_akses',TRUE),
-		'avatar' => $this->input->post('avatar',TRUE),
+                'nama' => $this->input->post('nama',TRUE),
+                'username' => $this->input->post('username',TRUE),
+                'level' => $this->input->post('level',TRUE),
 	    );
 
-            $this->Tb_user_model->update($this->input->post('id_user', TRUE), $data);
+            $this->Tb_user_model->update($this->input->post('id_pengguna', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('tb_user'));
         }
@@ -142,19 +137,19 @@ class Tb_user extends CI_Controller
 
     public function _rules() 
     {
-	$this->form_validation->set_rules('nama_user', 'nama user', 'trim|required');
-	$this->form_validation->set_rules('password', 'password', 'trim|required');
-	$this->form_validation->set_rules('hak_akses', 'hak akses', 'trim|required');
+	$this->form_validation->set_rules('nama', 'nama user', 'trim|required');
+	$this->form_validation->set_rules('username', 'username', 'trim|required');
+	$this->form_validation->set_rules('level', 'hak akses', 'trim|required');
 	$this->form_validation->set_rules('avatar', 'avatar', 'trim|required');
 
-	$this->form_validation->set_rules('id_user', 'id_user', 'trim');
+	$this->form_validation->set_rules('id_pengguna', 'id_pengguna', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
     public function excel()
     {
         $this->load->helper('exportexcel');
-        $namaFile = "tb_user.xls";
+        $namaFile = "tb_user.xlsx";
         $judul = "tb_user";
         $tablehead = 0;
         $tablebody = 1;
@@ -172,19 +167,19 @@ class Tb_user extends CI_Controller
         xlsBOF();
 
         $kolomhead = 0;
-    xlsWriteLabel($tablehead, $kolomhead++, "No");
-	xlsWriteLabel($tablehead, $kolomhead++, "Nama User");
-	xlsWriteLabel($tablehead, $kolomhead++, "Password");
-	xlsWriteLabel($tablehead, $kolomhead++, "Hak Akses");
-	xlsWriteLabel($tablehead, $kolomhead++, "Avatar");
+        xlsWriteLabel($tablehead, $kolomhead++, "No");
+        xlsWriteLabel($tablehead, $kolomhead++, "Nama User");
+        xlsWriteLabel($tablehead, $kolomhead++, "username");
+        xlsWriteLabel($tablehead, $kolomhead++, "Hak Akses");
+        xlsWriteLabel($tablehead, $kolomhead++, "Avatar");
 
-	foreach ($this->Tb_user_model->get_all() as $data) {
+	    foreach ($this->Tb_user_model->get_all() as $data) {
             $kolombody = 0;
 
             //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
         xlsWriteNumber($tablebody, $kolombody++, $nourut);
 	    xlsWriteLabel($tablebody, $kolombody++, $data->nama);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->password);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->username);
 	    xlsWriteLabel($tablebody, $kolombody++, $data->username);
 	    xlsWriteLabel($tablebody, $kolombody++, $data->level);
 
@@ -199,14 +194,25 @@ class Tb_user extends CI_Controller
     public function word()
     {
         header("Content-type: application/vnd.ms-word");
-        header("Content-Disposition: attachment;Filename=tb_user.doc");
+        header("Content-Disposition: attachment;Filename=tb_user.docx");
 
         $data = array(
             'tb_user_data' => $this->Tb_user_model->get_all(),
             'start' => 0
         );
         
-        $this->load->view('tb_user_doc',$data);
+        $this->load->view('user/tb_user_doc',$data);
+    }
+
+    public function pdf()
+    {
+
+        $data = array(
+            'tb_user_data' => $this->Tb_user_model->get_all(),
+            'start' => 0
+        );
+        
+        $this->load->view('user/tb_user_pdf',$data);
     }
 
 }
