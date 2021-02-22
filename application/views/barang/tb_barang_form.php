@@ -1,16 +1,36 @@
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="<?= base_url('admin'); ?>">Dashboard</a>
+        </li>
+        <li>
+            <i class="ace-icon fa fa-briefcase"></i>
+            <a href="<?= base_url('tb_barang'); ?>">Master Barang</a>
+        </li>
+        <?php if($this->uri->segment(2) == 'create'): ?>
+        <li class="active">Tambah Barang Baru</li>
+        <?php else:?>
+        <li class="active">Ubah Data Barang Baru</li>
+        <?php endif;?>
+    </ul>
+</div>
 <!-- Main content -->
 <section class='content'>
     <div class='row'>
         <div class='col-xs-12'>
             <div class='box'>
                 <div class='box-header'>
-
-                    <h3 class='box-title'>TB_BARANG</h3>
+                    <?php if($this->uri->segment(2) == 'create'): ?>
+                    <h3 class="table-header text-center"><strong>Tambah Barang Baru</strong></h3>
+                    <?php else:?>
+                    <h3 class="table-header text-center"><strong>Ubah Data Barang</strong></h3>
+                    <?php endif;?>
                     <div class='box box-primary'>
-                        <form action="<?php echo $action; ?>" method="post">
-                            <table class='table table-bordered'>
+                        <form action="<?= $action; ?>" method="post">
+                            <table class='table table-bordered table-hover table-striped'>
                                 <tr>
-                                    <td>Part Number <?php echo form_error('part_number') ?></td>
+                                    <td><strong>Part Number</strong> <?= form_error('part_number') ?></td>
                                     <td>
                                         <input type="text" id="dis" class="form-control" name="part_number"
                                             id="part_number" placeholder="Part Number"
@@ -19,17 +39,25 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Nama Barang <?php echo form_error('nama_barang') ?></td>
+                                    <td><strong>Kode Barcode</strong> <?= form_error('kode_barcode') ?></td>
                                     <td>
-                                        <input type="text" class="form-control" name="nama_barang" id="nama_barang"
-                                            placeholder="Nama Barang" value="<?php echo $nama_barang; ?>"
+                                        <input type="number" class="form-control" name="kode_barcode" id="kode_barcode"
+                                            required placeholder="Kode Barcode" value="<?= $kode_barcode; ?>"
                                             autocomplete="off" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Kategori <?php echo form_error('kategori') ?></td>
+                                    <td><strong>Nama Barang</strong> <?= form_error('nama_barang') ?></td>
                                     <td>
-                                        <select class="form-control" name="kategori" id="kategori">
+                                        <input type="text" class="form-control" name="nama_barang" id="nama_barang"
+                                            required placeholder="Nama Barang" value="<?= $nama_barang; ?>"
+                                            autocomplete="off" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Kategori</strong> <?= form_error('kategori') ?></td>
+                                    <td>
+                                        <select class="form-control" name="kategori" id="kategori" required>
                                             <option value="" selected disabled>----Pilih Kategori----</option>
                                             <?php foreach($kategori->result() as $k):?>
                                             <option
@@ -40,9 +68,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Brand <?php echo form_error('brand') ?></td>
+                                    <td><strong>Brand</strong> <?= form_error('brand') ?></td>
                                     <td>
-                                        <select class="form-control" name="brand" id="brand">
+                                        <select class="form-control" name="brand" id="brand" required>
                                             <option value="" selected disabled>----Pilih Brand----</option>
                                             <?php foreach($brand->result() as $b):?>
                                             <option
@@ -53,9 +81,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Satuan <?php echo form_error('satuan') ?></td>
+                                    <td><strong>Satuan</strong> <?= form_error('satuan') ?></td>
                                     <td>
-                                        <select class="form-control" name="satuan" id="satuan">
+                                        <select class="form-control" name="satuan" id="satuan" required>
                                             <option value="" selected disabled>----Pilih Satuan----</option>
                                             <?php foreach($satuan->result() as $s):?>
                                             <option
@@ -66,30 +94,30 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Harga Beli <?php echo form_error('ket') ?></td>
-                                    <td><input type="number" class="form-control" name="harga_beli" id="ket"
-                                            placeholder="Harga Beli" value="<?php echo $harga_beli; ?>"
+                                    <td><strong>Harga Beli</strong> <?= form_error('harga_beli') ?></td>
+                                    <td><input type="text" class="form-control" name="harga_beli" id="tanpa-rupiah"
+                                            required onkeyup="sum();" placeholder="Harga Beli"
+                                            value="<?= $harga_beli; ?>" autocomplete="off" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Harga Jual</strong> <?= form_error('harga_jual') ?></td>
+                                    <td><input type="text" class="form-control" name="harga_jual" id="tanpa-rupiah2"
+                                            required placeholder="Harga Jual" value="<?= $harga_jual; ?>"
                                             autocomplete="off" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Harga Jual <?php echo form_error('ket') ?></td>
-                                    <td><input type="number" class="form-control" name="harga_jual" id="ket"
-                                            placeholder="Harga Jual" value="<?php echo $harga_jual; ?>"
-                                            autocomplete="off" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Ket <?php echo form_error('ket') ?></td>
+                                    <td><strong>Keterangan</strong> <?= form_error('ket') ?></td>
                                     <td><input type="text" class="form-control" name="ket" id="ket" placeholder="Ket"
-                                            value="<?php echo $ket; ?>" autocomplete="off" />
+                                            value="<?= $ket; ?>" autocomplete="off" />
                                     </td>
-                                    <input type="hidden" name="id_barang" value="<?php echo $id_barang; ?>" />
+                                    <input type="hidden" name="id_barang" value="<?= $id_barang; ?>" />
                                 </tr>
                                 <tr>
-                                    <td>Unit <?php echo form_error('unit') ?></td>
+                                    <td><strong>Unit</strong> <?= form_error('unit_id') ?></td>
                                     <td>
-                                        <select class="form-control" name="unit_id" id="unit_id">
+                                        <select class="form-control" name="unit_id" id="unit_id" required>
                                             <option value="" selected disabled>----Pilih Unit----</option>
                                             <?php foreach($unit->result() as $k):?>
                                             <option
@@ -100,11 +128,21 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td><strong>Minimal stok</strong> <?= form_error('min_stok') ?></td>
+                                    <td>
+                                        <input type="number" class="form-control" name="min_stok" id="min_stok" required
+                                            placeholder="Minimal stok" value="<?= $min_stok; ?>" autocomplete="off" />
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td colspan='2'>
-                                        <button type="submit" id="btnu" onclick="myFunction()"
-                                            class="btn btn-sm btn-round btn-primary"><?php echo $button ?></button>
-                                        <a href="<?php echo site_url('tb_barang') ?>"
-                                            class="btn btn-sm btn-round btn-default">Cancel</a>
+                                        <div class="btn-group btn-corner">
+                                            <button type="submit" id="btnu" onclick="myFunction()"
+                                                class="btn btn-sm btn-primary"
+                                                style="margin-right:3px;"><?= $button ?></button>
+                                            <a href="<?= site_url('tb_barang') ?>" class="btn btn-danger btn-sm">
+                                                <i class="fa fa-reply"></i> Kembali</a>
+                                        </div>
                                     </td>
                                 </tr>
 
