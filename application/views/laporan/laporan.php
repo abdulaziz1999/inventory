@@ -51,10 +51,10 @@
                                             <button type="submit" class="btn tampil btn-sm btn-primary">Tampil</button>
                                             <a href="<?php echo site_url('laporan') ?>"
                                                 class="btn btn-sm btn-default">Reset</a>
-                                            <?php if($this->input->get('s') == true):?>
+                                            <!-- <?php if($this->input->get('s') == true):?>
                                             <a href="<?php echo site_url('laporan/receiving_report/') ?><?= $this->input->get('s')?>/<?= $this->input->get('e')?>"
                                                 class="btn btn-sm btn-warning fa fa-print" target="_blank">Print</a>
-                                            <?php endif;?>
+                                            <?php endif;?> -->
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +69,10 @@
         <div class="col-xs-12" style="padding-top: 15px">
             <div class="clearfix">
                 <div class="table-header">
-                    Laporan Inventory : <?= $this->input->get('s') ." - ". $this->input->get('e')?>
+                    Laporan Inventory :
+                    <?php if($this->input->get('s') == true):?>
+                    <?= date('d M Y',strtotime($this->input->get('s'))) ." sampai ". date('d M Y',strtotime($this->input->get('e')))?>
+                    <?php endif;?>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover table-sm" id="table">
@@ -77,11 +80,10 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal</th>
-                                <th>No Ref</th>
-                                <th>Nama Barang</th>
-                                <th>Remarks</th>
-                                <th>Jumlah</th>
+                                <th>No PO</th>
                                 <th>Supplier</th>
+                                <th>Pemesan</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
                     </table>
