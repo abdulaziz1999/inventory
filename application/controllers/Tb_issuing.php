@@ -38,11 +38,11 @@ class Tb_issuing extends CI_Controller
         $row = $this->Tb_issuing_model->get_by_id($id);
         if ($row) {
             $data = array(
-		'id_issuing' => $row->id_issuing,
-		'tgl' => $row->tgl,
-		'no_ref' => $row->no_ref,
-		'picker' => $row->picker,
-		'remarks' => $row->remarks,
+                'id_issuing' => $row->id_issuing,
+                'tgl' => $row->tgl,
+                'no_ref' => $row->no_ref,
+                'picker' => $row->picker,
+                'remarks' => $row->remarks,
 	    );
             $this->template->load('template','issuing/tb_issuing_read', $data);
         } else {
@@ -54,106 +54,116 @@ class Tb_issuing extends CI_Controller
     public function create() 
     {
         $data = array(
-            'button' => 'Create',
-            'action' => site_url('tb_issuing/create_action'),
-            'id_issuing' => set_value('id_issuing'),
-            'tgl' => set_value('tgl'),
-            'no_ref' => set_value('no_ref'),
-            'picker' => set_value('picker'),
-            'remarks' => set_value('remarks'),
+            'button'        => 'Tambah',
+            'action'        => site_url('tb_issuing/create_action'),
+            'id_issuing'    => set_value('id_issuing'),
+            'tgl'           => set_value('tgl'),
+            'no_ref'        => set_value('no_ref'),
+            'picker'        => set_value('picker'),
+            'remarks'       => set_value('remarks'),
+            'nama_proyek'   => set_value('nama_proyek'),
+            'ket'           => set_value('ket'),
+            'nm_proyek'     => @$this->db->get('tb_proyek'),
+            'nm_customer'   => @$this->db->get('tb_customer'),
+            'nm_pemesan'    => @$this->db->get('tb_pemesan'),
 	);
         $this->template->load('template','issuing/tb_issuing_create', $data);
     }
     
     public function create_action() 
     {
-        $this->_rules();
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->create();
-        } else {
+       
             $data = array(
-                'tgl' => $this->input->post('tgl',TRUE),
-                'no_ref' => $this->input->post('no_ref',TRUE),
-                'picker' => $this->input->post('picker',TRUE),
-                'remarks' => $this->input->post('remarks',TRUE),
+                'tgl'           => $this->input->post('tgl',TRUE),
+                'no_ref'        => $this->input->post('no_ref',TRUE),
+                'picker'        => $this->input->post('picker',TRUE),
+                'remarks'       => $this->input->post('remarks',TRUE),
+                'nama_proyek'   => $this->input->post('nama_proyek',TRUE),
+                'ket'           => $this->input->post('ket',TRUE),
 	    );
 
             $this->Tb_issuing_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('tb_issuing'));
-        }
+        
     }
     
     public function update($id) 
     {
         $row = $this->Tb_issuing_model->get_by_id($id);
-
+        $this->db->join('tb_barang tb','tb.id_barang = tb_issuing_item.id_barang');
+        $data_Issuing = $this->db->get_where('tb_issuing_item',['id_issuing' => $row->id_issuing]);
         if ($row) {
             $data = array(
-                'button' => 'Update',
-                'action' => site_url('tb_issuing/update_action'),
-                'id_issuing' => set_value('id_issuing', $row->id_issuing),
-                'tgl' => set_value('tgl', $row->tgl),
-                'no_ref' => set_value('no_ref', $row->no_ref),
-                'picker' => set_value('picker', $row->picker),
-                'remarks' => set_value('remarks', $row->remarks), 
-                'b_issuing' => $this->db->get_where('tb_issuing_item',['id_issuing' => $row->id_issuing]),
-                'barang' => $this->db->get('tb_barang')->result(),
+                'button'        => 'Ubah',
+                'action'        => site_url('tb_issuing/update_action'),
+                'id_issuing'    => set_value('id_issuing', $row->id_issuing),
+                'tgl'           => set_value('tgl', $row->tgl),
+                'no_ref'        => set_value('no_ref', $row->no_ref),
+                'picker'        => set_value('picker', $row->picker),
+                'remarks'       => set_value('remarks', $row->remarks),
+                'nama_proyek'   => set_value('nama_proyek',$row->nama_proyek),
+                'ket'           => set_value('ket',$row->ket), 
+                'b_issuing'     => $data_Issuing,
+                'barang'        => $this->db->get('tb_barang')->result(),
+                'nm_proyek'     => @$this->db->get('tb_proyek'),
+                'nm_customer'   => @$this->db->get('tb_customer'),
+                'nm_pemesan'    => @$this->db->get('tb_pemesan'),
                 );
             $this->template->load('template','issuing/tb_issuing_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('tb_issuing'));
+            redirect($_SERVER['HTTP_REFERER']);
         }
     }
     
     public function update_action() 
     {
-        $this->_rules();
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->update($this->input->post('id_issuing', TRUE));
-        } else {
             $data = array(
-		'tgl' => $this->input->post('tgl',TRUE),
-		'no_ref' => $this->input->post('no_ref',TRUE),
-		'picker' => $this->input->post('picker',TRUE),
-		'remarks' => $this->input->post('remarks',TRUE),
+            'tgl'           => $this->input->post('tgl',TRUE),
+            'no_ref'        => $this->input->post('no_ref',TRUE),
+            'picker'        => $this->input->post('picker',TRUE),
+            'remarks'       => $this->input->post('remarks',TRUE),
+            'nama_proyek'   => $this->input->post('nama_proyek',TRUE),
+            'ket'           => $this->input->post('ket',TRUE),
 	    );
 
             $this->Tb_issuing_model->update($this->input->post('id_issuing', TRUE), $data);
-            $this->session->set_flashdata('message', 'Update Record Success');
-            redirect(site_url('tb_issuing'));
-        }
+            $this->session->set_flashdata('sukses', 'Update Record Success');
+            redirect($_SERVER['HTTP_REFERER']);
+        
     }
     
     function simpan_barang($uri){
-        $data = [
-            'id_issuing'    => $uri,
-            'id_barang'     => $this->input->post('barang', TRUE),
-            'jumlah'        => $this->input->post('jumlah', TRUE)
-        ];
-        
-        $this->db->insert('tb_issuing_item',$data);
-
-                      $this->db->select_max('id_itemiss','max');
-        $idmax      = $this->db->get('tb_issuing_item')->row()->max;
-        $id         = $this->db->get_where('tb_issuing_item',['id_itemiss' => $idmax])->row();
-        $jmlstok    = $this->db->get_where('tb_stok',['id_barang' => $id->id_barang])->row()->stok;
-        $issuing    = $jmlstok - $id->jumlah;
-
-        $data2 = [
-            'stok' => $issuing
-        ];
-
-        $this->db->update('tb_stok', $data2, ['id_barang' =>$id->id_barang]);
-
-        if($this->db->affected_rows() > 0){
-            $this->session->set_flashdata('sukses', "Issuing Berhasil");
+        $idbarang   = $this->input->post('barang', TRUE);
+        $jmlout     = $this->input->post('jumlah', TRUE);
+        $stok       = $this->db->get_where('tb_stok',['id_barang' => $idbarang ])->row()->stok;
+        $sisa = $stok - $jmlout;
+        if($sisa >= 0){
+            $data = [
+                'id_issuing'    => $uri,
+                'id_barang'     => $this->input->post('barang', TRUE),
+                'jumlah'        => $this->input->post('jumlah', TRUE)
+            ];
+            
+            $this->db->insert('tb_issuing_item',$data);
+    
+                          $this->db->select_max('id_itemiss','max');
+            $idmax      = $this->db->get('tb_issuing_item')->row()->max;
+            $id         = $this->db->get_where('tb_issuing_item',['id_itemiss' => $idmax])->row();
+            $jmlstok    = $this->db->get_where('tb_stok',['id_barang' => $id->id_barang])->row()->stok;
+            $issuing    = $jmlstok - $id->jumlah;
+    
+            $data2 = [
+                'stok' => $issuing
+            ];
+    
+            $this->db->update('tb_stok', $data2, ['id_barang' =>$id->id_barang]);
+            $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
             redirect($_SERVER['HTTP_REFERER']);
-        }else{
-            $this->session->set_flashdata('error', "Issuing Gagal");
+        }elseif($stok == 0 || $sisa < 0){
+            $this->session->set_flashdata('gagal', "Jumlah barang tidak mencukupi");
             redirect($_SERVER['HTTP_REFERER']);
         }
 
