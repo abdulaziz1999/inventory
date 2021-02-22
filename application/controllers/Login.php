@@ -31,8 +31,12 @@ class Login extends CI_Controller{
             }
             if ($this->session->userdata('true') == TRUE) {
                 redirect('admin');
+            }elseif($this->session->userdata('true') == TRUE && $this->session->userdata('level') == 'superuser'){
+                redirect('admin');
+            }elseif($this->session->userdata('true') == TRUE && $this->session->userdata('level') == 'staff'){
+                redirect('admin');
             }
-        } else{
+        } else{ 
             //untuk menendcode kata
             redirect('login?e='.base64_encode('Username dan Password tidak sesuai'));
         } 
