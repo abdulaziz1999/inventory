@@ -4,7 +4,7 @@
         <div class='col-xs-12'>
             <div class='box'>
                 <div class='box-header'>
-                    <h3 class='box-title'>Tb_pemesan Read</h3>
+                <h3 class="table-header text-center"><strong>Read Pemesan Barang</strong></h3>
                     <table class="table table-bordered">
                         <tr>
                             <td>Nama pemesan</td>
@@ -12,7 +12,7 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td><a href="<?= site_url('tb_pemesan') ?>" class="btn btn-default">Cancel</a></td>
+                            <td><a href="<?= site_url('tb_pemesan') ?>" class="btn btn-danger btn-sm btn-round">Kembali</a></td>
                         </tr>
                     </table>
                 </div><!-- /.box-body -->
