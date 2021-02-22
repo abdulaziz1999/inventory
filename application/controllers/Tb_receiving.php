@@ -22,6 +22,35 @@ class Tb_receiving extends CI_Controller
         }
     }
 
+    function dataLog($aktifitas){
+        if ($this->agent->is_browser())
+		{
+			$agent = $this->agent->browser().' '.$this->agent->version();
+		}
+		elseif ($this->agent->is_robot())
+		{
+			$agent = $this->agent->robot();
+		}
+		elseif ($this->agent->is_mobile())
+		{
+			$agent = $this->agent->mobile();
+		}
+		else
+		{
+			$agent = 'Unidentified User Agent';
+		}
+
+        $data = [
+            'nama'      => $this->session->userdata('nama'),
+            'level'     => $this->session->userdata('level'),
+            'aktifitas' => $aktifitas,
+            'browser'   => $agent,
+            'platform'  => $this->agent->platform(),
+            'ip_address'=> $this->input->ip_address(),
+        ];
+        $this->db->insert('tb_log',$data);
+    }
+
     public function index()
     {
         $tb_receiving = $this->Tb_receiving_model->get_all();
@@ -38,11 +67,11 @@ class Tb_receiving extends CI_Controller
         $row = $this->Tb_receiving_model->get_by_id($id);
         if ($row) {
             $data = array(
-		'id_receiving' => $row->id_receiving,
-		'tgl' => $row->tgl,
-		'no_ref' => $row->no_ref,
-		'supplier' => $row->supplier,
-		'remarks' => $row->remarks,
+                'id_receiving' => $row->id_receiving,
+                'tgl' => $row->tgl,
+                'no_ref' => $row->no_ref,
+                'supplier' => $row->supplier,
+                'remarks' => $row->remarks,
 	    );
             $this->template->load('template','receiving/tb_receiving_read', $data);
         } else {
@@ -54,15 +83,19 @@ class Tb_receiving extends CI_Controller
     public function create() 
     {
         $data = array(
-            'button'        => 'Create',
+            'button'        => 'Tambah',
             'action'        => site_url('tb_receiving/create_action'),
             'id_receiving'  => set_value('id_receiving'),
             'tgl'           => set_value('tgl'),
             'no_ref'        => set_value('no_ref'),
             'supplier'      => set_value('supplier'),
             'remarks'       => set_value('remarks'),
-            // 'b_receiving'   => $this->db->get_where('tb_receiving_item',['id_receiving' => ]),
             'barang'        => $this->db->get('tb_barang')->result(),
+            'nama_proyek'   => set_value('nama_proyek'),
+            'ket'           => set_value('ket'),
+            'nm_proyek'     => @$this->db->get('tb_proyek'),
+            'nm_suplier'    => @$this->db->get('tb_suplier'),
+            'nm_pemesan'    => @$this->db->get('tb_pemesan'),
 	);
         $this->template->load('template','receiving/tb_receiving_create', $data);
     }
@@ -71,37 +104,44 @@ class Tb_receiving extends CI_Controller
     {
         $this->_rules();
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->create();
-        } else {
+        
             $data = array(
-            'tgl' => $this->input->post('tgl',TRUE),
-            'no_ref' => $this->input->post('no_ref',TRUE),
-            'supplier' => $this->input->post('supplier',TRUE),
-            'remarks' => $this->input->post('remarks',TRUE),
+            'tgl'           => $this->input->post('tgl',TRUE),
+            'no_ref'        => $this->input->post('no_ref',TRUE),
+            'supplier'      => $this->input->post('supplier',TRUE),
+            'remarks'       => $this->input->post('remarks',TRUE),
+            'nama_proyek'   => $this->input->post('nama_proyek',TRUE),
+            'ket'           => $this->input->post('ket',TRUE),
 	    );
 
-            $this->Tb_receiving_model->insert($data);
-            $this->session->set_flashdata('message', 'Create Record Success');
-            redirect(site_url('tb_receiving'));
-        }
+        $this->Tb_receiving_model->insert($data);
+        $this->session->set_flashdata('sukses', 'Data berhasil diinput');
+        $this->dataLog('Tambah Detail Barang Masuk');
+        redirect(site_url('tb_receiving'));
+        
     }
     
     public function update($id) 
     {
         $row = $this->Tb_receiving_model->get_by_id($id);
-
+        $this->db->join('tb_barang tb','tb.id_barang = tb_receiving_item.id_barang');
+        $data_Receiving = $this->db->get_where('tb_receiving_item',['id_receiving' => $row->id_receiving]);
         if ($row) {
             $data = array(
-                'button'        => 'Update',
+                'button'        => 'Ubah',
                 'action'        => site_url('tb_receiving/update_action'),
                 'id_receiving'  => set_value('id_receiving', $row->id_receiving),
-                'b_receiving'   => $this->db->get_where('tb_receiving_item',['id_receiving' => $row->id_receiving]),
                 'tgl'           => set_value('tgl', $row->tgl),
                 'no_ref'        => set_value('no_ref', $row->no_ref),
                 'supplier'      => set_value('supplier', $row->supplier),
                 'remarks'       => set_value('remarks', $row->remarks),
-                'barang'        => $this->db->get('tb_barang')->result(),
+                'nama_proyek'   => set_value('nama_proyek',$row->nama_proyek),
+                'ket'           => set_value('ket',$row->ket), 
+                'b_receiving'   => $data_Receiving,
+                'barang'        => @$this->db->get('tb_barang')->result(),
+                'nm_proyek'     => @$this->db->get('tb_proyek'),
+                'nm_suplier'    => @$this->db->get('tb_suplier'),
+                'nm_pemesan'    => @$this->db->get('tb_pemesan'),
 	    );
             $this->template->load('template','receiving/tb_receiving_form', $data);
         } else {
@@ -114,20 +154,20 @@ class Tb_receiving extends CI_Controller
     {
         $this->_rules();
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->update($this->input->post('id_receiving', TRUE));
-        } else {
             $data = array(
-		'tgl' => $this->input->post('tgl',TRUE),
-		'no_ref' => $this->input->post('no_ref',TRUE),
-		'supplier' => $this->input->post('supplier',TRUE),
-		'remarks' => $this->input->post('remarks',TRUE),
+		        'tgl'           => $this->input->post('tgl',TRUE),
+		        'no_ref'        => $this->input->post('no_ref',TRUE),
+		        'supplier'      => $this->input->post('supplier',TRUE),
+                'remarks'       => $this->input->post('remarks',TRUE),
+                'nama_proyek'   => $this->input->post('nama_proyek',TRUE),
+                'ket'           => $this->input->post('ket',TRUE),
 	    );
 
             $this->Tb_receiving_model->update($this->input->post('id_receiving', TRUE), $data);
-            $this->session->set_flashdata('message', 'Update Record Success');
+            $this->session->set_flashdata('sukses', 'Update Record Success');
+            $this->dataLog('Update Detail Barang Masuk');
             redirect($_SERVER['HTTP_REFERER']);
-        }
+        
     }
 
     function simpan_barang($uri){
