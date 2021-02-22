@@ -21,55 +21,50 @@
                     <h3 class="table-header text-center"><strong>Data Warning Stok</strong></h3>
                 </div><!-- /.box-header -->
                 <div class='box-body'>
-                    <table class="table table-striped table-hover table-striped" id="mytable">
-                        <thead>
-                            <tr>
-                                <th width="80px">No</th>
-                                <th>Nama Barang</th>
-                                <th>Harga Beli</th>
-                                <th>Harga Jual</th>
-                                <th>Stok</th>
-                                <th>Unit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover table-striped" id="mytable">
+                            <thead>
+                                <tr>
+                                    <th width="80px">No</th>
+                                    <th>Nama Barang</th>
+                                    <th>Harga Beli</th>
+                                    <th>Harga Jual</th>
+                                    <th>Stok</th>
+                                    <th>Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
                             $start = 0;
                             foreach ($tb_stok_data as $tb_stok)
                             {
                                 $min_stok = $this->db->get_where('tb_barang',['id_barang' => $tb_stok->id_barang])->row()->min_stok;
                                 if($tb_stok->stok <= $min_stok){
                             ?>
-                            <tr>
-                                <td><?= ++$start ?></td>
-                                <td>
-                                    <?= $this->db->get_where('tb_barang',['id_barang' => $tb_stok->id_barang])->row()->nama_barang ?>
-                                </td>
-                                <td><?= "Rp. ".number_format($tb_stok->harga_beli,0,"",".") ?></td>
-                                <td><?= "Rp. ".number_format($tb_stok->harga_jual,0,"",".") ?></td>
-                                <td>
-                                    <span class="badge badge-danger">
-                                        <?= $tb_stok->stok ?>
-                                    </span>
-                                    <i class="ace-icon fa fa-exclamation-triangle 
+                                <tr>
+                                    <td><?= ++$start ?></td>
+                                    <td>
+                                        <?= $this->db->get_where('tb_barang',['id_barang' => $tb_stok->id_barang])->row()->nama_barang ?>
+                                    </td>
+                                    <td><?= "Rp. ".number_format($tb_stok->harga_beli,0,"",".") ?></td>
+                                    <td><?= "Rp. ".number_format($tb_stok->harga_jual,0,"",".") ?></td>
+                                    <td>
+                                        <span class="badge badge-danger">
+                                            <?= $tb_stok->stok ?>
+                                        </span>
+                                        <i class="ace-icon fa fa-exclamation-triangle 
                                         bigger-120 red icon-animated-vertical"> </i>
-                                </td>
-                                <td><?= $tb_stok->nama_unit ?></td>
-                            </tr>
-                            <?php
+                                    </td>
+                                    <td><?= $tb_stok->nama_unit ?></td>
+                                </tr>
+                                <?php
                                 }
                             }
                                 ?>
-                        </tbody>
-                    </table>
-                    <script src="<?= base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
-                    <script src="<?= base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
-                    <script src="<?= base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
-                    <script type="text/javascript">
-                    $(document).ready(function() {
-                        $("#mytable").dataTable();
-                    });
-                    </script>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
