@@ -13,7 +13,7 @@
         <div class='col-xs-12'>
             <div class='box'>
                 <div class='box-header'><br>
-                    <?= anchor('tb_kategori/create/','Tambah',array('class'=>'btn btn-sm btn-round btn-primary btn-sm'));?>
+                    <?= anchor('tb_kategori/create/','<i class="fa fa-plus"></i> Tambah',array('class'=>'btn btn-sm btn-round btn-primary btn-sm'));?>
                     <!-- <?= anchor(site_url('tb_kategori/excel'), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-primary btn-sm"'); ?>
                     <?= anchor(site_url('tb_kategori/word'), '<i class="fa fa-file-word-o"></i> Word', 'class="btn btn-primary btn-sm"'); ?>
                     <?= anchor(site_url('tb_kategori/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-primary btn-sm"'); ?> -->
