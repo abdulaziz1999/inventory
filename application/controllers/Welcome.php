@@ -20,10 +20,29 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$mpdf = new \Mpdf\Mpdf(['format' => 'A4-L','orientation' => 'L']);
-		$html = $this->load->view('welcome_message',[],true);
-		$mpdf->WriteHTML($html);
-		$mpdf->Output();
-		// $this->load->view('welcome_message');
+		$this->load->library('user_agent');
+
+		if ($this->agent->is_browser())
+		{
+			$agent = $this->agent->browser().' '.$this->agent->version();
+		}
+		elseif ($this->agent->is_robot())
+		{
+			$agent = $this->agent->robot();
+		}
+		elseif ($this->agent->is_mobile())
+		{
+			$agent = $this->agent->mobile();
+		}
+		else
+		{
+			$agent = 'Unidentified User Agent';
+		}
+
+		echo $agent;
+		echo "<br>";
+		echo $this->agent->platform(); 
+		echo "<br>";
+		echo $this->input->ip_address(); 
 	}
 }
