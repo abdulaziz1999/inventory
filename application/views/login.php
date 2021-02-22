@@ -47,7 +47,7 @@
                             <h1>
                                 <i class="ace-icon fa fa-leaf green"></i>
                                 <span class="red">Inventory</span>
-                                <span class="black" id="id-text2">Application</span>
+                                <span class="white" id="id-text2">Application</span>
                                 <!-- <img src="<?= base_url()?>/assets/images/foto/cv.png" width="" height="" alt=""> -->
                             </h1>
                             <h4 class="blue" id="id-company-text">&copy; PT Berkah Sejahtera </h4>
@@ -67,7 +67,7 @@
 
                                         <div class="space-6"></div>
 
-                                        <?php echo form_open('login/cek_login'); ?>
+                                        <?= form_open('login/cek_login'); ?>
                                         <fieldset>
                                             <label class="block clearfix">
                                                 <span class="block input-icon input-icon-right">
@@ -107,7 +107,7 @@
 											echo "<span style='color:red'>".base64_decode($_GET['e'])."</span>";
 										} ?>
 
-                                        <?php echo form_close(); ?>
+                                        <?= form_close(); ?>
 
                                         <div class="social-or-login center">
 
