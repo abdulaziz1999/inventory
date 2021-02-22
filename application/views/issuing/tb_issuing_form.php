@@ -1,57 +1,139 @@
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="<?= base_url('admin'); ?>">Dashboard</a>
+        </li>
+        <li>
+            <i class="ace-icon fa fa-truck"></i>
+            <a href="<?= base_url('tb_issuing'); ?>">Issuing</a>
+        </li>
+        <li class="active">Detail</li>
+    </ul>
+</div>
 <!-- Main content -->
-<section class='content'>
-    <div class='row'>
-        <div class='col-xs-12'>
-            <div class='box'>
-                <div class='box-header'>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
 
-                    <h3 class='box-title'>Table Issuing</h3>
-                    <div class='box box-primary'>
-                        <form action="<?php echo $action; ?>" method="post">
-                            <table class='table table-bordered'>
+                    <h3 class="table-header text-center"><strong>Detail Barang Keluar</strong></h3>
+
+                    <div class="box box-primary">
+                        <form action="<?= $action; ?>" method="post">
+                            <table class="table table-bordered table-hover table-striped">
                                 <tr>
-                                    <td>Tgl <?php echo form_error('tgl') ?></td>
-                                    <td><input type="date" class="form-control" name="tgl" id="tgl" placeholder="Tgl"
-                                            value="<?php echo $tgl; ?>" />
+                                    <td>Tanggal <?= form_error('tgl') ?></td>
+                                    <td>
+                                        <input type="date" class="form-control" name="tgl" id="tgl" placeholder="Tgl"
+                                            required value="<?= $tgl; ?>" />
                                     </td>
+                                </tr>
                                 <tr>
-                                    <td>No Invoice <?php echo form_error('no_ref') ?></td>
-                                    <td><input type="text" class="form-control" name="no_ref" id="no_ref"
-                                            placeholder="No Ref" value="<?php echo $no_ref; ?>" />
+                                    <td>No Invoice <?= form_error('no_ref') ?></td>
+                                    <td>
+                                        <input type="text" class="form-control" name="no_ref" id="no_ref" required
+                                            autocomplete="off" placeholder="No Ref" value="<?= $no_ref; ?>" />
                                     </td>
+                                </tr>
                                 <tr>
-                                    <td>Penerima <?php echo form_error('picker') ?></td>
-                                    <td><input type="text" class="form-control" name="picker" id="picker"
-                                            placeholder="Picker" value="<?php echo $picker; ?>" />
+                                    <td>Customer <?= form_error('picker') ?></td>
+                                    <td>
+                                        <select class="form-control" name="picker" id="picker" required>
+                                            <option value="" selected disabled>----Pilih Nama Customer----</option>
+                                            <?php foreach($nm_customer->result() as $s):?>
+                                            <option
+                                                <?php if($this->uri->segment(2) == 'update'){if($picker == $s->id_customer) { echo 'selected';}}?>
+                                                value="<?= $s->id_customer?>"><?= $s->nama_customer?></option>
+                                            <?php endforeach;?>
+                                        </select>
                                     </td>
+                                </tr>
                                 <tr>
-                                    <td>Pemesan <?php echo form_error('remarks') ?></td>
-                                    <td><input type="text" class="form-control" name="remarks" id="remarks"
-                                            placeholder="Remarks" value="<?php echo $remarks; ?>" />
+                                    <td>Pemesan <?= form_error('remarks') ?></td>
+                                    <td>
+                                        <select class="form-control" name="remarks" id="remarks" required>
+                                            <option value="" selected disabled>----Pilih Nama Pemesan----</option>
+                                            <?php foreach($nm_pemesan->result() as $s):?>
+                                            <option
+                                                <?php if($this->uri->segment(2) == 'update'){if($remarks == $s->id_pemesan) { echo 'selected';}}?>
+                                                value="<?= $s->id_pemesan?>"><?= $s->nama_pemesan?></option>
+                                            <?php endforeach;?>
+                                        </select>
                                     </td>
-                                    <input type="hidden" name="id_issuing" value="<?php echo $id_issuing; ?>" />
+                                </tr>
                                 <tr>
-                                    <td colspan='2'><button type="submit"
-                                            class="btn btn-sm btn-round btn-primary"><?php echo $button ?></button>
-                                        <a href="<?php echo site_url('tb_issuing') ?>"
-                                            class="btn btn-sm btn-round btn-default">Kembali</a>
+                                    <td>Nama Proyek <?= form_error('nama_proyek') ?></td>
+                                    <td>
+                                        <select class="form-control" name="nama_proyek" id="nama_proyek" required>
+                                            <option value="" selected disabled>----Pilih Nama Proyek----</option>
+                                            <?php foreach($nm_proyek->result() as $s):?>
+                                            <option
+                                                <?php if($this->uri->segment(2) == 'update'){if($nama_proyek == $s->id_proyek) { echo 'selected';}}?>
+                                                value="<?= $s->id_proyek?>"><?= $s->nama_proyek?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Keterangan <?= form_error('ket') ?></td>
+                                    <td><input type="text" class="form-control" name="ket" id="ket"
+                                            placeholder="Keterangan" value="<?= $ket; ?>" />
+                                    <input type="hidden" name="id_issuing" value="<?= $id_issuing; ?>" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan='2'>
+                                        <div class="btn-group btn-corner">
+                                            <button type="submit" class="btn btn-sm btn-primary"
+                                                style="margin-right:3px;"><i class="fa fa-pencil"></i>
+                                                <?= $button ?></button>
+                                            <a href="<?= site_url('tb_issuing') ?>" class="btn btn-sm btn-danger">
+                                                <i class="fa fa-reply"></i> Kembali</a>
+                                        </div>
                                     </td>
                                 </tr>
 
                             </table>
                         </form>
                         <hr>
-                        <button type="button" class="btn btn-sm btn-round btn-primary" data-toggle="modal"
-                            data-target="#myModal" class="btn btn-primary round btn-sm">tambah</button>
-                        <a href="<?php echo site_url('tb_issuing/report_iss_picker/') ?><?= $this->uri->segment(3)?>"
-                            class="btn btn-sm btn-round btn-warning fa fa-print" target="_blank">Print</a>
-                        <br><br>
-                        <table class="table table-bordered table-striped" id="mytable">
+                        <?php if($this->session->flashdata('sukses')):?>
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <i class="ace-icon fa fa-times"></i>
+                            </button>
+                            <strong><i class="ace-icon fa fa-check"></i> Sukses </strong>
+                            <?= $this->session->flashdata('sukses')?>
+                        </div>
+                        <?php elseif($this->session->flashdata('gagal')):?>
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <i class="ace-icon fa fa-times"></i>
+                            </button>
+                            <strong><i class="ace-icon fa fa-times"></i> Gagal </strong>
+                            <?= $this->session->flashdata('gagal')?>
+                        </div>
+                        <?php endif;?>
+
+                        <div class="btn-group btn-corner">
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                                data-target="#myModal" class="btn btn-primary round btn-sm" style="margin-right:3px;"><i
+                                    class="fa fa-plus"></i> Tambah</button>
+                            <a href="<?= site_url('tb_issuing/report_iss_picker/') ?><?= $this->uri->segment(3)?>"
+                                class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-file-pdf-o"></i> Print
+                                pdf</a>
+                        </div>
+                        <h3 class="table-header text-center"><strong>Data Barang Keluar</strong></h3>
+                        <table class="table table-hover table-striped" id="mytable">
                             <thead>
                                 <tr>
                                     <th width="80px">No</th>
                                     <th>Nama Barang</th>
+                                    <th>Harga Beli</th>
+                                    <th>Harga Jual</th>
                                     <th>Jumlah</th>
+                                    <th>Harga Jual x Jumlah</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -62,12 +144,16 @@
                           {
                               ?>
                                 <tr>
-                                    <td><?php echo ++$start ?></td>
-                                    <td><?php echo $this->db->get_where('tb_barang',['id_barang' => $issuing->id_barang])->row()->nama_barang; ?>
-                                    </td>
-                                    <td><?php echo $issuing->jumlah ?></td>
+                                    <td><?= ++$start ?></td>
                                     <td>
-                                        <?php echo anchor(site_url('tb_issuing/deleteitem/'.$issuing->id_itemiss),'<i class="fa fa-trash-o red"></i>','title="delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); ?>
+                                        <?= $issuing->nama_barang; ?>
+                                    </td>
+                                    <td><?= "Rp. ".number_format($issuing->harga_beli,0,"",".") ?></td>
+                                    <td><?= "Rp. ".number_format($issuing->harga_jual,0,"",".") ?></td>
+                                    <td><?= $issuing->jumlah ?></td>
+                                    <td><?= "Rp. ".number_format($issuing->jumlah*$issuing->harga_jual,0,"",".") ?></td>
+                                    <td>
+                                        <?= anchor(site_url('tb_issuing/deleteitem/'.$issuing->id_itemiss),'<i class="fa fa-trash-o red"></i>','title="delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); ?>
                                     </td>
 
                                 </tr>
