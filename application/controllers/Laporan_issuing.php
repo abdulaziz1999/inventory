@@ -27,7 +27,7 @@ class Laporan_issuing extends CI_Controller{
         $this->template->load('template', 'laporan/laporan_issuing',$data);
     }
 
-    function ajax($s, $e, $u){
+    function ajax($s, $e, $u=false, $k=false){
         $draw 	= intval($this->input->get("draw"));
         $start 	= intval($this->input->get("start"));
         $length = intval($this->input->get("length"));
@@ -38,10 +38,16 @@ class Laporan_issuing extends CI_Controller{
         $this->db->join('tb_brand br','tb_barang.brand = br.id_brand');
         $this->db->join('tb_issuing_item i','tb_barang.id_barang = i.id_barang');
         $this->db->join('tb_issuing i2','i.id_issuing = i2.id_issuing');
+        $this->db->join('tb_customer c','i2.picker = c.id_customer');
+        $this->db->join('tb_pemesan p','i2.remarks = p.id_pemesan');
         $this->db->where('tgl >=', $s);
 		$this->db->where('tgl <=', $e);
-		$this->db->where('unit_id =', $u);
-        $get =	$this->db->get('tb_barang');
+		if($u == TRUE){
+            $this->db->where('unit_id =', $u);
+        }elseif($k == TRUE){
+            $this->db->where('kategori =', $k);
+        }
+        $get =	$this->db->select('tgl,no_ref,nama_customer,nama_pemesan,harga_beli,harga_jual,sum(harga_jual*jumlah) as total')->group_by('i.id_issuing')->get('tb_barang');
 
         $data = array();
         $no = 1;
@@ -51,10 +57,9 @@ class Laporan_issuing extends CI_Controller{
                 $no++,
                 $row->tgl,
                 $row->no_ref,
-                $row->nama_barang,
-                $row->remarks,
-                $row->jumlah,
-                $row->picker
+                $row->nama_customer,
+                $row->nama_pemesan,
+                "Rp. ".number_format($row->total,0,"","."),
             ];
         }
 
