@@ -5,16 +5,16 @@
             <div class='box'>
                 <div class='box-header'>
 
-                    <h3 class='box-title'>TB_unit</h3>
+                <h3 class="table-header text-center"><strong>Tambah Unit</strong></h3>
                     <div class='box box-primary'>
-                        <form action="<?php echo $action; ?>" method="post">
+                        <form action="<?= $action; ?>" method="post">
                             <table class='table table-bordered'>
                                 <tr>
-                                    <td>Nama unit <?php echo form_error('nama_unit') ?></td>
+                                    <td>Nama unit <?= form_error('nama_unit') ?></td>
                                     <td><input type="text" class="form-control" name="nama_unit" id="nama_unit"
-                                            placeholder="Nama unit" value="<?php echo $nama_unit; ?>" />
+                                            placeholder="Nama unit" value="<?= $nama_unit; ?>" />
                                     </td>
-                                    <input type="hidden" name="id_unit" value="<?php echo $id_unit; ?>" />
+                                    <input type="hidden" name="id_unit" value="<?= $id_unit; ?>" />
                                 <tr>
                                     <td colspan='2'>
                                         <div class="btn-group btn-corner">
