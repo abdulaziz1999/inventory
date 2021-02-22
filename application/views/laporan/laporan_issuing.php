@@ -77,11 +77,10 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal</th>
-                                <th>No Ref</th>
-                                <th>Nama Barang</th>
-                                <th>Remarks</th>
-                                <th>Jumlah</th>
-                                <th>Picker</th>
+                                <th>No Invoice</th>
+                                <th>Customer</th>
+                                <th>Pemesan</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
                     </table>
