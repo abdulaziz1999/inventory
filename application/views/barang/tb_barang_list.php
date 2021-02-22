@@ -4,7 +4,7 @@
             <i class="ace-icon fa fa-home home-icon"></i>
             <a href="<?= base_url('admin'); ?>">Dashboard</a>
         </li>
-        <li class="active">Table Barang</li>
+        <li class="active">Master Barang</li>
     </ul>
 </div>
 <!-- Main content -->
@@ -13,20 +13,55 @@
         <div class='col-xs-12'>
             <div class='box'>
                 <div class='box-header'>
-                    <h3 class='box-title'>Table Barang </h3>
-                    <?= anchor('tb_barang/create/','Create',array('class'=>'btn btn-sm btn-round btn-primary btn-sm'));?>
+                    <br>
+                    <form action="" method="get">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <select class="form-control" name="k" id="kategori">
+                                        <option value="" selected disabled>---- Pilih Kategori ----</option>
+                                        <?php foreach($kategori->result() as $k):?>
+                                        <option
+                                            <?php if($this->input->get('k', TRUE) == $k->id_kategori) { echo 'selected';}?>
+                                            value="<?= $k->id_kategori?>"><?= $k->nama_kategori?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <select class="form-control" name="u" id="unit_id">
+                                        <option value="" selected disabled>---- Pilih Unit ----</option>
+                                        <?php foreach($unit->result() as $k):?>
+                                        <option
+                                            <?php if($this->input->get('u', TRUE) == $k->id_unit) { echo 'selected';}?>
+                                            value="<?= $k->id_unit?>"><?= $k->nama_unit?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="btn-group btn-corner">
+                                    <button type="submit" class="btn tampil btn-sm btn-primary"
+                                        style="margin-right:3px;"><i class="fa fa-eye"></i> Filter</button>
+                                    <a href="<?= site_url('tb_barang') ?>" class="btn btn-sm btn-danger">
+                                        <i class="fa fa-remove"></i> Reset</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-2"></div>
+                        </div>
+                    </form>
+                    <hr>
+                    <?= anchor('tb_barang/create/','<i class="fa fa-plus"></i> Tambah',array('class'=>'btn btn-sm btn-round btn-primary btn-sm'));?>
                     <!-- <button class="btn btn-sm btn-warning btn-round" data-toggle="modal" data-target="#ModalaEdit">
                         <i class="fa fa-barcode"></i> Scan Barcode
-                    </button> --><br><br>
-                    <form action="<?= base_url('tb_barang/save')?>" method="post">
+                    </button> -->
+                    <!-- <form action="<?= base_url('tb_barang/save')?>" method="post">
                         <input name="kode" id="myTextField" class="form-control" type="text" autocomplete="off">
                         <button type="submit" class="btn btn-sm btn-round btn-block btn-success">
                             <i class="fa fa-barcode"></i> Save
                         </button>
-                    </form>
-                    <br>
-                    <br>
-
+                    </form> -->
                     <?php if($this->session->flashdata('sukses')):?>
                     <div class="alert alert-success">
                         <button type="button" class="close" data-dismiss="alert">
@@ -44,76 +79,74 @@
                         <?= $this->session->flashdata('gagal')?>
                     </div>
                     <?php endif;?>
+                    <h3 class="table-header text-center"><strong>Table Master Barang</strong></h3>
                 </div>
                 <div class='box-body'>
-                    <table class="table table-striped" id="mytable">
-                        <thead>
-                            <tr>
-                                <th width="80px">No</th>
-                                <th>Part Number</th>
-                                <th>Kode Barcode</th>
-                                <th>Nama Barang</th>
-                                <th>Kategori</th>
-                                <th>Brand</th>
-                                <th>Satuan</th>
-                                <th>Harga Beli</th>
-                                <th>Harga Jual</th>
-                                <th>Unit</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped " id="mytable">
+                            <thead>
+                                <tr>
+                                    <th width="80px">No</th>
+                                    <th>Part Number</th>
+                                    <th>Kode Barcode</th>
+                                    <th>Nama Barang</th>
+                                    <th>Kategori</th>
+                                    <th>Brand</th>
+                                    <th>Satuan</th>
+                                    <th>Harga Beli</th>
+                                    <th>Harga Jual</th>
+                                    <th>Unit</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
                         $start = 0;
                         foreach ($tb_barang_data as $tb_barang)
                         {   
                         ?>
-                            <tr>
-                                <td><?= ++$start ?></td>
-                                <td><?= $tb_barang->part_number ?></td>
-                                <td><?= $tb_barang->kode_barcode ?></td>
-                                <td><?= $tb_barang->nama_barang ?></td>
-                                <td>
-                                    <?= @$this->db->get_where('tb_kategori',['id_kategori' => $tb_barang->kategori])->row()->nama_kategori; ?>
-                                </td>
-                                <td>
-                                    <?= @$this->db->get_where('tb_brand',['id_brand' => $tb_barang->brand])->row()->nama_brand; ?>
-                                </td>
-                                <td>
-                                    <?= @$this->db->get_where('tb_satuan',['id_satuan' => $tb_barang->satuan])->row()->nama_satuan; ?>
-                                </td>
-                                <td><?= $tb_barang->harga_beli ?></td>
-                                <td><?= $tb_barang->harga_jual ?></td>
-                                <td>
-                                    <?= @$this->db->get_where('tb_unit',['id_unit' => $tb_barang->unit_id])->row()->nama_unit; ?>
-                                </td>
-                                <td width="300px" class="text-center">
-                                    <div class="btn-group btn-corner">
-                                        <?php 
+                                <tr>
+                                    <td><?= ++$start ?></td>
+                                    <td><?= $tb_barang->part_number ?></td>
+                                    <td><?= $tb_barang->kode_barcode ?></td>
+                                    <td><?= $tb_barang->nama_barang ?></td>
+                                    <td>
+                                        <?= @$this->db->get_where('tb_kategori',['id_kategori' => $tb_barang->kategori])->row()->nama_kategori; ?>
+                                    </td>
+                                    <td>
+                                        <?= @$this->db->get_where('tb_brand',['id_brand' => $tb_barang->brand])->row()->nama_brand; ?>
+                                    </td>
+                                    <td>
+                                        <span class="label label-lg label-yellow arrowed-in arrowed-in-right">
+                                            <?= @$this->db->get_where('tb_satuan',['id_satuan' => $tb_barang->satuan])->row()->nama_satuan; ?>
+                                        </span>
+                                    </td>
+                                    <td><?= "Rp. ".number_format($tb_barang->harga_beli,0,"",".") ?></td>
+                                    <td><?= "Rp. ".number_format($tb_barang->harga_jual,0,"",".") ?></td>
+                                    <td>
+                                        <span class="label label-lg label-primary arrowed-right">
+                                            <?= @$this->db->get_where('tb_unit',['id_unit' => $tb_barang->unit_id])->row()->nama_unit; ?>
+                                        </span>
+                                    </td>
+                                    <td width="300px" class="text-center">
+                                        <div class="btn-group btn-corner">
+                                            <?php 
                                             echo anchor(site_url('tb_barang/read/'.$tb_barang->id_barang),'<i class="fa fa-eye"></i> <b>Detail</b>',array('title'=>'detail','class'=>'btn btn-sm btn-info')); 
                                             echo '&nbsp'; 
                                             echo anchor(site_url('tb_barang/update/'.$tb_barang->id_barang),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-sm btn-success')); 
-                                            echo '&nbsp&nbsp'; 
+                                            echo '&nbsp;&nbsp;'; 
                                             echo anchor(site_url('tb_barang/delete/'.$tb_barang->id_barang),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
                                         ?>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php
                         }
                         ?>
-                        </tbody>
-                    </table>
-
-
-                    <script src="<?= base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
-                    <script src="<?= base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
-                    <script src="<?= base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
-                    <script type="text/javascript">
-                    $(document).ready(function() {
-                        $("#mytable").dataTable();
-                    });
-                    </script>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
