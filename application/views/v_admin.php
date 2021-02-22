@@ -1,6 +1,9 @@
 <div class="page-header">
     <marquee behavior="" direction=""><strong>
-            <h1>Dashboard Inventory PT Berkah Sejahtera</h1>
+            <h1>
+                <img src="<?= base_url()?>/assets/images/foto/berkah.png" alt="logo" width="27" height="27">
+                Dashboard Inventory PT Berkah Sejahtera
+            </h1>
         </strong></marquee>
 </div>
 <div class="row">
@@ -9,8 +12,6 @@
             <div class="main-content-inner">
                 <div class="container">
                     <div class="row">
-                        <!-- <div class="col-sm-md-12"> -->
-                        <!-- <div class="row"> -->
                         <div class="col-sm-md-12" style="margin-bottom: 50px;">
                             <div class="container" style="margin-left: 0px;">
                                 <div class="col-sm-4 bg-primary text-center" style="border-radius: 15px 0px 0px 15px;">
@@ -39,8 +40,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- </div> -->
-                        <!-- </div> -->
                     </div>
                 </div>
             </div>
@@ -48,7 +47,7 @@
             <div class="hr hr32 hr-line"></div>
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="widget-box widget-color-blue" id="widget-box-12" style="height:455px;">
+                    <div class="widget-box widget-color-blue" id="widget-box-12">
                         <div class="widget-header widget-header-flat">
                             <h4 class="widget-title lighter">
                                 <i class="ace-icon fa fa-bar-chart-o"></i>
@@ -61,6 +60,7 @@
                         <div class="widget-body">
                             <div class="widget-main padding-4">
                                 <div id="container1" class="col-sm-12"></div>
+                                <div style="height:400px;"></div>
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="widget-body">
                             <div class="widget-main no-padding">
-                                <table class="table table-bordered table-striped">
+                                <table class="table table-striped">
                                     <thead class="thin-border-bottom">
                                         <tr>
                                             <!-- <th width="25%"><i class="ace-icon fa fa-lock blue"></i> Part Number</th> -->
@@ -97,7 +97,11 @@
                                         <?php foreach($barang_max->result() as $row):?>
                                         <tr>
                                             <td><?= $row->nama_barang?></td>
-                                            <td><?= $row->stok?></td>
+                                            <td>
+                                                <span class="badge badge-success">
+                                                    <?= $row->stok?>
+                                                </span>
+                                            </td>
                                             <td class="hidden-480 center">
                                                 <i class="ace-icon fa fa-arrow-up green icon-animated-vertical"></i>
                                                 <i class="ace-icon fa fa-arrow-up green icon-animated-vertical"></i>
@@ -123,7 +127,7 @@
                         </div>
                         <div class="widget-body">
                             <div class="widget-main no-padding">
-                                <table class="table table-bordered table-striped">
+                                <table class="table table-striped">
                                     <thead class="thin-border-bottom">
                                         <tr>
                                             <!-- <th width="25%"><i class="ace-icon fa fa-lock blue"></i> Part Number</th> -->
@@ -140,7 +144,11 @@
                                         <?php foreach($barang_min->result() as $row):?>
                                         <tr>
                                             <td><?= $row->nama_barang?></td>
-                                            <td><?= $row->stok?></td>
+                                            <td>
+                                                <span class="badge badge-danger">
+                                                    <?= $row->stok?>
+                                                </span>
+                                            </td>
                                             <td class="hidden-480 center">
                                                 <i class="ace-icon fa fa-arrow-down red icon-animated-vertical"></i>
                                                 <i class="ace-icon fa fa-arrow-down red icon-animated-vertical"></i>
