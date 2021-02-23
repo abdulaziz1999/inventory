@@ -71,7 +71,7 @@
                                     <td>
                                         <?= @$this->db->get_where('tb_proyek',['id_proyek' => $tb_receiving->nama_proyek])->row()->nama_proyek ?>
                                     </td>
-                                    <td><?= $tb_receiving->ket ?></td>
+                                    <td><?= @$tb_receiving->ket ?></td>
                                     <td style="text-align:center" width="300px">
                                         <div class="btn-group btn-corner">
                                             <?php 
