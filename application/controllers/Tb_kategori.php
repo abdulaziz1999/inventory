@@ -71,6 +71,7 @@ class Tb_kategori extends CI_Controller
 
             $this->Tb_kategori_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
+            $this->My_model->dataLog('Tambah data kategori');
             redirect(site_url('tb_kategori'));
         }
     }
@@ -106,6 +107,7 @@ class Tb_kategori extends CI_Controller
 
             $this->Tb_kategori_model->update($this->input->post('id_kategori', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
+            $this->My_model->dataLog('Update data kategori : '.$this->input->post('nama_kategori',TRUE));
             redirect(site_url('tb_kategori'));
         }
     }
@@ -117,6 +119,7 @@ class Tb_kategori extends CI_Controller
         if ($row) {
             $this->Tb_kategori_model->delete($id);
             $this->session->set_flashdata('message', 'Delete Record Success');
+            $this->My_model->dataLog('Delete data kategori');
             redirect(site_url('tb_kategori'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -153,7 +156,7 @@ class Tb_kategori extends CI_Controller
 
         $kolomhead = 0;
         xlsWriteLabel($tablehead, $kolomhead++, "No");
-	xlsWriteLabel($tablehead, $kolomhead++, "Nama Kategori");
+	    xlsWriteLabel($tablehead, $kolomhead++, "Nama Kategori");
 
 	foreach ($this->Tb_kategori_model->get_all() as $data) {
             $kolombody = 0;

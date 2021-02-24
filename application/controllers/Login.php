@@ -30,20 +30,25 @@ class Login extends CI_Controller{
                 $this->session->set_userdata('true','oke');
             }
             if ($this->session->userdata('true') == TRUE) {
+                $this->My_model->dataLog('Login Apps');
                 redirect('admin');
             }elseif($this->session->userdata('true') == TRUE && $this->session->userdata('level') == 'superuser'){
+                $this->My_model->dataLog('Login Apps');
                 redirect('admin');
             }elseif($this->session->userdata('true') == TRUE && $this->session->userdata('level') == 'staff'){
+                $this->My_model->dataLog('Login Apps');
                 redirect('admin');
             }
         } else{ 
             //untuk menendcode kata
+            $this->My_model->dataLog('Gagal Login Apps');
             redirect('login?e='.base64_encode('Username dan Password tidak sesuai'));
         } 
     }
 
     function logout(){
         $this->session->sess_destroy();
+        $this->My_model->dataLog('Logout Apps');
         redirect('login');
     }
 

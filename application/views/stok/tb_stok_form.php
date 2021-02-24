@@ -37,9 +37,11 @@
                                 </tr>
                                 <tr>
                                     <input type="hidden" name="id_barang" value="<?= $id_barang; ?>" />
-                                    <td colspan='2'><button type="submit"
-                                            class="btn btn-primary"><?= $button ?></button>
-                                        <a href="<?= site_url('tb_stok') ?>" class="btn btn-default">Cancel</a>
+                                    <td colspan='2'>
+                                    <div class="btn-group btn-corner">
+                                        <button type="submit" class="btn btn-primary" style="margin-right:3px;"><?= $button ?></button>
+                                        <a href="<?= site_url('tb_stok') ?>" class="btn btn-danger">Kembali</a>
+                                    </div>
                                     </td>
                                 </tr>
 

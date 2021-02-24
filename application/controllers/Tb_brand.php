@@ -71,7 +71,8 @@ class Tb_brand extends CI_Controller
 	    );
 
             $this->Tb_brand_model->insert($data);
-            $this->session->set_flashdata('message', 'Create Record Success');
+            $this->session->set_flashdata('sukses', 'Create Record Success');
+            $this->My_model->dataLog('Tambah data brand');
             redirect(site_url('tb_brand'));
         }
     }
@@ -89,7 +90,7 @@ class Tb_brand extends CI_Controller
 	    );
             $this->template->load('template','brand/tb_brand_form', $data);
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
+            $this->session->set_flashdata('gagal', 'Record Not Found');
             redirect(site_url('tb_brand'));
         }
     }
@@ -106,7 +107,8 @@ class Tb_brand extends CI_Controller
 	    );
 
             $this->Tb_brand_model->update($this->input->post('id_brand', TRUE), $data);
-            $this->session->set_flashdata('message', 'Update Record Success');
+            $this->session->set_flashdata('sukses', 'Update Record Success');
+            $this->My_model->dataLog('Update data brand');
             redirect(site_url('tb_brand'));
         }
     }
@@ -118,9 +120,11 @@ class Tb_brand extends CI_Controller
         if ($row) {
             $this->Tb_brand_model->delete($id);
             $this->session->set_flashdata('message', 'Delete Record Success');
+            $this->My_model->dataLog('Sukses Delete data brand');
             redirect(site_url('tb_brand'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
+            $this->My_model->dataLog('Gagal Delete data brand');
             redirect(site_url('tb_brand'));
         }
     }
