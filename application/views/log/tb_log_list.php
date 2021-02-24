@@ -25,6 +25,12 @@
                             <tr>
                                 <th width="80px">No</th>
                                 <th>Nama log</th>
+                                <th>Aktifitas</th>
+                                <th>Level</th>
+                                <th>Browser</th>
+                                <th>Platform</th>
+                                <th>IP</th>
+                                <th>Waktu</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -37,6 +43,12 @@
                             <tr>
                                 <td><?= ++$start ?></td>
                                 <td><?= $tb_log->nama ?></td>
+                                <td><?= $tb_log->aktifitas ?></td>
+                                <td><?= $tb_log->level ?></td>
+                                <td><?= $tb_log->browser ?></td>
+                                <td><?= $tb_log->platform ?></td>
+                                <td><?= $tb_log->ip_address ?></td>
+                                <td><?= $tb_log->waktu ?></td>
                                 <td style="text-align:center" width="300px">
                                     <div class="btn-group btn-corner">
                                         <?php 
