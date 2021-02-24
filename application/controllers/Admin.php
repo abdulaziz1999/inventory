@@ -21,9 +21,14 @@ class Admin extends CI_Controller{
         // $this->output->enable_profiler(true);
         $data = [
             'barang_max' => $this->admin->barang_max(),
-            'barang_min' => $this->admin->barang_min()
+            'barang_min' => $this->admin->barang_min(),
+            'chart_iss'  => $this->My_model->chart_iss(),
+            'chart_rev'  => $this->My_model->chart_rev(),
         ];
+
 		$this->template->load('template','v_admin',$data);
+        // $this->output->enable_profiler(TRUE);
+        
     }
     
     function grap(){
