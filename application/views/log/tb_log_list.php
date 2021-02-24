@@ -52,11 +52,11 @@
                                 <td style="text-align:center" width="300px">
                                     <div class="btn-group btn-corner">
                                         <?php 
-                                            echo anchor(site_url('tb_log/read/'.$tb_log->id_log),'<i class="fa fa-eye"></i> Detail',array('title'=>'detail','class'=>'btn btn-sm btn-info ')); 
-                                            echo '  '; 
-                                            echo anchor(site_url('tb_log/update/'.$tb_log->id_log),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-sm btn-success ')); 
-                                            echo '  '; 
-                                            //echo anchor(site_url('tb_log/delete/'.$tb_log->id_log),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-sm btn-danger " onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+                                            // echo anchor(site_url('tb_log/read/'.$tb_log->id_log),'<i class="fa fa-eye"></i> Detail',array('title'=>'detail','class'=>'btn btn-sm btn-info ')); 
+                                            // echo '&nbsp&nbsp'; 
+                                            // echo anchor(site_url('tb_log/update/'.$tb_log->id_log),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-sm btn-success ')); 
+                                            // echo '&nbsp&nbsp'; 
+                                            echo anchor(site_url('tb_log/delete/'.$tb_log->id_log),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-sm btn-danger " onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
                                         ?>
                                     </div>
                                 </td>
