@@ -80,4 +80,29 @@ Class My_model extends CI_Model{
             ];
             $this->db->insert('tb_log',$data);
         }
+
+    function chart_iss(){
+        $this->db->select('tgl,sum(r.jumlah) as total');
+        $this->db->from('tb_barang b');
+        $this->db->join('tb_issuing_item r','b.id_barang = r.id_barang');
+        $this->db->join('tb_issuing r2','r.id_issuing = r2.id_issuing');
+        $this->db->join('tb_stok st','b.id_barang = st.id_barang');
+        $this->db->group_by('MONTH(tgl)');
+        $this->db->limit('30');
+        $data = $this->db->get()->result();
+        return $data;
+    }
+
+    function chart_rev(){
+        $this->db->select('tgl,sum(r.jumlah) as total');
+        $this->db->from('tb_barang b');
+        $this->db->join('tb_receiving_item r','b.id_barang = r.id_barang');
+        $this->db->join('tb_receiving r2','r.id_receiving = r2.id_receiving');
+        $this->db->join('tb_stok st','b.id_barang = st.id_barang');
+        $this->db->group_by('MONTH(tgl)');
+        $this->db->limit('30');
+        $data = $this->db->get()->result();
+        return $data;
+    }
+
 }
