@@ -108,11 +108,13 @@ class Tb_stok extends CI_Controller
 
         if ($row) {
             $data = array(
-                'button' => 'Update',
-                'action' => site_url('tb_stok/update_action'),
-		'id_barang' => set_value('id_barang', $row->id_barang),
-		'stok' => set_value('stok', $row->stok),
-		'amount' => set_value('amount', $row->amount),
+                'button'        => 'Update',
+                'action'        => site_url('tb_stok/update_action'),
+                'id_barang'     => set_value('id_barang', $row->id_barang),
+                'stok'          => set_value('stok', $row->stok),
+                'jml_baik'      => set_value('jml_baik', $row->jml_baik),
+                'jml_rusak'     => set_value('jml_rusak', $row->jml_rusak),
+                'jml_hilang'    => set_value('jml_hilang', $row->jml_hilang),
 	    );
             $this->template->load('template','stok/tb_stok_form', $data);
         } else {
@@ -129,8 +131,10 @@ class Tb_stok extends CI_Controller
             $this->update($this->input->post('id_barang', TRUE));
         } else {
             $data = array(
-		'stok' => $this->input->post('stok',TRUE),
-		'amount' => $this->input->post('amount',TRUE),
+            'stok' => $this->input->post('stok',TRUE),
+            'jml_baik'      => $this->input->post('jml_baik',TRUE),
+            'jml_rusak'     => $this->input->post('jml_rusak',TRUE),
+            'jml_hilang'    => $this->input->post('jml_hilang',TRUE),
 	    );
 
             $this->Tb_stok_model->update($this->input->post('id_barang', TRUE), $data);

@@ -31,8 +31,12 @@
                                     <th>Harga Beli</th>
                                     <th>Harga Jual</th>
                                     <th>Stok Barang</th>
+                                    <th>Jumlah Baik</th>
+                                    <th>Jumlah Rusak</th>
+                                    <th>Jumlah Hilang</th>
                                     <th>Minimal Stok</th>
                                     <th>Unit</th>
+                                    <th>Act</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,6 +61,21 @@
                                         </span>
                                     </td>
                                     <td>
+                                        <span class="badge badge-info">
+                                            <?= $tb_stok->jml_baik." ".$tb_stok->nama_satuan ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-warning">
+                                            <?= $tb_stok->jml_rusak." ".$tb_stok->nama_satuan ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-secondary">
+                                            <?= $tb_stok->jml_hilang." ".$tb_stok->nama_satuan ?>
+                                        </span>
+                                    </td>
+                                    <td>
                                         <span class="badge badge-danger">
                                             <?= $tb_stok->min_stok." ".$tb_stok->nama_satuan ?>
                                         </span>
@@ -66,10 +85,11 @@
                                             <?= $tb_stok->nama_unit ?>
                                         </span>
                                     </td>
+                                    <td>
                                     <?php 
                             // echo anchor(site_url('tb_stok/read/'.$tb_stok->id_barang),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-danger btn-sm')); 
                             // echo '  '; 
-                            // echo anchor(site_url('tb_stok/update/'.$tb_stok->id_barang),'<i class="fa fa-pencil-square-o"></i>',array('title'=>'edit','class'=>'btn btn-danger btn-sm')); 
+                            echo anchor(site_url('tb_stok/update/'.$tb_stok->id_barang),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-success btn-sm btn-round')); 
                             // echo '  '; 
                             // echo anchor(site_url('tb_stok/delete/'.$tb_stok->id_barang),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
 			                ?>
