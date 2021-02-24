@@ -27,7 +27,7 @@ class Laporan extends CI_Controller{
         $this->template->load('template', 'laporan/laporan',$data);
     }
 
-    function ajax($s, $e, $u=false){
+    function ajax($s, $e, $u=false,$k=false){
         $draw 	= intval($this->input->get("draw"));
         $start 	= intval($this->input->get("start"));
         $length = intval($this->input->get("length"));
