@@ -52,8 +52,8 @@ class Tb_proyek extends CI_Controller
         $data = array(
             'button' => 'Create',
             'action' => site_url('tb_proyek/create_action'),
-	    'id_proyek' => set_value('id_proyek'),
-	    'nama_proyek' => set_value('nama_proyek'),
+            'id_proyek' => set_value('id_proyek'),
+            'nama_proyek' => set_value('nama_proyek'),
 	);
         $this->template->load('template','proyek/tb_proyek_form', $data);
     }
@@ -70,6 +70,7 @@ class Tb_proyek extends CI_Controller
 	    );
 
             $this->Tb_proyek_model->insert($data);
+            $this->My_model->dataLog('Tambah data nama proyek');
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('tb_proyek'));
         }
@@ -105,6 +106,7 @@ class Tb_proyek extends CI_Controller
 	    );
 
             $this->Tb_proyek_model->update($this->input->post('id_proyek', TRUE), $data);
+            $this->My_model->dataLog('Update data nama proyek');
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('tb_proyek'));
         }
@@ -116,6 +118,7 @@ class Tb_proyek extends CI_Controller
 
         if ($row) {
             $this->Tb_proyek_model->delete($id);
+            $this->My_model->dataLog('Delete data Supplier sukses');
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('tb_proyek'));
         } else {
