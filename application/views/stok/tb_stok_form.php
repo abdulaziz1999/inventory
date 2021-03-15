@@ -12,7 +12,7 @@
                                 <tr>
                                     <td>Stok <?= form_error('stok') ?></td>
                                     <td><input type="text" class="form-control" name="stok" id="stok" placeholder="Stok"
-                                            value="<?= $stok; ?>" readonly />
+                                            value="<?= $stok; ?>"  />
                                     </td>
                                 <tr>
                                     <td>Jumla baik <?= form_error('jml_baik') ?></td>
