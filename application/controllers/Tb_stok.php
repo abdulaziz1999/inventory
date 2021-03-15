@@ -127,20 +127,18 @@ class Tb_stok extends CI_Controller
     {
         $this->_rules();
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->update($this->input->post('id_barang', TRUE));
-        } else {
             $data = array(
-            'stok' => $this->input->post('stok',TRUE),
+            'stok'          => $this->input->post('stok',TRUE),
             'jml_baik'      => $this->input->post('jml_baik',TRUE),
             'jml_rusak'     => $this->input->post('jml_rusak',TRUE),
             'jml_hilang'    => $this->input->post('jml_hilang',TRUE),
 	    );
 
             $this->Tb_stok_model->update($this->input->post('id_barang', TRUE), $data);
+            $this->My_model->dataLog('Update data Stok');
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('tb_stok'));
-        }
+        
     }
     
     public function delete($id) 
