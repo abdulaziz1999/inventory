@@ -52,8 +52,8 @@ class Tb_kategori extends CI_Controller
         $data = array(
             'button' => 'Create',
             'action' => site_url('tb_kategori/create_action'),
-	    'id_kategori' => set_value('id_kategori'),
-	    'nama_kategori' => set_value('nama_kategori'),
+            'id_kategori' => set_value('id_kategori'),
+            'nama_kategori' => set_value('nama_kategori'),
 	);
         $this->template->load('template','kategori/tb_kategori_form', $data);
     }
@@ -158,14 +158,14 @@ class Tb_kategori extends CI_Controller
         xlsWriteLabel($tablehead, $kolomhead++, "No");
 	    xlsWriteLabel($tablehead, $kolomhead++, "Nama Kategori");
 
-	foreach ($this->Tb_kategori_model->get_all() as $data) {
+	    foreach ($this->Tb_kategori_model->get_all() as $data) {
             $kolombody = 0;
 
             //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
             xlsWriteNumber($tablebody, $kolombody++, $nourut);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->nama_kategori);
+	        xlsWriteLabel($tablebody, $kolombody++, $data->nama_kategori);
 
-	    $tablebody++;
+	        $tablebody++;
             $nourut++;
         }
 
