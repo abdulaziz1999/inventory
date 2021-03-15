@@ -21,7 +21,7 @@
                     User Profile Page
                     <small>
                         <i class="ace-icon fa fa-angle-double-right"></i>
-                        3 styles with inline editable feature
+                        Inventory System
                     </small>
                 </h1>
             </div><!-- /.page-header -->
@@ -45,7 +45,7 @@
                                             <a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
                                                 <i class="ace-icon fa fa-circle light-green"></i>
                                                 &nbsp;
-                                                <span class="white">Alex M. Doe</span>
+                                                <span class="white"><?= $user->nama?></span>
                                             </a>
 
                                             <ul class="align-left dropdown-menu dropdown-caret dropdown-lighter">
@@ -83,25 +83,20 @@
 
                                 <div class="profile-contact-info">
                                     <div class="profile-contact-links align-left">
-                                        <a href="#" class="btn btn-link">
-                                            <i class="ace-icon fa fa-plus-circle bigger-120 green"></i>
-                                            Add as a friend
-                                        </a>
-
-                                        <a href="#" class="btn btn-link">
+                                        <a href="mailto:<?= $user->email?>" class="btn btn-link">
                                             <i class="ace-icon fa fa-envelope bigger-120 pink"></i>
-                                            Send a message
+                                            <?= $user->email?>
                                         </a>
 
-                                        <a href="#" class="btn btn-link">
+                                        <a href="https://berkahinventorysystem.com/" class="btn btn-link">
                                             <i class="ace-icon fa fa-globe bigger-125 blue"></i>
-                                            www.alexdoe.com
+                                            berkahinventorysystem.com
                                         </a>
                                     </div>
 
                                     <div class="space-6"></div>
 
-                                    <div class="profile-social-links align-center">
+                                    <!-- <div class="profile-social-links align-center">
                                         <a href="#" class="tooltip-info" title=""
                                             data-original-title="Visit my Facebook">
                                             <i class="middle ace-icon fa fa-facebook-square fa-2x blue"></i>
@@ -116,25 +111,26 @@
                                             data-original-title="Visit my Pinterest">
                                             <i class="middle ace-icon fa fa-pinterest-square fa-2x red"></i>
                                         </a>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <div class="hr hr12 dotted"></div>
 
                                 <div class="clearfix">
-                                    <div class="grid2">
+                                    <!-- <div class="grid2">
                                         <span class="bigger-175 blue">25</span>
 
                                         <br />
                                         Followers
-                                    </div>
-
-                                    <div class="grid2">
+                                    </div> -->
+                                    <!-- <img src="<?= base_url()?>/assets/images/foto/berkah.png" alt="logo" >
+                                    <span class="blue bolder">Inventory System</span> -->
+                                    <!-- <div class="grid2">
                                         <span class="bigger-175 blue">12</span>
 
                                         <br />
                                         Following
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <div class="hr hr16 dotted"></div>
@@ -146,10 +142,10 @@
 
                                 <div class="profile-user-info profile-user-info-striped">
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name"> Username </div>
+                                        <div class="profile-info-name"> Nama </div>
 
                                         <div class="profile-info-value">
-                                            <span class="editable" id="username">alexdoe</span>
+                                            <span class="editable" id="username"><?= $user->nama?></span>
                                         </div>
                                     </div>
 
@@ -157,17 +153,23 @@
                                         <div class="profile-info-name"> Email </div>
 
                                         <div class="profile-info-value">
-                                            <span class="editable" id="email">email@gmail.com</span>
+                                            <span class="editable" id="email"><?= $user->email?></span>
                                         </div>
                                     </div>
 
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name"> Location </div>
+                                        <div class="profile-info-name"> Tempat Lahir </div>
 
                                         <div class="profile-info-value">
-                                            <i class="fa fa-map-marker light-orange bigger-110"></i>
-                                            <span class="editable" id="country">Netherlands</span>
-                                            <span class="editable" id="city">Amsterdam</span>
+                                            <span class="editable" id="tmp_lahir"><?= $user->tmp_lahir?></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Tanggal Lahir </div>
+
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="signup">2010/06/20</span>
                                         </div>
                                     </div>
 
@@ -180,10 +182,12 @@
                                     </div>
 
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name"> Joined </div>
+                                        <div class="profile-info-name"> Location </div>
 
                                         <div class="profile-info-value">
-                                            <span class="editable" id="signup">2010/06/20</span>
+                                            <i class="fa fa-map-marker light-orange bigger-110"></i>
+                                            <span class="editable" id="country">Netherlands</span>
+                                            <span class="editable" id="city">Amsterdam</span>
                                         </div>
                                     </div>
 
@@ -206,7 +210,8 @@
 
                                 <div class="space-20"></div>
 
-                                <div class="widget-box transparent">
+                                <?php if($this->session->userdata('level') == "superuser"){?>
+                                    <div class="widget-box transparent">
                                     <div class="widget-header widget-header-small">
                                         <h4 class="widget-title blue smaller">
                                             <i class="ace-icon fa fa-rss orange"></i>
@@ -391,6 +396,7 @@
                                         <i class="icon-on-right ace-icon fa fa-arrow-right"></i>
                                     </button>
                                 </div>
+                                <?php }?>
                             </div>
                         </div>
                     </div>
