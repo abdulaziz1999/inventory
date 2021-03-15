@@ -70,6 +70,7 @@ class Tb_suplier extends CI_Controller
 	    );
 
             $this->Tb_suplier_model->insert($data);
+            $this->My_model->dataLog('Tambah data Supplier');
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('tb_suplier'));
         }
@@ -105,6 +106,7 @@ class Tb_suplier extends CI_Controller
 	    );
 
             $this->Tb_suplier_model->update($this->input->post('id_suplier', TRUE), $data);
+            $this->My_model->dataLog('Update data Supplier');
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('tb_suplier'));
         }
@@ -116,9 +118,11 @@ class Tb_suplier extends CI_Controller
 
         if ($row) {
             $this->Tb_suplier_model->delete($id);
+            $this->My_model->dataLog('Delete data Supplier Sukses');
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('tb_suplier'));
         } else {
+            $this->My_model->dataLog('Delete data Supplier Gagal');
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('tb_suplier'));
         }
