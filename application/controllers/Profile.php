@@ -23,9 +23,8 @@ class Profile extends CI_Controller
 
     public function index()
     {
-       
-
-        $this->template->load('template','profile');
+        $data['user'] = $this->db->get_where('pengguna',['id_pengguna' => $this->session->userdata('id_pengguna')])->row();
+        $this->template->load('template','profile', $data);
     }
 
 }
