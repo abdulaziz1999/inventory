@@ -70,6 +70,7 @@ class Tb_unit extends CI_Controller
 	    );
 
             $this->Tb_unit_model->insert($data);
+            $this->My_model->dataLog('Tambah data unit');
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('tb_unit'));
         }
@@ -105,6 +106,7 @@ class Tb_unit extends CI_Controller
 	    );
 
             $this->Tb_unit_model->update($this->input->post('id_unit', TRUE), $data);
+            $this->My_model->dataLog('Update data unit');
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('tb_unit'));
         }
@@ -116,9 +118,11 @@ class Tb_unit extends CI_Controller
 
         if ($row) {
             $this->Tb_unit_model->delete($id);
+            $this->My_model->dataLog('Delete data unit Sukses');
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('tb_unit'));
         } else {
+            $this->My_model->dataLog('Delete data unit gagal');
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('tb_unit'));
         }
