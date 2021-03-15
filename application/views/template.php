@@ -646,37 +646,6 @@
     <script src="<?= base_url()?>assets/js/highcharts.js" type="text/javascript"></script>
     <script type="text/javascript">
     var chart1; // globally available
-    // $(document).ready(function() {
-    //     chart1 = new Highcharts.Chart({
-    //         chart: {
-    //             renderTo: 'container',
-    //             type: 'line'
-    //         },
-    //         title: {
-    //             text: 'Item Barang Berdasarkan Kategori'
-    //         },
-    //         xAxis: {
-    //             categories: ['Kategori']
-    //         },
-    //         yAxis: {
-    //             title: {
-    //                 text: 'Jumlah Item'
-    //             }
-    //         },
-    //         series: [
-    //             <?php //$data = $this->Admin_model->grap_kategori();
-    // 							foreach($data as $row):?> {
-    //                 name: '<?php //$row->nama_kategori?>',
-    //                 data: [<?php //$row->stok?>],
-    //             },
-    //             <?php //endforeach;?>
-    //         ]
-    //     });
-    // });
-    </script>
-    <script src="<?= base_url()?>assets/js/highcharts.js" type="text/javascript"></script>
-    <script type="text/javascript">
-    var chart1; // globally available
     $(document).ready(function() {
         chart1 = new Highcharts.Chart({
             chart: {
