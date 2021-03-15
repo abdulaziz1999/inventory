@@ -74,6 +74,7 @@ class Tb_satuan extends CI_Controller
 	    );
 
             $this->Tb_satuan_model->insert($data);
+            $this->My_model->dataLog('Tambah data satuan');
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('tb_satuan'));
         }
@@ -111,6 +112,7 @@ class Tb_satuan extends CI_Controller
 	    );
 
             $this->Tb_satuan_model->update($this->input->post('id_satuan', TRUE), $data);
+            $this->My_model->dataLog('Update data satuan');
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('tb_satuan'));
         }
@@ -122,9 +124,11 @@ class Tb_satuan extends CI_Controller
 
         if ($row) {
             $this->Tb_satuan_model->delete($id);
+            $this->My_model->dataLog('Delete data satuan sukses');
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('tb_satuan'));
         } else {
+            $this->My_model->dataLog('Delete data satuan gagal');
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('tb_satuan'));
         }
