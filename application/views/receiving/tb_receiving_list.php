@@ -79,7 +79,7 @@
                                     echo '&nbsp;&nbsp;'; 
                                     echo anchor(site_url('tb_receiving/update/'.$tb_receiving->id_receiving),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-success btn-sm')); 
                                     echo '&nbsp;&nbsp;'; 
-                                    echo anchor(site_url('tb_receiving/delete/'.$tb_receiving->id_receiving),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+                                    // echo anchor(site_url('tb_receiving/delete/'.$tb_receiving->id_receiving),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
                                     ?>
                                         </div>
                                     </td>
