@@ -33,6 +33,7 @@ class Laporan_card extends CI_Controller{
         $draw 	= intval($this->input->get("draw"));
         $start 	= intval($this->input->get("start"));
         $length = intval($this->input->get("length"));
+        $this->My_model->dataLog('Laporan card stok dengan filter dari '.$s.' sampai '.$e.' unit : '.$u);
                
                 $this->db->join('tb_stok st','tb_barang.id_barang = st.id_barang');
                 $this->db->join('tb_satuan s','tb_barang.satuan = s.id_satuan');

@@ -31,7 +31,8 @@ class Laporan_issuing extends CI_Controller{
         $draw 	= intval($this->input->get("draw"));
         $start 	= intval($this->input->get("start"));
         $length = intval($this->input->get("length"));
-               
+        $this->My_model->dataLog('Laporan penjualan dengan filter dari '.$s.' sampai '.$e.' unit : '.$u);
+
         $this->db->join('tb_stok st','tb_barang.id_barang = st.id_barang');
         $this->db->join('tb_satuan s','tb_barang.satuan = s.id_satuan');
         $this->db->join('tb_kategori k','tb_barang.kategori = k.id_kategori');
