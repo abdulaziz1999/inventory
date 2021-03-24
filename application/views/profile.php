@@ -161,7 +161,7 @@
                                         <div class="profile-info-name"> Tempat Lahir </div>
 
                                         <div class="profile-info-value">
-                                            <span class="editable" id="tmp_lahir"><?= $user->tmp_lahir?></span>
+                                            <span class="editable" id="tmp_lahir"><?= $user->ttl?></span>
                                         </div>
                                     </div>
 
