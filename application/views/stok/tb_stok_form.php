@@ -11,7 +11,7 @@
                             <table class='table table-bordered'>
                                 <tr>
                                     <td>Stok <?= form_error('stok') ?></td>
-                                    <td><input type="text" class="form-control" readonly name="stok" id="stok" placeholder="Stok"
+                                    <td><input type="text" class="form-control"  name="stok" id="stok" placeholder="Stok"
                                             value="<?= $stok; ?>"  />
                                     </td>
                                 <tr>
