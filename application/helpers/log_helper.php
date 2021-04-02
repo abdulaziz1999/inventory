@@ -30,3 +30,16 @@ function dataLog($aktifitas){
         $this->db->insert('tb_log',$data);
 		return ;
     }
+
+
+	function rupiah($angka)
+	{
+		$hasil_rupiah = number_format($angka, 0, ',', '.');
+		return $hasil_rupiah;
+	}
+	
+	function rupiah2($angka)
+	{
+		$hasil_rupiah = number_format($angka, 0, ',', '.');
+		return $hasil_rupiah;
+	}
