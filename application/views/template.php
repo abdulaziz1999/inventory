@@ -141,7 +141,7 @@
                     <li class="light-blue dropdown-modal">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                             <img class="nav-user-photo"
-                                src="http://ace.jeka.by/assets/images/avatars/profile-pic.jpg" />
+                                src="<?= base_url()?>assets/images/avatars/avatar2.png" />
                             <span class="user-info">
                                 <small>Welcome,</small>
                                 <?= $this->session->userdata('nama') ?>
