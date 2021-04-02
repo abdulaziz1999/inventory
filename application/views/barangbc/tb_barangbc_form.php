@@ -151,14 +151,14 @@
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
-            <div class=col-xs-12>
-                <div class="col-xs-2 text-center ">
+            <div class=col-md-12>
+                <div class="col-md-2 text-center ">
                         <div class="kotak-barcode mb-4">
                            <div  class="bg-white p-2" style="border:1px solid #000; padding:10px"> 
-                                <?= "<img alt='Barcode Generator TEC-IT' src='https://barcode.tec-it.com/barcode.ashx?data=899606673726&code=EAN13&multiplebarcodes=true&translate-esc=true&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&qunit=Mm&quiet=0' />" ?><br>
+                                <?= "<img alt='Barcode Generator TEC-IT' src='https://barcode.tec-it.com/barcode.ashx?data=".$kode_barcode."&code=EAN13&multiplebarcodes=true&translate-esc=true&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&qunit=Mm&quiet=0' />" ?><br>
                            </div>
-                                <h5 class="text-center mb-1 mt-2" style="color:#000;">As Batu</h5>
-                                <h5 class="text-center font-weight-normal mb-1" style="color:#000;">Rp. 500</h5>
+                                <h5 class="text-center mb-1 mt-2" style="color:#000;"><strong><?= $nama_barang; ?></strong></h5>
+                                <h5 class="text-center font-weight-normal mb-1" style="color:#000;"><?= 'Rp. '.number_format($harga_jual,0,"","."); ?></h5>
                         </div>
                 </div>
             </div>
@@ -167,32 +167,3 @@
 
         
 
-<script>
-$('#buat_bc').click(function() {
-            // var nama = $('#barang').val();
-            var nama = $('select').find(':selected').attr('data-nama');
-            let harga = $('#harga_barang').val();
-            $('#harga_barang').number(true);
-            let code = $('#code').val();
-            let jumlah = $('#jumlah').val();
-            $("#hasil").html("<h3>HASIL</h3>");
-            $("#bar_disini").html("");
-            for (let a = 1; a <= jumlah; a++) {
-                <?php if (isset($_GET['barcode'])) : ?>
-                    $('#bar_disini').append(`
-                            <div class="kotak-barcode mb-4">
-                           <div  class="bg-white p-2" style="border:1px solid #000;"> 
-                                <?= "<img alt='Barcode Generator TEC-IT' src='https://barcode.tec-it.com/barcode.ashx?data=" . $kode . "&code=EAN13&multiplebarcodes=true&translate-esc=true&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&qunit=Mm&quiet=0' />" ?><br>
-                           </div>
-                                <h5 class="text-center mb-1 mt-2" style="color:#000;">` + nama + `</h5>
-                                <h5 class="text-center font-weight-normal mb-1" style="color:#000;">Rp. <?= rupiah($harga) ?></h5>
-                            </div>
-                        `);
-
-                <?php else : ?>
-
-                <?php endif; ?>
-            }
-            $('#cetak').html("<a class='btn btn-info text-center'><i class='fas fa-print'></i> Cetak</a>");
-        })
-</script>
