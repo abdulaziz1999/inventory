@@ -298,6 +298,15 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+                <li class="<?php if($this->uri->segment(1) == 'cetak_barcode'){ echo "active"; }else{ echo "";}?>">
+                    <a href="<?= base_url('cetak_barcode'); ?>">
+                        <i class="menu-icon fa fa-barcode"></i>
+                        <span class="menu-text">
+                            Cetak Barcode
+                        </span>
+                    </a>
+                    <b class="arrow"></b>
+                </li>
                 <li class="<?php if($this->uri->segment(1) == 'tb_receiving'){ echo "active"; }else{ echo "";}?>">
                     <a href="<?= base_url('tb_receiving'); ?>">
                         <i class="menu-icon fa fa-shopping-cart"></i>
@@ -642,6 +651,57 @@
     }
     </script>
     <?php endif;?>
+
+    <?php if($this->uri->segment(1) == "cetak_barcode"):?>
+    <script src="<?= base_url('assets/') ?>js/jQuery.print.min.js"></script>
+    <script>
+        <?php if (isset($_GET['barcode'])) {
+                    $barcode = $_GET['barcode'];
+                    $row = $this->db->get_where('tb_barang', ['kode_barcode' => $barcode])->row_array();
+                    $harga = $row['harga_jual'];
+                    $kode = $row['kode_barcode'];
+        }?>
+
+        function selectNameBarang(){
+            $("form").submit();
+        }
+
+        function buatBc(){
+            let cek = $('#harga_barang').val();
+            if(cek == ''){
+                alert("Silahkan pilih nama barang terlebih dahulu");
+            }else{
+                let nama = $('select').find(':selected').attr('data-nama');
+                let harga = $('#harga_barang').val();
+                let code = $('#code').val();
+                let jumlah = $('#jumlah').val();
+                $("#hasil").html("<h3>Hasil Generate Barcode 😊</h3>");
+                for (let a = 1; a <= jumlah; a++) {
+                    <?php if (isset($_GET['barcode'])) : ?>
+                        $("#bar_disini").append(`
+                            <div class="col-xs-2 text-center ">
+                                <div class="kotak-barcode mb-4">
+                                    <div  class="bg-white p-2" style="border:1px solid #000;padding:10px;"> 
+                                            <?= "<img alt='Barcode Generator TEC-IT' src='https://barcode.tec-it.com/barcode.ashx?data=" . $kode . "&code=EAN13&multiplebarcodes=true&translate-esc=true&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&qunit=Mm&quiet=0' />" ?><br>
+                                    </div>
+                                        <h5 class="text-center mb-1 mt-2" style="color:#000;">` + nama + `</h5>
+                                        <h5 class="text-center font-weight-normal mb-1" style="color:#000;">Rp. <?= rupiah($harga) ?></h5>
+                                    </div>
+                                </div>
+                            </div>`);
+                    <?php else : ?>
+                    <?php endif; ?>
+                }
+                $('#cetak').html("<a class='btn btn-success btn-sm btn-round text-center' ><i class='fa fa-print'></i> Cetak</a>");
+            }
+        }
+        
+        $("#cetak").on('click', function() {
+            $.print("#bar_disini");
+        });
+    </script>
+    <?php endif;?>
+
     <?php if($this->uri->segment(1) == "admin"): ?>
     <script src="<?= base_url()?>assets/js/highcharts.js" type="text/javascript"></script>
     <script type="text/javascript">
