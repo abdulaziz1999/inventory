@@ -115,18 +115,19 @@
                         </div>
                         <?php endif;?>
                         <div class="btn-group btn-corner">
-                            <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal"
+                            <a href="#" class="btn btn-sm btn-primary" id="click" data-toggle="modal" data-target="#myModal"
                                 style="margin-right:3px;"><i class="fa fa-plus"></i> Tambah</a>
                             <a href="<?= site_url('tb_receiving/report_rev_supplier/') ?><?= $this->uri->segment(3)?>"
                                 class="btn btn-sm btn-warning" target="_blank">
                                 <i class="fa fa-file-pdf-o"></i> Print Pdf</a>
                         </div>
-                        <!-- <form action="#" method="post">
+                        <form action="<?= base_url('tb_receiving/update/'.$this->uri->segment(3))?>" method="post">
                             <input name="kode" id="myTextField" class="form-control" type="text" autocomplete="off">
-                            <button type="submit" class="btn btn-sm btn-round btn-block btn-success">
+                            <input type="hidden" name="jumlah" value="1">
+                            <button type="submit" class="btn btn-sm btn-round btn-block btn-success hide">
                                 <i class="fa fa-barcode"></i> Save
                             </button>
-                        </form> -->
+                        </form>
                         <h3 class="table-header text-center"><strong>Data Barang Masuk</strong></h3>
                         <table class="table table-hover table-striped" id="mytable">
                             <thead>

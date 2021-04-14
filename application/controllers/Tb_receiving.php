@@ -10,6 +10,7 @@ class Tb_receiving extends CI_Controller
     function __construct()
     {
         parent::__construct();
+        $this->load->model('Tb_barang_model');
         $this->load->model('Tb_receiving_model');
         $this->load->library('form_validation');
         $this->load->helper('url');
@@ -62,6 +63,47 @@ class Tb_receiving extends CI_Controller
         $this->template->load('template','receiving/tb_receiving_list', $data);
     }
 
+    public function save() 
+    {
+        $kode = $this->Tb_barang_model->kode();
+        $scan = $this->db->get_where('tb_data_scan',['kode' => $this->input->post('kode',TRUE)])->row();
+        $cekKode = $this->db->get_where('tb_barang',['kode_barcode' => $this->input->post('kode',TRUE)])->num_rows();
+        if($cekKode == 1){
+            $this->session->set_flashdata('gagal', 'Data Barang Sudah Ada '.$scan->nama_barang);
+            
+            ?>
+            <script>
+                // location.reload();
+            </script>
+            <?php
+        }else{
+        //     $data = array(
+        //         'part_number'   => $kode,
+        //         'nama_barang'   => $scan->nama_barang,
+        //         'kategori'      => '',
+        //         'brand'         => '',
+        //         'satuan'        => '',
+        //         'harga_beli'    => $scan->harga,
+        //         'harga_jual'    => '',
+        //         'ket'           => '',
+        //         'kode_barcode'  =>$scan->kode
+        // );
+
+        // $this->Tb_barang_model->insert($data);
+        
+        // $this->db->select_max('id_barang','idmax');
+        // $idmax = $this->db->get('tb_barang')->row()->idmax;
+        // $data1 = [
+        //     'id_barang' => $idmax,
+        //     'stok'      => ''
+        // ];
+        //     $this->db->insert('tb_stok',$data1);
+            
+        //     $this->session->set_flashdata('sukses', 'Data Barang Berhasil di Input');
+        redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
     public function read($id) 
     {
         $row = $this->Tb_receiving_model->get_by_id($id);
@@ -103,8 +145,6 @@ class Tb_receiving extends CI_Controller
     public function create_action() 
     {
         $this->_rules();
-
-        
             $data = array(
             'tgl'           => $this->input->post('tgl',TRUE),
             'no_ref'        => $this->input->post('no_ref',TRUE),
@@ -118,11 +158,19 @@ class Tb_receiving extends CI_Controller
         $this->session->set_flashdata('sukses', 'Data berhasil diinput');
         $this->dataLog('Tambah Detail Barang Masuk');
         redirect(site_url('tb_receiving'));
-        
+         
     }
     
     public function update($id) 
     {
+        if($this->input->post('kode',TRUE)){
+            $kode = $this->Tb_barang_model->kode();
+            $scan = $this->db->get_where('tb_barang',['kode_barcode' => $this->input->post('kode',TRUE)])->row();
+            $this->session->set_flashdata('sukses', 'Data Barang '.$scan->nama_barang);
+            $this->simpanBrangBarcode($id,$scan->id_barang,$this->input->post('jumlah',TRUE));
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+
         $row = $this->Tb_receiving_model->get_by_id($id);
         $this->db->join('tb_barang tb','tb.id_barang = tb_receiving_item.id_barang');
         $data_Receiving = $this->db->get_where('tb_receiving_item',['id_receiving' => $row->id_receiving]);
@@ -175,6 +223,37 @@ class Tb_receiving extends CI_Controller
             'id_receiving'  => $uri,
             'id_barang'     => $this->input->post('barang', TRUE),
             'jumlah'        => $this->input->post('jumlah', TRUE)
+        ];
+        
+        $this->db->insert('tb_receiving_item',$data);
+
+                      $this->db->select_max('id_item','max');
+        $idmax      = $this->db->get('tb_receiving_item')->row()->max;
+        $id         = $this->db->get_where('tb_receiving_item',['id_item' => $idmax])->row();
+        $jmlstok    = $this->db->get_where('tb_stok',['id_barang' => $id->id_barang])->row()->stok;
+        $receiving  = $id->jumlah + $jmlstok;
+
+        $data2 = [
+            'stok' => $receiving
+        ];
+
+        $this->db->update('tb_stok', $data2, ['id_barang' =>$id->id_barang]);
+
+        if($this->db->affected_rows() > 0){
+            $this->session->set_flashdata('sukses', "Barang Masuk Berhasil Ditambahkan");
+            redirect($_SERVER['HTTP_REFERER']);
+        }else{
+            $this->session->set_flashdata('gagal', "Barang Masuk Gagal Ditambahkan");
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+
+    }
+
+    function simpanBrangBarcode($uri,$idbarang,$jumlah){
+        $data = [
+            'id_receiving'  => $uri,
+            'id_barang'     => $idbarang,
+            'jumlah'        => $jumlah
         ];
         
         $this->db->insert('tb_receiving_item',$data);

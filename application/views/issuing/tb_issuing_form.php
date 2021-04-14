@@ -124,6 +124,13 @@
                                 class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-file-pdf-o"></i> Print
                                 pdf</a>
                         </div>
+                        <form action="<?= base_url('tb_issuing/update/'.$this->uri->segment(3))?>" method="post">
+                            <input name="kode" id="myTextField" class="form-control" type="text" autocomplete="off">
+                            <input type="hidden" name="jumlah" value="1">
+                            <button type="submit" class="btn btn-sm btn-round btn-block btn-success hide">
+                                <i class="fa fa-barcode"></i> Save
+                            </button>
+                        </form>
                         <h3 class="table-header text-center"><strong>Data Barang Keluar</strong></h3>
                         <table class="table table-hover table-striped" id="mytable">
                             <thead>
@@ -217,3 +224,7 @@
         </div>
     </div>
 </div>
+
+<script>
+document.getElementById("myTextField").focus();
+</script>

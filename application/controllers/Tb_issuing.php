@@ -11,6 +11,7 @@ class Tb_issuing extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Tb_issuing_model');
+        $this->load->model('Tb_barang_model');
         $this->load->library('form_validation');
         $this->load->helper('url');
         $this->load->helper('form');
@@ -90,6 +91,14 @@ class Tb_issuing extends CI_Controller
     
     public function update($id) 
     {
+        if($this->input->post('kode',TRUE)){
+            $kode = $this->Tb_barang_model->kode();
+            $scan = $this->db->get_where('tb_barang',['kode_barcode' => $this->input->post('kode',TRUE)])->row();
+            $this->session->set_flashdata('sukses', 'Data Barang '.$scan->nama_barang);
+            $this->simpanBrangBarcode($id,$scan->id_barang,$this->input->post('jumlah',TRUE));
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+
         $row = $this->Tb_issuing_model->get_by_id($id);
         $this->db->join('tb_barang tb','tb.id_barang = tb_issuing_item.id_barang');
         $data_Issuing = $this->db->get_where('tb_issuing_item',['id_issuing' => $row->id_issuing]);
@@ -145,6 +154,40 @@ class Tb_issuing extends CI_Controller
                 'id_issuing'    => $uri,
                 'id_barang'     => $this->input->post('barang', TRUE),
                 'jumlah'        => $this->input->post('jumlah', TRUE)
+            ];
+            
+            $this->db->insert('tb_issuing_item',$data);
+    
+                          $this->db->select_max('id_itemiss','max');
+            $idmax      = $this->db->get('tb_issuing_item')->row()->max;
+            $id         = $this->db->get_where('tb_issuing_item',['id_itemiss' => $idmax])->row();
+            $jmlstok    = $this->db->get_where('tb_stok',['id_barang' => $id->id_barang])->row()->stok;
+            $issuing    = $jmlstok - $id->jumlah;
+    
+            $data2 = [
+                'stok' => $issuing
+            ];
+    
+            $this->db->update('tb_stok', $data2, ['id_barang' =>$id->id_barang]);
+            $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
+            redirect($_SERVER['HTTP_REFERER']);
+        }elseif($stok == 0 || $sisa < 0){
+            $this->session->set_flashdata('gagal', "Jumlah barang tidak mencukupi");
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+
+    }
+
+    function simpanBrangBarcode($uri,$id_barang,$jumlah){
+        $idbarang   = $id_barang;
+        $jmlout     = $jumlah;
+        $stok       = $this->db->get_where('tb_stok',['id_barang' => $idbarang ])->row()->stok;
+        $sisa = $stok - $jmlout;
+        if($sisa >= 0){
+            $data = [
+                'id_issuing'    => $uri,
+                'id_barang'     => $id_barang,
+                'jumlah'        => $jumlah
             ];
             
             $this->db->insert('tb_issuing_item',$data);

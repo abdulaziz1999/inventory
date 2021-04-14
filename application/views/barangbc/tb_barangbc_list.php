@@ -18,12 +18,12 @@
                     <!-- <button class="btn btn-sm btn-warning btn-round" data-toggle="modal" data-target="#ModalaEdit">
                         <i class="fa fa-barcode"></i> Scan Barcode
                     </button> -->
-                    <!-- <form action="<?= base_url('tb_barang/save')?>" method="post">
+                    <form action="<?= base_url('tb_barang/save')?>" method="post">
                         <input name="kode" id="myTextField" class="form-control" type="text" autocomplete="off">
                         <button type="submit" class="btn btn-sm btn-round btn-block btn-success">
                             <i class="fa fa-barcode"></i> Save
                         </button>
-                    </form> -->
+                    </form>
                     <?php if($this->session->flashdata('sukses')):?>
                     <div class="alert alert-success">
                         <button type="button" class="close" data-dismiss="alert">
