@@ -11,7 +11,6 @@ class Tb_issuing extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Tb_issuing_model');
-        $this->load->model('Tb_barang_model');
         $this->load->library('form_validation');
         $this->load->helper('url');
         $this->load->helper('form');
@@ -92,11 +91,16 @@ class Tb_issuing extends CI_Controller
     public function update($id) 
     {
         if($this->input->post('kode',TRUE)){
-            $kode = $this->Tb_barang_model->kode();
+            $cek = $this->db->get_where('tb_barang',['kode_barcode' => $this->input->post('kode',TRUE)]);
             $scan = $this->db->get_where('tb_barang',['kode_barcode' => $this->input->post('kode',TRUE)])->row();
-            $this->session->set_flashdata('sukses', 'Data Barang '.$scan->nama_barang);
-            $this->simpanBrangBarcode($id,$scan->id_barang,$this->input->post('jumlah',TRUE));
-            redirect($_SERVER['HTTP_REFERER']);
+            if($cek->num_rows() == 1){
+                $this->session->set_flashdata('sukses', 'Data Barang '.$scan->nama_barang);
+                $this->simpanBrangBarcode($id,$scan->id_barang,$this->input->post('jumlah',TRUE));
+                redirect($_SERVER['HTTP_REFERER']);
+            }else{
+                $this->session->set_flashdata('gagal', 'Data barang tidak ada, Silahkan di tambah di Master Barang');
+                redirect($_SERVER['HTTP_REFERER']);
+            }
         }
 
         $row = $this->Tb_issuing_model->get_by_id($id);

@@ -10,7 +10,6 @@ class Tb_receiving extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->model('Tb_barang_model');
         $this->load->model('Tb_receiving_model');
         $this->load->library('form_validation');
         $this->load->helper('url');
@@ -61,47 +60,6 @@ class Tb_receiving extends CI_Controller
         );
 
         $this->template->load('template','receiving/tb_receiving_list', $data);
-    }
-
-    public function save() 
-    {
-        $kode = $this->Tb_barang_model->kode();
-        $scan = $this->db->get_where('tb_data_scan',['kode' => $this->input->post('kode',TRUE)])->row();
-        $cekKode = $this->db->get_where('tb_barang',['kode_barcode' => $this->input->post('kode',TRUE)])->num_rows();
-        if($cekKode == 1){
-            $this->session->set_flashdata('gagal', 'Data Barang Sudah Ada '.$scan->nama_barang);
-            
-            ?>
-            <script>
-                // location.reload();
-            </script>
-            <?php
-        }else{
-        //     $data = array(
-        //         'part_number'   => $kode,
-        //         'nama_barang'   => $scan->nama_barang,
-        //         'kategori'      => '',
-        //         'brand'         => '',
-        //         'satuan'        => '',
-        //         'harga_beli'    => $scan->harga,
-        //         'harga_jual'    => '',
-        //         'ket'           => '',
-        //         'kode_barcode'  =>$scan->kode
-        // );
-
-        // $this->Tb_barang_model->insert($data);
-        
-        // $this->db->select_max('id_barang','idmax');
-        // $idmax = $this->db->get('tb_barang')->row()->idmax;
-        // $data1 = [
-        //     'id_barang' => $idmax,
-        //     'stok'      => ''
-        // ];
-        //     $this->db->insert('tb_stok',$data1);
-            
-        //     $this->session->set_flashdata('sukses', 'Data Barang Berhasil di Input');
-        redirect($_SERVER['HTTP_REFERER']);
-        }
     }
 
     public function read($id) 
@@ -164,11 +122,16 @@ class Tb_receiving extends CI_Controller
     public function update($id) 
     {
         if($this->input->post('kode',TRUE)){
-            $kode = $this->Tb_barang_model->kode();
+            $cek = $this->db->get_where('tb_barang',['kode_barcode' => $this->input->post('kode',TRUE)]);
             $scan = $this->db->get_where('tb_barang',['kode_barcode' => $this->input->post('kode',TRUE)])->row();
-            $this->session->set_flashdata('sukses', 'Data Barang '.$scan->nama_barang);
-            $this->simpanBrangBarcode($id,$scan->id_barang,$this->input->post('jumlah',TRUE));
-            redirect($_SERVER['HTTP_REFERER']);
+            if($cek->num_rows() == 1){
+                $this->session->set_flashdata('sukses', 'Data Barang '.$scan->nama_barang);
+                $this->simpanBrangBarcode($id,$scan->id_barang,$this->input->post('jumlah',TRUE));
+                redirect($_SERVER['HTTP_REFERER']);
+            }else{
+                $this->session->set_flashdata('gagal', 'Data barang tidak ada, Silahkan di tambah di Master Barang');
+                redirect($_SERVER['HTTP_REFERER']);
+            }
         }
 
         $row = $this->Tb_receiving_model->get_by_id($id);
