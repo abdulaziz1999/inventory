@@ -47,17 +47,17 @@
             <p>Date: <?php date_default_timezone_set('Asia/Jakarta'); echo date("d F Y, H:i A");?></p>
         <table class="word-table" style="margin-bottom: 10px">
             <tr>
-                <td width="50"><b id="j">No</b></td>	
+                <td><b id="j">No</b></td>	
 				<td width="180"><b id="j">Nama Barang</b></td>	
-				<td width="180"><b id="j">Kategori Barang</b></td>	
-				<td width="180"><b id="j">Harga Beli</b></td>	
-				<td width="180"><b id="j">Harga Jual</b></td>	
-				<td width="180"><b id="j">Stok Barang</b></td>	
-				<td width="180"><b id="j">Jumlah Baik</b></td>	
-				<td width="180"><b id="j">Jumlah Rusak</b></td>	
-				<td width="180"><b id="j">Jumlah Hilang</b></td>	
-				<td width="180"><b id="j">Minimal Stok</b></td>	
-				<td width="180"><b id="j">Nama Unit</b></td>	
+				<td width="90"><b id="j">Kategori Barang</b></td>	
+				<td width="90"><b id="j">Harga Beli</b></td>	
+				<td width="90"><b id="j">Harga Jual</b></td>	
+				<td width="90"><b id="j">Stok Barang</b></td>	
+				<td width="90"><b id="j">Jumlah Baik</b></td>	
+				<td width="90"><b id="j">Jumlah Rusak</b></td>	
+				<td width="90"><b id="j">Jumlah Hilang</b></td>	
+				<td width="90"><b id="j">Minimal Stok</b></td>	
+				<td width="90"><b id="j">Nama Unit</b></td>	
             </tr><?php
             foreach ($tb_stok_data as $row)
             {
