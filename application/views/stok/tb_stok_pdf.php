@@ -47,26 +47,33 @@
             <p>Date: <?php date_default_timezone_set('Asia/Jakarta'); echo date("d F Y, H:i A");?></p>
         <table class="word-table" style="margin-bottom: 10px">
             <tr>
-                <td width="50"><b id="j">ID</b></td>
-				<td width="140"><b id="j">No. Barang</b></td>	
+                <td width="50"><b id="j">No</b></td>	
 				<td width="180"><b id="j">Nama Barang</b></td>	
-				<td width="230"><b id="j">Kategori</b></td>	
-				<td width="120"><b id="j">Merk</b></td>	
-				<td width="80"><b id="j">Stock</b></td>	
-				<td width="100"><b id="j">Satuan</b></td>
-		
+				<td width="180"><b id="j">Kategori Barang</b></td>	
+				<td width="180"><b id="j">Harga Beli</b></td>	
+				<td width="180"><b id="j">Harga Jual</b></td>	
+				<td width="180"><b id="j">Stok Barang</b></td>	
+				<td width="180"><b id="j">Jumlah Baik</b></td>	
+				<td width="180"><b id="j">Jumlah Rusak</b></td>	
+				<td width="180"><b id="j">Jumlah Hilang</b></td>	
+				<td width="180"><b id="j">Minimal Stok</b></td>	
+				<td width="180"><b id="j">Nama Unit</b></td>	
             </tr><?php
-            foreach ($tb_stok_data->result() as $row)
+            foreach ($tb_stok_data as $row)
             {
                 ?>
                 <tr>
                 <td><?= ++$start ?></td>
-                <td><?= $row->part_number ?></td>
                 <td><?= $row->nama_barang ?></td>	
                 <td><?= $row->nama_kategori ?></td>	
-                <td><?= $row->nama_brand ?></td>	
+                <td><?= $row->harga_beli ?></td>	
+                <td><?= $row->harga_jual ?></td>	
                 <td><?= $row->stok ?></td>	
-                <td><?= $row->nama_satuan ?></td>	
+                <td><?= $row->jml_baik ?></td>	
+                <td><?= $row->jml_rusak ?></td>	
+                <td><?= $row->jml_hilang ?></td>	
+                <td><?= $row->min_stok ?></td>	
+                <td><?= $row->nama_unit ?></td>	
                 </tr>
                 <?php
             }

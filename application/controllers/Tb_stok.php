@@ -167,12 +167,12 @@ class Tb_stok extends CI_Controller
     public function excel()
     {
         $this->load->helper('exportexcel');
-        $namaFile = "tb_stok.xls";
+        $namaFile = "tb_stok.xlsx";
         $judul = "tb_stok";
         $tablehead = 0;
         $tablebody = 1;
         $nourut = 1;
-        //penulisan header
+        // penulisan header
         header("Pragma: public");
         header("Expires: 0");
         header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
@@ -186,18 +186,40 @@ class Tb_stok extends CI_Controller
 
         $kolomhead = 0;
         xlsWriteLabel($tablehead, $kolomhead++, "No");
-	xlsWriteLabel($tablehead, $kolomhead++, "Stok");
-	xlsWriteLabel($tablehead, $kolomhead++, "Amount");
+        xlsWriteLabel($tablehead, $kolomhead++, "Nama Barang");
+        xlsWriteLabel($tablehead, $kolomhead++, "Kategori Barang");
+        xlsWriteLabel($tablehead, $kolomhead++, "Harga beli");
+        xlsWriteLabel($tablehead, $kolomhead++, "Harga jual");
+        xlsWriteLabel($tablehead, $kolomhead++, "Stok");
+        xlsWriteLabel($tablehead, $kolomhead++, "Jumlah Baik");
+        xlsWriteLabel($tablehead, $kolomhead++, "Jumlah Rusak");
+        xlsWriteLabel($tablehead, $kolomhead++, "Jumlah Hilang");
+        xlsWriteLabel($tablehead, $kolomhead++, "Minimal Stok");
+        xlsWriteLabel($tablehead, $kolomhead++, "Nama Unit");
 
-	foreach ($this->Tb_stok_model->get_all() as $data) {
+        $this->db->join('tb_barang tb','tb.id_barang = tb_stok.id_barang');
+        $this->db->join('tb_satuan st','st.id_satuan = tb.satuan');
+        $this->db->join('tb_kategori k','tb.kategori = k.id_kategori');
+        $this->db->join('tb_brand br','tb.brand = br.id_brand');
+        $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
+        $tb_stok = $this->db->get('tb_stok')->result();
+        foreach ($tb_stok as $data) {
             $kolombody = 0;
 
             //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
             xlsWriteNumber($tablebody, $kolombody++, $nourut);
-	    xlsWriteNumber($tablebody, $kolombody++, $data->stok);
-	    xlsWriteNumber($tablebody, $kolombody++, $data->amount);
+	        xlsWriteLabel($tablebody, $kolombody++, $data->nama_barang);
+	        xlsWriteLabel($tablebody, $kolombody++, $data->nama_kategori);
+	        xlsWriteNumber($tablebody, $kolombody++, $data->harga_beli);
+	        xlsWriteNumber($tablebody, $kolombody++, $data->harga_jual);
+	        xlsWriteNumber($tablebody, $kolombody++, $data->stok);
+	        xlsWriteNumber($tablebody, $kolombody++, $data->jml_baik);
+	        xlsWriteNumber($tablebody, $kolombody++, $data->jml_rusak);
+	        xlsWriteNumber($tablebody, $kolombody++, $data->jml_hilang);
+	        xlsWriteNumber($tablebody, $kolombody++, $data->min_stok);
+	        xlsWriteLabel($tablebody, $kolombody++, $data->nama_unit);
 
-	    $tablebody++;
+	        $tablebody++;
             $nourut++;
         }
 
@@ -220,9 +242,14 @@ class Tb_stok extends CI_Controller
 
     public function pdf()
     {
-
+        $this->db->join('tb_barang tb','tb.id_barang = tb_stok.id_barang');
+        $this->db->join('tb_satuan st','st.id_satuan = tb.satuan');
+        $this->db->join('tb_kategori k','tb.kategori = k.id_kategori');
+        $this->db->join('tb_brand br','tb.brand = br.id_brand');
+        $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
+        $tb_stok = $this->db->get('tb_stok')->result();
         $data = array(
-            'tb_stok_data' => $this->Tb_stok_model->get_print_stok(),
+            'tb_stok_data' => $tb_stok,
             'start' => 0
         );
         $mpdf = new \Mpdf\Mpdf(['format' => 'A4-P','orientation' => 'L']);
@@ -230,7 +257,7 @@ class Tb_stok extends CI_Controller
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
         
-        // $this->load->view('stok/tb_stok_pdf',$data);
+        $this->load->view('stok/tb_stok_pdf',$data);
     }
 
     public function tes(){
