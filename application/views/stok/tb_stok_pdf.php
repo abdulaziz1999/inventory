@@ -21,6 +21,7 @@
 
             b#j{
                 font-weight:bold;
+                text-align: center;
             }
         </style>
     </head>
@@ -49,15 +50,15 @@
             <tr>
                 <td><b id="j">No</b></td>	
 				<td width="180"><b id="j">Nama Barang</b></td>	
-				<td width="90"><b id="j">Kategori Barang</b></td>	
-				<td width="90"><b id="j">Harga Beli</b></td>	
-				<td width="90"><b id="j">Harga Jual</b></td>	
-				<td width="90"><b id="j">Stok Barang</b></td>	
-				<td width="90"><b id="j">Jumlah Baik</b></td>	
-				<td width="90"><b id="j">Jumlah Rusak</b></td>	
-				<td width="90"><b id="j">Jumlah Hilang</b></td>	
-				<td width="90"><b id="j">Minimal Stok</b></td>	
-				<td width="90"><b id="j">Nama Unit</b></td>	
+				<td width="90" id="j"><b >Kategori Barang</b></td>	
+				<td width="90" id="j"><b >Harga Beli</b></td>	
+				<td width="90" id="j"><b >Harga Jual</b></td>	
+				<td width="90" id="j"><b >Stok Barang</b></td>	
+				<td width="90" id="j"><b >Jumlah Baik</b></td>	
+				<td width="90" id="j"><b >Jumlah Rusak</b></td>	
+				<td width="90" id="j"><b >Jumlah Hilang</b></td>	
+				<td width="90" id="j"><b >Minimal Stok</b></td>	
+				<td width="90" id="j"><b >Nama Unit</b></td>	
             </tr><?php
             foreach ($tb_stok_data as $row)
             {
@@ -66,13 +67,13 @@
                 <td><?= ++$start ?></td>
                 <td><?= $row->nama_barang ?></td>	
                 <td><?= $row->nama_kategori ?></td>	
-                <td><?= $row->harga_beli ?></td>	
-                <td><?= $row->harga_jual ?></td>	
-                <td><?= $row->stok ?></td>	
-                <td><?= $row->jml_baik ?></td>	
-                <td><?= $row->jml_rusak ?></td>	
-                <td><?= $row->jml_hilang ?></td>	
-                <td><?= $row->min_stok ?></td>	
+                <td id="j"><?= $row->harga_beli ?></td>	
+                <td id="j"><?= $row->harga_jual ?></td>	
+                <td id="j"><?= $row->stok ?></td>	
+                <td id="j"><?= $row->jml_baik ?></td>	
+                <td id="j"><?= $row->jml_rusak ?></td>	
+                <td id="j"><?= $row->jml_hilang ?></td>	
+                <td id="j"><?= $row->min_stok ?></td>	
                 <td><?= $row->nama_unit ?></td>	
                 </tr>
                 <?php
