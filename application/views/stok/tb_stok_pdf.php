@@ -67,8 +67,8 @@
                 <td><?= ++$start ?></td>
                 <td><?= $row->nama_barang ?></td>	
                 <td><?= $row->nama_kategori ?></td>	
-                <td align="center"><?= $row->harga_beli ?></td>	
-                <td align="center"><?= $row->harga_jual ?></td>	
+                <td align="center"><?= number_format($row->harga_beli,0,"",".") ?></td>	
+                <td align="center"><?= number_format($row->harga_jual,0,"",".") ?></td>	
                 <td align="center"><?= $row->stok ?></td>	
                 <td align="center"><?= $row->jml_baik ?></td>	
                 <td align="center"><?= $row->jml_rusak ?></td>	
