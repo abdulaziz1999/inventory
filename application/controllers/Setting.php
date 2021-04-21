@@ -12,7 +12,6 @@ class Setting extends CI_Controller{
 		if($this->session->userdata('true') != 'oke'){
             redirect(base_url());
         }
- 
 	}
 
 	function index(){
