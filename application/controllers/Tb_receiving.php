@@ -136,7 +136,7 @@ class Tb_receiving extends CI_Controller
 
         $row = $this->Tb_receiving_model->get_by_id($id);
         $this->db->join('tb_barang tb','tb.id_barang = tb_receiving_item.id_barang');
-        $data_Receiving = $this->db->get_where('tb_receiving_item',['id_receiving' => $row->id_receiving]);
+        $data_Receiving = $this->db->select('*,sum(jumlah) as jml,sum(harga_jual) as h_jual, sum(harga_beli) as h_beli')->group_by('nama_barang')->get_where('tb_receiving_item',['id_receiving' => $row->id_receiving]);
         if ($row) {
             $data = array(
                 'button'        => 'Ubah',

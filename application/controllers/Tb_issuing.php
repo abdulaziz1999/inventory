@@ -105,7 +105,7 @@ class Tb_issuing extends CI_Controller
 
         $row = $this->Tb_issuing_model->get_by_id($id);
         $this->db->join('tb_barang tb','tb.id_barang = tb_issuing_item.id_barang');
-        $data_Issuing = $this->db->get_where('tb_issuing_item',['id_issuing' => $row->id_issuing]);
+        $data_Issuing = $this->db->select('*,sum(jumlah) as jml,sum(harga_jual) as h_jual, sum(harga_beli) as h_beli')->group_by('nama_barang')->get_where('tb_issuing_item',['id_issuing' => $row->id_issuing]);
         if ($row) {
             $data = array(
                 'button'        => 'Ubah',

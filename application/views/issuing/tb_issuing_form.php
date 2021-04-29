@@ -137,6 +137,7 @@
                                 <tr>
                                     <th width="80px">No</th>
                                     <th>Nama Barang</th>
+                                    <th>Kode Barcode</th>
                                     <th>Harga Beli</th>
                                     <th>Harga Jual</th>
                                     <th>Jumlah</th>
@@ -155,9 +156,10 @@
                                     <td>
                                         <?= $issuing->nama_barang; ?>
                                     </td>
-                                    <td><?= "Rp. ".number_format($issuing->harga_beli,0,"",".") ?></td>
-                                    <td><?= "Rp. ".number_format($issuing->harga_jual,0,"",".") ?></td>
-                                    <td><?= $issuing->jumlah ?></td>
+                                    <td><?= $issuing->kode_barcode ?></td>
+                                    <td><?= "Rp. ".number_format($issuing->h_beli,0,"",".") ?></td>
+                                    <td><?= "Rp. ".number_format($issuing->h_jual,0,"",".") ?></td>
+                                    <td><?= $issuing->jml ?></td>
                                     <td><?= "Rp. ".number_format($issuing->jumlah*$issuing->harga_jual,0,"",".") ?></td>
                                     <td>
                                         <?= anchor(site_url('tb_issuing/deleteitem/'.$issuing->id_itemiss),'<i class="fa fa-trash-o red"></i>','title="delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); ?>

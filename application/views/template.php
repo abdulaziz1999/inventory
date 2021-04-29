@@ -349,7 +349,7 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
-                <li class="">
+                <li class="<?php if($this->uri->segment(1) == 'laporan_opname'){ echo "active"; }else{ echo "";}?>">
                     <a href="<?= base_url('laporan_opname'); ?>">
                         <i class="menu-icon fa fa-folder-open"></i>
                         <span class="menu-text">Stok Opname </span>

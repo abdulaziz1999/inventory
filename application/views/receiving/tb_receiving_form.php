@@ -134,6 +134,7 @@
                                 <tr>
                                     <th width="80px">No</th>
                                     <th>Nama Barang</th>
+                                    <th>Kode Barcode</th>
                                     <th>Harga Beli</th>
                                     <th>Harga Jual</th>
                                     <th>Jumlah</th>
@@ -152,9 +153,10 @@
                                     <td>
                                         <?= $tb_receiving->nama_barang; ?>
                                     </td>
-                                    <td><?= "Rp. ".number_format($tb_receiving->harga_beli,0,"",".") ?></td>
-                                    <td><?= "Rp. ".number_format($tb_receiving->harga_jual,0,"",".") ?></td>
-                                    <td><?= $tb_receiving->jumlah ?></td>
+                                    <td><?= $tb_receiving->kode_barcode ?></td>
+                                    <td><?= "Rp. ".number_format($tb_receiving->h_beli,0,"",".") ?></td>
+                                    <td><?= "Rp. ".number_format($tb_receiving->h_jual,0,"",".") ?></td>
+                                    <td><?= $tb_receiving->jml ?></td>
                                     <td><?= "Rp. ".number_format($tb_receiving->jumlah*$tb_receiving->harga_jual,0,"",".") ?>
                                     </td>
                                     <td>
