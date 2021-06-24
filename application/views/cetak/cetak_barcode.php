@@ -73,7 +73,7 @@
                                 <div class="col-md-6 hide">
                                     <div>
                                         <label for="form-field-select-4"><strong>Jumlah Barcode</strong></label>
-                                        <select class="form-control" id="jumlah" >
+                                        <select class="form-control hide" id="jumlah">
                                             <option value="54" type="hidden">1 halaman</option>
                                             <!-- <?php //for ($a = 1; $a <= 100; $a++) : ?>
                                             <option value="<?= $a ?>"><?= $a ?></option>
@@ -118,7 +118,7 @@
                                                 readonly>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 hide">
                                         <div>
                                             <label for="form-field-select-4"><strong>Jumlah Barcode</strong></label>
                                             <select class="form-control"  id="jumlah">
