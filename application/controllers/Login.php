@@ -38,6 +38,12 @@ class Login extends CI_Controller{
             }elseif($this->session->userdata('true') == TRUE && $this->session->userdata('level') == 'staff'){
                 $this->My_model->dataLog('Login Apps');
                 redirect('admin');
+            }elseif($this->session->userdata('true') == TRUE && $this->session->userdata('level') == 'operator'){
+                $this->My_model->dataLog('Login Apps');
+                redirect('admin');
+            }elseif($this->session->userdata('true') == TRUE && $this->session->userdata('level') == 'admin'){
+                $this->My_model->dataLog('Login Apps');
+                redirect('admin');
             }
         } else{ 
             //untuk menendcode kata
