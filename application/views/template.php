@@ -353,13 +353,12 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
-            <?php if($this->session->userdata('level') == 'admin'){?>
+            <?php if($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'staff'){?>
                 <li class="<?php if($this->uri->segment(1) == 'laporan_opname'){ echo "active"; }else{ echo "";}?>">
                     <a href="<?= base_url('laporan_opname'); ?>">
                         <i class="menu-icon fa fa-folder-open"></i>
                         <span class="menu-text">Stok Opname </span>
                     </a>
-
                     <b class="arrow"></b>
                 </li>
                 <li class="<?php if($this->uri->segment(1) == 'laporan'){ echo "active open"; }
