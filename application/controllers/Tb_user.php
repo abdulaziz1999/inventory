@@ -38,10 +38,10 @@ class Tb_user extends CI_Controller
         $row = $this->Tb_user_model->get_by_id($id);
         if ($row) {
             $data = array(
-		'id_pengguna' => $row->id_pengguna,
-		'nama' => $row->nama,
-		'username' => $row->username,
-		'level' => $row->level,
+            'id_pengguna' => $row->id_pengguna,
+            'nama' => $row->nama,
+            'username' => $row->username,
+            'level' => $row->level,
 	    );
             $this->template->load('template','user/tb_user_read', $data);
         } else {
@@ -53,12 +53,13 @@ class Tb_user extends CI_Controller
     public function create() 
     {
         $data = array(
-            'button' => 'Create',
-            'action' => site_url('tb_user/create_action'),
-            'id_pengguna' => set_value('id_pengguna'),
-            'nama' => set_value('nama'),
-            'username' => set_value('username'),
-            'level' => set_value('level'),
+            'button'        => 'Create',
+            'action'        => site_url('tb_user/create_action'),
+            'id_pengguna'   => set_value('id_pengguna'),
+            'nama'          => set_value('nama'),
+            'username'      => set_value('username'),
+            'level'         => set_value('level'),
+            'password'      => set_value('password'),
 	);
         $this->template->load('template','user/tb_user_form', $data);
     }
@@ -71,9 +72,10 @@ class Tb_user extends CI_Controller
             $this->create();
         } else {
             $data = array(
-		'nama' => $this->input->post('nama',TRUE),
-		'username' => $this->input->post('username',TRUE),
-		'level' => $this->input->post('level',TRUE),
+                'nama'      => $this->input->post('nama',TRUE),
+                'username'  => $this->input->post('username',TRUE),
+                'level'     => $this->input->post('level',TRUE),
+                'password'  => $this->input->post('password',TRUE),
 	    );
 
             $this->Tb_user_model->insert($data);
