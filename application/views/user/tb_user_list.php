@@ -27,29 +27,50 @@
                         </thead>
                         <tbody>
                             <?php
-            $start = 0;
-            foreach ($tb_user_data as $tb_user)
-            {
-                ?>
-                            <tr>
-                                <td><?= ++$start ?></td>
-                                <td><?= $tb_user->nama ?></td>
-                                <td><?= $tb_user->username ?></td>
-                                <td><?= $tb_user->level ?></td>
-                                <td style="text-align:center" width="300px">
-                                    <div class="btn-group btn-corner">
-                                        <?php 
-                                            echo anchor(site_url('tb_user/read/'.$tb_user->id_pengguna),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-info btn-sm')); 
-                                            echo '&nbsp;'; 
-                                            echo anchor(site_url('tb_user/update/'.$tb_user->id_pengguna),'<i class="fa fa-pencil-square-o"></i>',array('title'=>'edit','class'=>'btn btn-success btn-sm')); 
-                                            echo '&nbsp;'; 
-                                            echo anchor(site_url('tb_user/delete/'.$tb_user->id_pengguna),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
-			                            ?>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php
-            }
+                            $start = 0;
+                            foreach ($tb_user_data as $tb_user){
+                                if($tb_user->level != 'superuser' && $this->session->userdata('level') == 'admin'){
+                                    ?>
+                                        <tr>
+                                            <td><?= ++$start ?></td>
+                                            <td><?= $tb_user->nama ?></td>
+                                            <td><?= $tb_user->username ?></td>
+                                            <td><?= $tb_user->level ?></td>
+                                            <td style="text-align:center" width="300px">
+                                                <div class="btn-group btn-corner">
+                                                    <?php 
+                                                        echo anchor(site_url('tb_user/read/'.$tb_user->id_pengguna),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-info btn-sm')); 
+                                                        echo '&nbsp;'; 
+                                                        echo anchor(site_url('tb_user/update/'.$tb_user->id_pengguna),'<i class="fa fa-pencil-square-o"></i>',array('title'=>'edit','class'=>'btn btn-success btn-sm')); 
+                                                        echo '&nbsp;'; 
+                                                        echo anchor(site_url('tb_user/delete/'.$tb_user->id_pengguna),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+                                                    ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                }elseif($this->session->userdata('level') == 'superuser'){
+                                    ?>
+                                    <tr>
+                                            <td><?= ++$start ?></td>
+                                            <td><?= $tb_user->nama ?></td>
+                                            <td><?= $tb_user->username ?></td>
+                                            <td><?= $tb_user->level ?></td>
+                                            <td style="text-align:center" width="300px">
+                                                <div class="btn-group btn-corner">
+                                                    <?php 
+                                                        echo anchor(site_url('tb_user/read/'.$tb_user->id_pengguna),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-info btn-sm')); 
+                                                        echo '&nbsp;'; 
+                                                        echo anchor(site_url('tb_user/update/'.$tb_user->id_pengguna),'<i class="fa fa-pencil-square-o"></i>',array('title'=>'edit','class'=>'btn btn-success btn-sm')); 
+                                                        echo '&nbsp;'; 
+                                                        echo anchor(site_url('tb_user/delete/'.$tb_user->id_pengguna),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+                                                    ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                }
+                            }
             ?>
                         </tbody>
                     </table>
