@@ -216,6 +216,7 @@
 
                     <b class="arrow"></b>
                 </li>
+            <?php if($this->session->userdata('level') == 'admin'){?>
                 <li class="<?php if($this->uri->segment(1) == 'tb_kategori'){ echo "active open"; }
                     elseif($this->uri->segment(1) == 'tb_brand'){ echo "active open"; }
                     elseif($this->uri->segment(1) == 'tb_satuan'){ echo "active open"; }
@@ -298,6 +299,7 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+            <?php }?>
                 <li class="<?php if($this->uri->segment(1) == 'cetak_barcode'){ echo "active"; }else{ echo "";}?>">
                     <a href="<?= base_url('cetak_barcode'); ?>">
                         <i class="menu-icon fa fa-barcode"></i>
@@ -327,6 +329,7 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+            <?php if($this->session->userdata('level') == 'admin'){?>
                 <li
                     class="<?php if($this->uri->segment(1) == 'tb_stok' && $this->uri->segment(2) == ''){ echo "active"; }else{ echo "";}?>">
                     <a href="<?= base_url('tb_stok'); ?>">
@@ -338,6 +341,7 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+            <?php }?>
                 <li class="<?php if($this->uri->segment(2) == 'warning'){ echo "active"; }else{ echo "";}?>">
                     <a href="<?= base_url('tb_stok/warning'); ?>">
                         <i class="menu-icon fa fa-tag"></i>
@@ -349,6 +353,7 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+            <?php if($this->session->userdata('level') == 'admin'){?>
                 <li class="<?php if($this->uri->segment(1) == 'laporan_opname'){ echo "active"; }else{ echo "";}?>">
                     <a href="<?= base_url('laporan_opname'); ?>">
                         <i class="menu-icon fa fa-folder-open"></i>
@@ -402,18 +407,25 @@
                         </li>
                     </ul>
                 </li>
-                <?php if($this->session->userdata('level') == 'superuser'):?>
+            <?php }?>
+                <?php if($this->session->userdata('level') == 'superuser' || $this->session->userdata('level') == 'admin'){?>
                 <li
                     class="<?php if($this->uri->segment(1) == 'tb_user' && $this->uri->segment(2) == ''){ echo "active"; }else{ echo "";}?>">
                     <a href="<?= base_url('tb_user'); ?>">
                         <i class="menu-icon fa fa-users"></i>
                         <span class="menu-text">
                             User
-                            <span class="badge badge-info"><?= $this->db->get('pengguna')->num_rows();?></span>
+                            <?php if($this->session->userdata('level') == 'superuser'){?>
+                                <span class="badge badge-info"><?= $this->db->get('pengguna')->num_rows();?></span>
+                            <?php }elseif($this->session->userdata('level') == 'admin'){?>
+                                <span class="badge badge-info"><?= $this->db->get_where('pengguna',['level !=' => 'superuser'])->num_rows();?></span>
+                            <?php }?>
                         </span>
                     </a>
                     <b class="arrow"></b>
                 </li>
+                <?php }?>
+                <?php if($this->session->userdata('level') == 'superuser'):?>
                 <li
                     class="<?php if($this->uri->segment(1) == 'tb_log' && $this->uri->segment(2) == ''){ echo "active"; }else{ echo "";}?>">
                     <a href="<?= base_url('tb_log'); ?>">
