@@ -75,7 +75,7 @@ class Tb_user extends CI_Controller
                 'nama'      => $this->input->post('nama',TRUE),
                 'username'  => $this->input->post('username',TRUE),
                 'level'     => $this->input->post('level',TRUE),
-                'password'  => $this->input->post('password',TRUE),
+                'password'  => md5($this->input->post('password',TRUE)),
 	    );
 
             $this->Tb_user_model->insert($data);
@@ -90,12 +90,13 @@ class Tb_user extends CI_Controller
 
         if ($row) {
             $data = array(
-                'button' => 'Update',
-                'action' => site_url('tb_user/update_action'),
+                'button'    => 'Update',
+                'action'    => site_url('tb_user/update_action'),
                 'id_pengguna' => set_value('id_pengguna', $row->id_pengguna),
-                'nama' => set_value('nama', $row->nama),
-                'username' => set_value('username', $row->username),
-                'level' => set_value('level', $row->level),
+                'nama'      => set_value('nama', $row->nama),
+                'username'  => set_value('username', $row->username),
+                'level'     => set_value('level', $row->level),
+                'password'  => set_value('password', $row->password),
 	    );
             $this->template->load('template','user/tb_user_form', $data);
         } else {
@@ -111,11 +112,20 @@ class Tb_user extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('id_pengguna', TRUE));
         } else {
-            $data = array(
-                'nama' => $this->input->post('nama',TRUE),
-                'username' => $this->input->post('username',TRUE),
-                'level' => $this->input->post('level',TRUE),
-	    );
+            if($this->input->post('password',TRUE)){
+                $data = array(
+                    'nama'      => $this->input->post('nama',TRUE),
+                    'username'  => $this->input->post('username',TRUE),
+                    'level'     => $this->input->post('level',TRUE),
+                    'password'  => md5($this->input->post('password',TRUE)),
+                );
+            }else{
+                $data = array(
+                    'nama'      => $this->input->post('nama',TRUE),
+                    'username'  => $this->input->post('username',TRUE),
+                    'level'     => $this->input->post('level',TRUE),
+                );
+            }
 
             $this->Tb_user_model->update($this->input->post('id_pengguna', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
@@ -142,8 +152,6 @@ class Tb_user extends CI_Controller
 	$this->form_validation->set_rules('nama', 'nama user', 'trim|required');
 	$this->form_validation->set_rules('username', 'username', 'trim|required');
 	$this->form_validation->set_rules('level', 'hak akses', 'trim|required');
-	$this->form_validation->set_rules('avatar', 'avatar', 'trim|required');
-
 	$this->form_validation->set_rules('id_pengguna', 'id_pengguna', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
