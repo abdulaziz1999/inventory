@@ -7,9 +7,9 @@
                     <h3 class='box-title'>TB_USER LIST</h3>
                     <div class="btn-group btn-corner">
                         <?= anchor('tb_user/create/','Create',['class'=>'btn btn-primary btn-sm']);?>
-                        <?= anchor(site_url('tb_user/excel'), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-success btn-sm"'); ?>
+                        <!-- <?= anchor(site_url('tb_user/excel'), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-success btn-sm"'); ?>
                         <?= anchor(site_url('tb_user/word'), '<i class="fa fa-file-word-o"></i> Word ', 'class="btn btn-info btn-sm" style="margin-right:2px;"'); ?>
-                        <?= anchor(site_url('tb_user/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-danger btn-sm"'); ?>
+                        <?= anchor(site_url('tb_user/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-danger btn-sm"'); ?> -->
                     </div>
                     <br>
                     <br>
