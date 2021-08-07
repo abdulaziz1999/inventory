@@ -200,11 +200,11 @@
                             <label for="barang">Nama Barang :</label>
                             <div class="form-group">
                                 <select class="form-control col-md-12" type="text" name="barang" required>
-                                    <option value="" selected disabled>Nama Barang_Satuan</option>
+                                    <option value="" selected disabled>Nama Barang - [ Stok ] </option>
                                     <?php foreach($barang as $row){?>
                                     <option value="<?= $row->id_barang?>">
-                                        <?= $row->nama_barang?>_<?= $this->db->get_where('tb_stok',['id_barang' => $row->id_barang])->row()->stok?>
-                                        <?php $s = $this->db->get_where('tb_barang',['id_barang' => $row->id_barang])->row()->satuan; echo $this->db->get_where('tb_satuan',['id_satuan' => $s])->row()->nama_satuan;?>
+                                        <?= $row->nama_barang?> _ [ <?= $this->db->get_where('tb_stok',['id_barang' => $row->id_barang])->row()->stok?> 
+                                        <?php $s = $this->db->get_where('tb_barang',['id_barang' => $row->id_barang])->row()->satuan; echo $this->db->get_where('tb_satuan',['id_satuan' => $s])->row()->nama_satuan;?> ]
                                     </option>
                                     <?php }?>
                                 </select>
