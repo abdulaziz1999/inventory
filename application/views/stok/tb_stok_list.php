@@ -88,8 +88,11 @@
                                     <td>
                                     <?php 
                             // echo anchor(site_url('tb_stok/read/'.$tb_stok->id_barang),'<i class="fa fa-eye"></i>',array('title'=>'detail','class'=>'btn btn-danger btn-sm')); 
-                            // echo '  '; 
-                            echo anchor(site_url('tb_stok/update/'.$tb_stok->id_barang),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-success btn-sm btn-round')); 
+                            // echo '  ';
+                            if($this->session->userdata('level') == 'operator') {
+                            }else{
+                                echo anchor(site_url('tb_stok/update/'.$tb_stok->id_barang),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-success btn-sm btn-round')); 
+                            }
                             // echo '  '; 
                             // echo anchor(site_url('tb_stok/delete/'.$tb_stok->id_barang),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
 			                ?>
