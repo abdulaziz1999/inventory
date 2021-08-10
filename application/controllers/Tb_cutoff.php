@@ -110,11 +110,20 @@ class Tb_cutoff extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('id_cutoff', TRUE));
         } else {
-            $data = array(
-                'start' => $this->input->post('start',TRUE),
-                'end'   => $this->input->post('end',TRUE),
-                'status'=> $this->input->post('status',TRUE),
-	    );
+            if($this->input->post('status',TRUE) == 1){
+                $this->db->update('tb_cutoff',['status' => 0]);            
+                $data = array(
+                    'start' => $this->input->post('start',TRUE),
+                    'end'   => $this->input->post('end',TRUE),
+                    'status'=> $this->input->post('status',TRUE),
+                );
+            }else{
+                $data = array(
+                    'start' => $this->input->post('start',TRUE),
+                    'end'   => $this->input->post('end',TRUE),
+                    'status'=> $this->input->post('status',TRUE),
+                );
+            }
 
             $this->Tb_cutoff_model->update($this->input->post('id_cutoff', TRUE), $data);
             $this->My_model->dataLog('Update data cutoff');

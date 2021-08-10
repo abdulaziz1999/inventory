@@ -4,7 +4,7 @@
         <div class='col-xs-12'>
             <div class='box'>
                 <div class='box-header'>
-                <h3 class="table-header text-center"><strong>Read Satuan Barang</strong></h3>
+                <h3 class="table-header text-center"><strong>Read Data Cut Off</strong></h3>
                     <table class="table table-bordered">
                         <tr>
                             <td>Tanggal Awal</td>

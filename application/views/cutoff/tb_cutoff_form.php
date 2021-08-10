@@ -22,7 +22,7 @@
                                 <tr>
                                     <td>Status <?= form_error('status') ?></td>
                                     <td>
-                                        <select class="form-control" name="level"  required>
+                                        <select class="form-control" name="status"  required>
                                             <option>----Pilih Status----</option>
                                         <?php if($this->uri->segment(2) == 'update'){?>
                                             <?php if($status == 1){?>

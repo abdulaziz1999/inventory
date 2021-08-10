@@ -17,7 +17,7 @@
                     <!-- <?= anchor(site_url('tb_cutoff/excel'), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-primary btn-sm"'); ?>
                     <?= anchor(site_url('tb_cutoff/word'), '<i class="fa fa-file-word-o"></i> Word', 'class="btn btn-primary btn-sm"'); ?> 
                     <?= anchor(site_url('tb_cutoff/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-primary btn-sm"'); ?> -->
-                    <h3 class="table-header text-center"><strong>Tabel Satuan Barang</strong></h3>
+                    <h3 class="table-header text-center"><strong>Tabel Data Cut Off</strong></h3>
                 </div><!-- /.box-header -->
                 <div class='box-body'>
 
