@@ -72,8 +72,8 @@ class Tb_receiving_model extends CI_Model
         $this->db->delete($this->table);
     }
 
-    function get_sup($uri){
-                $this->db->select('*');
+    function get_sup($uri){ 
+                $this->db->select('*,sum(jumlah) as jml');
                 $this->db->from('tb_barang b');
                 $this->db->join('tb_receiving_item r','b.id_barang = r.id_barang');
                 $this->db->join('tb_receiving r2','r.id_receiving = r2.id_receiving');
@@ -81,6 +81,9 @@ class Tb_receiving_model extends CI_Model
                 $this->db->join('tb_satuan s','b.satuan = s.id_satuan');
                 $this->db->join('tb_kategori k','b.kategori = k.id_kategori');
                 $this->db->join('tb_brand br','b.brand = br.id_brand');
+                $this->db->join('tb_suplier sup','sup.id_suplier = r2.supplier');
+                $this->db->join('tb_pemesan pms','pms.id_pemesan = r2.remarks');
+                $this->db->group_by('nama_barang');
                 $this->db->where(['r2.id_receiving' => $uri]);
         $data = $this->db->get();
         return $data;

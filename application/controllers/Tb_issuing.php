@@ -320,7 +320,7 @@ class Tb_issuing extends CI_Controller
 
         $data['sup'] = $this->Tb_issuing_model->get_picker($uri);
 
-        $mpdf = new \Mpdf\Mpdf(['format' => 'A4-P','orientation' => 'P']);
+        $mpdf = new \Mpdf\Mpdf(['tempDir' => '/tmp','format' => 'A4-P','orientation' => 'P']);
 		$html = $this->load->view('issuing/tb_issuing_pdf',$data,true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
