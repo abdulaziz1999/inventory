@@ -7,16 +7,20 @@
                 <h3 class="table-header text-center"><strong>Read Satuan Barang</strong></h3>
                     <table class="table table-bordered">
                         <tr>
-                            <td>Nama Satuan</td>
-                            <td><?= $nama_satuan; ?></td>
+                            <td>Tanggal Awal</td>
+                            <td><?= $start; ?></td>
                         </tr>
                         <tr>
-                            <td>Ket</td>
-                            <td><?= $ket; ?></td>
+                            <td>Tanggal Akhir</td>
+                            <td><?= $end; ?></td>
+                        </tr>
+                        <tr>
+                            <td>Satatus</td>
+                            <td><?= $status == 1 ? '<span class="label label-warning arrowed arrowed-right"> Active</span>' : '<span class="label label-danger arrowed">Non Active</span>' ?></td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td><a href="<?= site_url('tb_satuan') ?>" class="btn btn-danger btn-round ntn-sm">Kembali</a></td>
+                            <td><a href="<?= site_url('tb_cutoff') ?>" class="btn btn-sm btn-danger btn-round ntn-sm">Kembali</a></td>
                         </tr>
                     </table>
                 </div><!-- /.box-body -->

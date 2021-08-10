@@ -39,8 +39,9 @@ class Tb_cutoff extends CI_Controller
         if ($row) {
             $data = array(
                 'id_cutoff' => $row->id_cutoff,
-                'nama_cutoff' => $row->nama_cutoff,
-                'ket' => $row->ket,
+                'start'     => $row->start,
+                'end'       => $row->end,
+                'status'    => $row->status,
 	    );
             $this->template->load('template','cutoff/tb_cutoff_read', $data);
         } else {
@@ -55,8 +56,9 @@ class Tb_cutoff extends CI_Controller
             'button' => 'Create',
             'action' => site_url('tb_cutoff/create_action'),
             'id_cutoff' => set_value('id_cutoff'),
-            'nama_cutoff' => set_value('nama_cutoff'),
-            'ket' => set_value('ket'),
+            'start' => set_value('start'),
+            'end' => set_value('end'),
+            'status' => set_value('status'),
 	);
         $this->template->load('template','cutoff/tb_cutoff_form', $data);
     }
@@ -69,8 +71,9 @@ class Tb_cutoff extends CI_Controller
             $this->create();
         } else {
             $data = array(
-                'nama_cutoff' => $this->input->post('nama_cutoff',TRUE),
-                'ket' => $this->input->post('ket',TRUE),
+                'start' => $this->input->post('start',TRUE),
+                'end'   => $this->input->post('end',TRUE),
+                'status'=> $this->input->post('status',TRUE),
 	    );
 
             $this->Tb_cutoff_model->insert($data);
@@ -89,8 +92,9 @@ class Tb_cutoff extends CI_Controller
                 'button' => 'Update',
                 'action' => site_url('tb_cutoff/update_action'),
                 'id_cutoff' => set_value('id_cutoff', $row->id_cutoff),
-                'nama_cutoff' => set_value('nama_cutoff', $row->nama_cutoff),
-                'ket' => set_value('ket', $row->ket),
+                'start' => set_value('start', $row->start),
+                'end' => set_value('end', $row->end),
+                'status' => set_value('status', $row->status),
 	    );
             $this->template->load('template','cutoff/tb_cutoff_form', $data);
         } else {
@@ -107,8 +111,9 @@ class Tb_cutoff extends CI_Controller
             $this->update($this->input->post('id_cutoff', TRUE));
         } else {
             $data = array(
-                'nama_cutoff'   => $this->input->post('nama_cutoff',TRUE),
-                'ket'           => $this->input->post('ket',TRUE),
+                'start' => $this->input->post('start',TRUE),
+                'end'   => $this->input->post('end',TRUE),
+                'status'=> $this->input->post('status',TRUE),
 	    );
 
             $this->Tb_cutoff_model->update($this->input->post('id_cutoff', TRUE), $data);
@@ -136,8 +141,8 @@ class Tb_cutoff extends CI_Controller
 
     public function _rules() 
     {
-        $this->form_validation->set_rules('nama_cutoff', 'nama cutoff', 'trim|required');
-        $this->form_validation->set_rules('ket', 'ket', 'trim|required');
+        $this->form_validation->set_rules('start', 'start', 'trim|required');
+        $this->form_validation->set_rules('end', 'end', 'trim|required');
         $this->form_validation->set_rules('id_cutoff', 'id_cutoff', 'trim');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
