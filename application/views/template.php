@@ -213,9 +213,20 @@
                         <i class="menu-icon fa fa-th-large"></i>
                         <span class="menu-text"> Dashboard </span>
                     </a>
-
                     <b class="arrow"></b>
                 </li>
+            <?php if($this->session->userdata('level') == 'admin' ){?>
+                <li class="<?php if($this->uri->segment(1) == 'tb_cutoff'){ echo "active"; }else{ echo "";}?>">
+                    <a href="<?= base_url('tb_cutoff'); ?>">
+                        <i class="menu-icon fa fa-cut"></i>
+                        <span class="menu-text"> Data Cutoff </span>
+                        <span class="badge badge-transparent tooltip-error" title="" data-original-title="2 Important Events">
+                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                        </span>
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            <?php }?>
             <?php if($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'staff'){?>
                 <li class="<?php if($this->uri->segment(1) == 'tb_kategori'){ echo "active open"; }
                     elseif($this->uri->segment(1) == 'tb_brand'){ echo "active open"; }
@@ -546,6 +557,7 @@
     }, 5000);
     $(document).ready(function() {
         $("#mytable").DataTable();
+        $("#mytable1").DataTable();
     });
     </script>
 
