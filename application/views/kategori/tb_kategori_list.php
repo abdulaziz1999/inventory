@@ -41,7 +41,7 @@
                                     <div class="btn-group btn-corner">
                                         <?php 
                                             echo anchor(site_url('tb_kategori/read/'.$tb_kategori->id_kategori),'<i class="fa fa-eye"></i> Detail',array('title'=>'detail','class'=>'btn btn-sm btn-info ')); 
-                                            echo '  '; 
+                                            echo '&nbsp;'; 
                                             echo anchor(site_url('tb_kategori/update/'.$tb_kategori->id_kategori),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-sm btn-success ')); 
                                             echo '  '; 
                                             //echo anchor(site_url('tb_kategori/delete/'.$tb_kategori->id_kategori),'<i class="fa fa-trash-o"></i>','title="delete" class="btn btn-sm btn-danger " onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
