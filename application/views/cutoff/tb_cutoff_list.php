@@ -41,7 +41,7 @@
                                 <td><?= ++$start ?></td>
                                 <td><?= date_indo($tb_cutoff->start) ?></td>
                                 <td><?= date_indo($tb_cutoff->end) ?></td>
-                                <td><?= $tb_cutoff->status == 1 ? '<span class="label label-warning arrowed arrowed-right"> Active</span>' : '<span class="label label-danger arrowed">Non Active</span>' ?></td>
+                                <td><?= $tb_cutoff->status == 1 ? '<span class="label label-success arrowed arrowed-right"> Active</span>' : '<span class="label label-danger arrowed">Non Active</span>' ?></td>
                                 <td style="text-align:center" width="300px">
                                     <div class="btn-group btn-corner">
                                         <?php 
