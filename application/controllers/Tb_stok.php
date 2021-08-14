@@ -252,7 +252,7 @@ class Tb_stok extends CI_Controller
             'tb_stok_data' => $tb_stok,
             'start' => 0
         );
-        $mpdf = new \Mpdf\Mpdf(['format' => 'A4-P','orientation' => 'L']);
+        $mpdf = new \Mpdf\Mpdf(['tempDir' => '/tmp','format' => 'A4-P','orientation' => 'L']);
 		$html = $this->load->view('stok/tb_stok_pdf',$data,true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
