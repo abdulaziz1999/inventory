@@ -8,11 +8,11 @@
                     <table class="table table-bordered">
                         <tr>
                             <td>Tanggal Awal</td>
-                            <td><?= $start; ?></td>
+                            <td><?= date_indo($start); ?></td>
                         </tr>
                         <tr>
                             <td>Tanggal Akhir</td>
-                            <td><?= $end; ?></td>
+                            <td><?= date_indo($end); ?></td>
                         </tr>
                         <tr>
                             <td>Satatus</td>
