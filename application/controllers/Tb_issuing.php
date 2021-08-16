@@ -72,7 +72,7 @@ class Tb_issuing extends CI_Controller
     
     public function create_action() 
     {
-       
+        $idcutoff = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
             $data = array(
                 'tgl'           => $this->input->post('tgl',TRUE),
                 'no_ref'        => $this->input->post('no_ref',TRUE),
@@ -80,6 +80,7 @@ class Tb_issuing extends CI_Controller
                 'remarks'       => $this->input->post('remarks',TRUE),
                 'nama_proyek'   => $this->input->post('nama_proyek',TRUE),
                 'ket'           => $this->input->post('ket',TRUE),
+                'idcutoff'      => $idcutoff
 	    );
 
             $this->Tb_issuing_model->insert($data);
