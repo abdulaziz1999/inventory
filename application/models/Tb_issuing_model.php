@@ -18,8 +18,9 @@ class Tb_issuing_model extends CI_Model
     // get all
     function get_all()
     {
+        $idcutoff = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
         $this->db->order_by($this->id, $this->order);
-        return $this->db->get($this->table)->result();
+        return $this->db->get_where($this->table,['idcutoff' => $idcutoff])->result();
     }
 
     // get data by id
