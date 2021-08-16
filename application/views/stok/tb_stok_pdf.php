@@ -44,10 +44,12 @@
 
     </table>
     <hr style="color:black;">
-            <p align="center"><b><u>REPORT STOK</u></b></p>
-            <p>Date: <?php date_default_timezone_set('Asia/Jakarta'); echo date("d F Y, H:i A");?></p>
+    
+            <p align="center"><b id="j"><u>LAPORAN STOK</u></b></p>
+            <p>Tanggal: <?php date_default_timezone_set('Asia/Jakarta'); echo date("d F Y, H:i A");?></p>
+
         <table class="word-table" style="margin-bottom: 10px">
-            <tr align="center">
+            <tr align="center" bgcolor="#2eb3ff">
                 <td><b id="j">No</b></td>	
 				<td width="180"><b id="j">Nama Barang</b></td>	
 				<td width="90"><b id="j">Kategori Barang</b></td>	

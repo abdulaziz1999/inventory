@@ -106,17 +106,27 @@ class Tb_cutoff extends CI_Controller
     public function update_action() 
     {
         $this->_rules();
-
+        $idcutoff = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('id_cutoff', TRUE));
         } else {
             if($this->input->post('status',TRUE) == 1){
-                $this->db->update('tb_cutoff',['status' => 0]);            
+                $this->db->update('tb_cutoff',['status' => '0']);            
                 $data = array(
                     'start' => $this->input->post('start',TRUE),
                     'end'   => $this->input->post('end',TRUE),
                     'status'=> $this->input->post('status',TRUE),
                 );
+                $this->Tb_cutoff_model->update($this->input->post('id_cutoff', TRUE), $data);
+                $cutoffNow = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
+
+                $this->db->query("INSERT tb_stok (stok, jml_baik, jml_rusak, jml_hilang, idcutoff)
+                SELECT tok, jml_baik, jml_rusak, jml_hilang, {$cutoffNow}
+                FROM tb_stok
+                WHERE idcutoff = '{$idcutoff}'");
+
+                $this->My_model->dataLog('Update data cutoff');
+                $this->session->set_flashdata('message', 'Update Record Success');
             }else{
                 $data = array(
                     'start' => $this->input->post('start',TRUE),
@@ -124,10 +134,6 @@ class Tb_cutoff extends CI_Controller
                     'status'=> $this->input->post('status',TRUE),
                 );
             }
-
-            $this->Tb_cutoff_model->update($this->input->post('id_cutoff', TRUE), $data);
-            $this->My_model->dataLog('Update data cutoff');
-            $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('tb_cutoff'));
         }
     }
