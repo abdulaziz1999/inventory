@@ -80,7 +80,7 @@
                                     <td>Keterangan <?= form_error('ket') ?></td>
                                     <td><input type="text" class="form-control" name="ket" id="ket"
                                             placeholder="Keterangan" value="<?= $ket; ?>" />
-                                    <input type="hidden" name="id_issuing" value="<?= $id_issuing; ?>" />
+                                        <input type="hidden" name="id_issuing" value="<?= $id_issuing; ?>" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -157,12 +157,12 @@
                                         <?= $issuing->nama_barang; ?>
                                     </td>
                                     <td><?= $issuing->kode_barcode ?></td>
-                                    <td><?= "Rp. ".number_format($issuing->h_beli,0,"",".") ?></td>
-                                    <td><?= "Rp. ".number_format($issuing->h_jual,0,"",".") ?></td>
+                                    <td><?= "Rp. ".rupiah($issuing->harga_beli) ?></td>
+                                    <td><?= "Rp. ".rupiah($issuing->harga_jual) ?></td>
                                     <td><?= $issuing->jml ?></td>
-                                    <td><?= "Rp. ".number_format($issuing->jumlah*$issuing->harga_jual,0,"",".") ?></td>
+                                    <td><?= "Rp. ".rupiah($issuing->jumlah*$issuing->harga_jual) ?></td>
                                     <td>
-                                        <?= anchor(site_url('tb_issuing/deleteitem/'.$issuing->id_itemiss),'<i class="fa fa-trash-o red"></i>','title="delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); ?>
+                                        <?= anchor(site_url('tb_issuing/deleteitem/'.$issuing->id_itemiss),'<i class="fa fa-trash-o"></i> Hapus','class="btn btn-danger btn-sm btn-round" title="delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); ?>
                                     </td>
 
                                 </tr>
@@ -171,6 +171,54 @@
                           ?>
                             </tbody>
                         </table>
+                        <hr>
+                    <?php if($b_pending->num_rows() >= 1):?>
+                        <?php $length = $this->db->get_where('tb_issuing_temp',['id_issuing' => $this->uri->segment(3)])->num_rows();?>
+                        <h3 class="table-header text-center"><strong>Data Barang Keluar Pending</strong>
+                        <?php if($this->session->userdata('level') == 'superuser' || $this->session->userdata('level') == 'admin'){?>
+                                <?= $length ? anchor(site_url('tb_issuing/approve_all/'.$length.'/'.$this->uri->segment(3)),'<i class="fa fa-cloud-upload"></i> Approve','title="approve" class="btn btn-success btn-round btn-sm" style="float:right; margin-right:9px; margin-top:3px;" onclick="javasciprt: return confirm(\'Anda Yakin ingin approve ?\')"') : '' ?>
+                            <?php }?>
+                        </h3>
+                        <table class="table table-hover table-striped" id="mytable">
+                            <thead>
+                                <tr>
+                                    <th width="80px">No</th>
+                                    <th>Nama Barang</th>
+                                    <th>Kode Barcode</th>
+                                    <th>Harga Beli</th>
+                                    <th>Harga Jual</th>
+                                    <th>Jumlah</th>
+                                    <th>Harga Jual x Jumlah</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                          $start = 0;
+                          foreach ($b_pending->result() as $issuing)
+                          {
+                              ?>
+                                <tr>
+                                    <td><?= ++$start ?></td>
+                                    <td>
+                                        <?= $issuing->nama_barang; ?>
+                                    </td>
+                                    <td><?= $issuing->kode_barcode ?></td>
+                                    <td><?= "Rp. ".rupiah($issuing->harga_beli) ?></td>
+                                    <td><?= "Rp. ".rupiah($issuing->harga_jual) ?></td>
+                                    <td><?= $issuing->jml ?></td>
+                                    <td><?= "Rp. ".rupiah($issuing->jumlah*$issuing->harga_jual) ?></td>
+                                    <td>
+                                        <?= anchor(site_url('tb_issuing/deletePending/'.$issuing->id_pendings.'/'.$this->uri->segment(3)),'<i class="fa fa-trash-o"></i> Hapus','class="btn btn-danger btn-sm btn-round" title="delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); ?>
+                                    </td>
+
+                                </tr>
+                                <?php
+                          }
+                          ?>
+                            </tbody>
+                        </table>
+                    <?php endif;?>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
@@ -191,7 +239,7 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="<?= base_url('tb_issuing/simpan_barang')?>/<?= $this->uri->segment(3)?>" method="post">
+                <form action="<?= base_url('tb_issuing/simpan_pending')?>/<?= $this->uri->segment(3)?>" method="post">
                     <div class="row">
                         <div class="col-md-12">
                             <label for="barang">Nama Barang :</label>
@@ -200,8 +248,10 @@
                                     <option value="" selected disabled>Nama Barang - [ Stok ] </option>
                                     <?php foreach($barang as $row){?>
                                     <option value="<?= $row->id_barang?>">
-                                        <?= $row->nama_barang?> _ [ <?= $this->db->get_where('tb_stok',['id_barang' => $row->id_barang])->row()->stok?>
-                                        <?php $s = $this->db->get_where('tb_barang',['id_barang' => $row->id_barang])->row()->satuan; echo $this->db->get_where('tb_satuan',['id_satuan' => $s])->row()->nama_satuan;?> ]
+                                        <?= $row->nama_barang?> _ [
+                                        <?= $this->db->get_where('tb_stok',['id_barang' => $row->id_barang])->row()->stok?>
+                                        <?php $s = $this->db->get_where('tb_barang',['id_barang' => $row->id_barang])->row()->satuan; echo $this->db->get_where('tb_satuan',['id_satuan' => $s])->row()->nama_satuan;?>
+                                        ]
                                     </option>
                                     <?php }?>
                                 </select>
