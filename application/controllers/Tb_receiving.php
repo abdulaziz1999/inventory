@@ -102,6 +102,7 @@ class Tb_receiving extends CI_Controller
     
     public function create_action() 
     {
+        $idcutoff = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
         $this->_rules();
             $data = array(
             'tgl'           => $this->input->post('tgl',TRUE),
@@ -110,6 +111,7 @@ class Tb_receiving extends CI_Controller
             'remarks'       => $this->input->post('remarks',TRUE),
             'nama_proyek'   => $this->input->post('nama_proyek',TRUE),
             'ket'           => $this->input->post('ket',TRUE),
+            'idcutoff'      => $idcutoff
 	    );
 
         $this->Tb_receiving_model->insert($data);
