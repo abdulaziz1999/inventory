@@ -95,7 +95,7 @@ class Tb_issuing extends CI_Controller
             $scan = $this->db->get_where('tb_barang',['kode_barcode' => $this->input->post('kode',TRUE)])->row();
             if($cek->num_rows() == 1){
                 $this->session->set_flashdata('sukses', 'Data Barang '.$scan->nama_barang);
-                $this->simpanBrangBarcode($id,$scan->id_barang,$this->input->post('jumlah',TRUE));
+                $this->simpanBrangBarcodePending($id,$scan->id_barang,$this->input->post('jumlah',TRUE));
                 redirect($_SERVER['HTTP_REFERER']);
             }else{
                 $this->session->set_flashdata('gagal', 'Data barang tidak ada, Silahkan di tambah di Master Barang');
@@ -105,7 +105,9 @@ class Tb_issuing extends CI_Controller
 
         $row = $this->Tb_issuing_model->get_by_id($id);
         $this->db->join('tb_barang tb','tb.id_barang = tb_issuing_item.id_barang');
-        $data_Issuing = $this->db->select('*,sum(jumlah) as jml,sum(harga_jual) as h_jual, sum(harga_beli) as h_beli')->group_by('nama_barang')->get_where('tb_issuing_item',['id_issuing' => $row->id_issuing]);
+        $data_Issuing = $this->db->select('*,sum(jumlah) as jml')->group_by('nama_barang')->get_where('tb_issuing_item',['id_issuing' => $row->id_issuing]);
+        $this->db->join('tb_barang tb','tb.id_barang = tb_issuing_temp.id_barang');
+        $data_Pending = $this->db->select('*,sum(jumlah) as jml')->group_by('nama_barang')->get_where('tb_issuing_temp',['id_issuing' => $row->id_issuing]);
         if ($row) {
             $data = array(
                 'button'        => 'Ubah',
@@ -118,12 +120,17 @@ class Tb_issuing extends CI_Controller
                 'nama_proyek'   => set_value('nama_proyek',$row->nama_proyek),
                 'ket'           => set_value('ket',$row->ket), 
                 'b_issuing'     => $data_Issuing,
+                'b_pending'     => $data_Pending,
                 'barang'        => $this->db->get('tb_barang')->result(),
                 'nm_proyek'     => @$this->db->get('tb_proyek'),
                 'nm_customer'   => @$this->db->get('tb_customer'),
                 'nm_pemesan'    => @$this->db->get('tb_pemesan'),
                 );
-            $this->template->load('template','issuing/tb_issuing_form', $data);
+            if($this->session->userdata('level') == 'superuser' || $this->session->userdata('level') == 'admin'){
+                $this->template->load('template','issuing/tb_issuing_form', $data);
+            }else{
+                $this->template->load('template','issuing/tb_issuing_form_pending', $data);
+            }
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect($_SERVER['HTTP_REFERER']);
@@ -154,6 +161,12 @@ class Tb_issuing extends CI_Controller
         $stok       = $this->db->get_where('tb_stok',['id_barang' => $idbarang ])->row()->stok;
         $sisa = $stok - $jmlout;
         if($sisa >= 0){
+            
+            $this->db->select_max('id_itemiss','max');
+            $idmax      = $this->db->get('tb_issuing_item')->row()->max;
+            $id         = $this->db->get_where('tb_issuing_item',['id_itemiss' => $idmax])->row();
+            $jmlstok    = $this->db->get_where('tb_stok',['id_barang' => $id->id_barang])->row()->stok;
+            $issuing    = $jmlstok - $id->jumlah;
             $data = [
                 'id_issuing'    => $uri,
                 'id_barang'     => $this->input->post('barang', TRUE),
@@ -162,12 +175,6 @@ class Tb_issuing extends CI_Controller
             
             $this->db->insert('tb_issuing_item',$data);
     
-                          $this->db->select_max('id_itemiss','max');
-            $idmax      = $this->db->get('tb_issuing_item')->row()->max;
-            $id         = $this->db->get_where('tb_issuing_item',['id_itemiss' => $idmax])->row();
-            $jmlstok    = $this->db->get_where('tb_stok',['id_barang' => $id->id_barang])->row()->stok;
-            $issuing    = $jmlstok - $id->jumlah;
-    
             $data2 = [
                 'stok' => $issuing
             ];
@@ -175,11 +182,74 @@ class Tb_issuing extends CI_Controller
             $this->db->update('tb_stok', $data2, ['id_barang' =>$id->id_barang]);
             $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
             redirect($_SERVER['HTTP_REFERER']);
-        }elseif($stok == 0 || $sisa < 0){
+        }elseif($stok == 0 || $sisa <= 0){
             $this->session->set_flashdata('gagal', "Jumlah barang tidak mencukupi");
             redirect($_SERVER['HTTP_REFERER']);
         }
 
+    }
+
+    //simpan pending
+    function simpan_pending($uri){
+        $idbarang   = $this->input->post('barang', TRUE);
+        $jmlout     = $this->input->post('jumlah', TRUE);
+            $data = [
+                'id_issuing'    => $uri,
+                'id_barang'     => $idbarang,
+                'jumlah'        => $jmlout
+            ];
+            
+        $this->db->insert('tb_issuing_temp',$data);
+        $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    //Approve All
+    function approve_all($loop,$uri){  
+            $x = 1;
+ 
+            while($x <= $loop) {
+            echo "The number is: $x <br>";
+            
+                $this->db->select_max('id_pendings','max');
+                $idmax      = $this->db->get('tb_issuing_temp')->row()->max;
+                $id         = $this->db->get_where('tb_issuing_temp',['id_pendings' => $idmax])->row();
+                $jmlstok    = $this->db->get_where('tb_stok',['id_barang' => $id->id_barang])->row()->stok;
+                $issuing    = $jmlstok - $id->jumlah;
+
+                if($issuing >= 0){
+                    $data = [
+                        'id_issuing'    => $uri,
+                        'id_barang'     => $id->id_barang ,
+                        'jumlah'        => $id->jumlah
+                    ];                
+                    $data2 = ['stok' => $issuing];
+                    $this->db->insert('tb_issuing_item',$data);
+                    $this->db->update('tb_stok', $data2,['id_barang' =>$id->id_barang]);
+                    $this->db->delete('tb_issuing_temp',['id_pendings' => $idmax]);
+
+                    $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
+                    redirect($_SERVER['HTTP_REFERER']);
+
+                }elseif($stok == 0 || $sisa <= 0){
+                    $this->session->set_flashdata('gagal', "Jumlah barang tidak mencukupi");
+                    redirect($_SERVER['HTTP_REFERER']);
+                }
+                $x++;
+            }        
+    }    
+
+    //Delete barang Pending
+    function deletePending($id,$uri){
+        $id_barang = $this->db->get_where('tb_issuing_temp',['id_pendings' => $id])->row()->id_barang;
+        $cek = $this->db->get_where('tb_issuing_temp',['id_barang' => $id_barang])->num_rows();
+        if($cek > 1){
+            $this->db->delete('tb_issuing_temp',['id_issuing' => $uri, 'id_barang' => $id_barang]);
+        }else{
+            $this->db->delete('tb_issuing_temp',['id_pendings' => $id]);
+        }
+        $this->session->set_flashdata('sukses', "Hapus Barang Masuk Berhasil");
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
     function simpanBrangBarcode($uri,$id_barang,$jumlah){
@@ -214,6 +284,18 @@ class Tb_issuing extends CI_Controller
             redirect($_SERVER['HTTP_REFERER']);
         }
 
+    }
+
+    function simpanBrangBarcodePending($uri,$id_barang,$jumlah){
+            $data = [
+                'id_issuing'    => $uri,
+                'id_barang'     => $id_barang,
+                'jumlah'        => $jumlah
+            ];
+            
+        $this->db->insert('tb_issuing_temp',$data);
+        $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function deleteitem($id) 
