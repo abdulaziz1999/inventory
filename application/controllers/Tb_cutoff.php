@@ -106,7 +106,9 @@ class Tb_cutoff extends CI_Controller
     public function update_action() 
     {
         $this->_rules();
-        $idcutoff = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
+        $idcutoffold = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
+        $this->session->set_userdata('idc_old',$idcutoffold);
+        
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('id_cutoff', TRUE));
         } else {
@@ -118,12 +120,8 @@ class Tb_cutoff extends CI_Controller
                     'status'=> $this->input->post('status',TRUE),
                 );
                 $this->Tb_cutoff_model->update($this->input->post('id_cutoff', TRUE), $data);
-                $cutoffNow = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
-
-                $this->db->query("INSERT tb_stok (stok, jml_baik, jml_rusak, jml_hilang, idcutoff)
-                SELECT tok, jml_baik, jml_rusak, jml_hilang, {$cutoffNow}
-                FROM tb_stok
-                WHERE idcutoff = '{$idcutoff}'");
+                $idcutoffNow = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
+                $this->session->set_userdata('idc_now',$idcutoffNow);
 
                 $this->My_model->dataLog('Update data cutoff');
                 $this->session->set_flashdata('message', 'Update Record Success');

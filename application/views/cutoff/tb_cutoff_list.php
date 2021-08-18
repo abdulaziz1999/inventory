@@ -28,6 +28,7 @@
                                 <th>Tanggal Awal</th>
                                 <th>Tanggal Akhir</th>
                                 <th>Status</th>
+                                <th>Status Sinkron</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -42,6 +43,12 @@
                                 <td><?= date_indo($tb_cutoff->start) ?></td>
                                 <td><?= date_indo($tb_cutoff->end) ?></td>
                                 <td><?= $tb_cutoff->status == 1 ? '<span class="label label-success arrowed arrowed-right"> Active</span>' : '<span class="label label-danger arrowed">Non Active</span>' ?></td>
+                                <td>
+                                    <?php $cek = $this->db->get_where('tb_stok',['cutoff_id' => $tb_cutoff->id_cutoff])->num_rows(); ?>
+                                    <?php if($cek == 1){ ?>
+                                    <a href="<?= base_url('tb_cutoff/sinkron_stok/'.$this->session->userdata('idc_old').'/'.$this->session->userdata('idc_now'))?>"></a>
+                                    <?php }?>
+                                </td>
                                 <td style="text-align:center" width="300px">
                                     <div class="btn-group btn-corner">
                                         <?php 
