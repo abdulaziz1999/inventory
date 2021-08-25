@@ -176,7 +176,7 @@
                         <?php $length = $this->db->get_where('tb_issuing_temp',['id_issuing' => $this->uri->segment(3)])->num_rows();?>
                         <h3 class="table-header text-center"><strong>Data Barang Keluar Pending</strong>
                         <?php if($this->session->userdata('level') == 'superuser' || $this->session->userdata('level') == 'admin'){?>
-                                <?= $length ? anchor(site_url('tb_issuing/approve_all/'.$length.'/'.$this->uri->segment(3)),'<i class="fa fa-cloud-upload"></i> Approve','title="approve" class="btn btn-success btn-round btn-sm" style="float:right; margin-right:9px; margin-top:3px;" onclick="javasciprt: return confirm(\'Anda Yakin ingin approve ?\')"') : '' ?>
+                                <?php //$length ? anchor(site_url('tb_issuing/approve_all/'.$length.'/'.$this->uri->segment(3)),'<i class="fa fa-cloud-upload"></i> Approve','title="approve" class="btn btn-success btn-round btn-sm" style="float:right; margin-right:9px; margin-top:3px;" onclick="javasciprt: return confirm(\'Anda Yakin ingin approve ?\')"') : '' ?>
                             <?php }?>
                         </h3>
                         <table class="table table-hover table-striped" id="mytable">
