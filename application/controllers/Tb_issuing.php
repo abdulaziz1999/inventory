@@ -230,7 +230,8 @@ class Tb_issuing extends CI_Controller
                     $this->db->delete('tb_issuing_temp',['id_pendings' => $idmax]);
 
                     $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
-                    redirect($_SERVER['HTTP_REFERER']);
+                    // redirect($_SERVER['HTTP_REFERER']);
+                    redirect(base_url('tb_issuing/update/'.$uri));
                 }elseif($stok == 0 || $sisa <= 0){
                     $this->session->set_flashdata('gagal', "Jumlah barang tidak mencukupi");
                     redirect($_SERVER['HTTP_REFERER']);
