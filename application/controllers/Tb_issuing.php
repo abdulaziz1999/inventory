@@ -210,8 +210,6 @@ class Tb_issuing extends CI_Controller
             $x = 1;
  
             while($x <= $loop) {
-            echo "The number is: $x <br>";
-            
                 $this->db->select_max('id_pendings','max');
                 $idmax      = $this->db->get('tb_issuing_temp')->row()->max;
                 $id         = $this->db->get_where('tb_issuing_temp',['id_pendings' => $idmax])->row();
@@ -230,8 +228,7 @@ class Tb_issuing extends CI_Controller
                     $this->db->delete('tb_issuing_temp',['id_pendings' => $idmax]);
 
                     $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
-                    // redirect($_SERVER['HTTP_REFERER']);
-                    redirect(base_url('tb_issuing/update/'.$uri));
+                    redirect($_SERVER['HTTP_REFERER']);
                 }elseif($stok == 0 || $sisa <= 0){
                     $this->session->set_flashdata('gagal', "Jumlah barang tidak mencukupi");
                     redirect($_SERVER['HTTP_REFERER']);
