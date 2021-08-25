@@ -231,7 +231,6 @@ class Tb_issuing extends CI_Controller
 
                     $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
                     redirect($_SERVER['HTTP_REFERER']);
-
                 }elseif($stok == 0 || $sisa <= 0){
                     $this->session->set_flashdata('gagal', "Jumlah barang tidak mencukupi");
                     redirect($_SERVER['HTTP_REFERER']);
