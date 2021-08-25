@@ -264,7 +264,6 @@ class Tb_receiving extends CI_Controller
         $x = 1;
  
         while($x <= $loop) {
-        echo "The number is: $x <br>";
             $this->db->select_max('id_pending','max');
             $idmax      = $this->db->get('tb_receiving_temp')->row()->max;
             $id         = $this->db->get_where('tb_receiving_temp',['id_pending' => $idmax, 'id_receiving' => $uri])->row();
