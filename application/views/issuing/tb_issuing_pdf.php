@@ -69,11 +69,11 @@
             </td>
         </tr>
         <tr>
-            <td width="300">No. Ref &nbsp;: <?= $sup->row()->no_ref?> <br />
-                Waktu &nbsp; &nbsp;: <?= date_indo($sup->row()->tgl)?>
+            <td width="300">No. Ref &nbsp;: <?= @$sup->row()->no_ref?> <br />
+                Waktu &nbsp; &nbsp;: <?= @date_indo($sup->row()->tgl)?>
             </td>
-            <td width="300">Customer &nbsp;: <?= $sup->row()->nama_customer?> <br />
-                Pemesan &nbsp; : <?= $sup->row()->nama_pemesan?>
+            <td width="300">Customer &nbsp;: <?= @$sup->row()->nama_customer?> <br />
+                Pemesan &nbsp; : <?= @$sup->row()->nama_pemesan?>
                 <br /><br />
             </td>
         </tr>
@@ -92,19 +92,19 @@
         <?php $sum=0; $no=1; foreach($sup->result() as $row):?>
         <tr>
             <td><?= $no++ ?></td>
-            <td><?= $row->part_number?></td>
-            <td><?= $row->nama_barang?></td>
-			<td><?= $row->kode_barcode?></td>
-            <td><?= rupiah($row->harga_jual)?></td>
-            <td><?= $row->nama_satuan?></td>
-            <td><?= $row->jumlah?></td>
-            <td><?php $sum += $row->jml*$row->harga_jual; echo rupiah( $row->jml*$row->harga_jual)?></td>
+            <td><?= @$row->part_number?></td>
+            <td><?= @$row->nama_barang?></td>
+			<td><?= @$row->kode_barcode?></td>
+            <td><?= @rupiah($row->harga_jual)?></td>
+            <td><?= @$row->nama_satuan?></td>
+            <td><?= @$row->jumlah?></td>
+            <td><?php @$sum += $row->jml*$row->harga_jual; echo @rupiah( $row->jml*$row->harga_jual)?></td>
         </tr>
         <?php endforeach;?>
 		<tfoot>
             <tr>
                 <td colspan="7" align="center" bgcolor="#2eb3ff"><b id="j">Total</b></td>
-                <td id="total" ><?= rupiah($sum) ?></td>
+                <td id="total" ><?= @rupiah($sum) ?></td>
             </tr>
         </tfoot>
     </table>
