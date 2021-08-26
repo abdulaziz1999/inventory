@@ -347,7 +347,10 @@
                         <i class="menu-icon fa fa-table"></i>
                         <span class="menu-text">
                             Stok
-                            <span class="badge badge-info"><?= $this->db->get('tb_stok')->num_rows();?></span>
+                            <span class="badge badge-info"><?php
+                            $idc = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
+                            echo $this->db->get_where('tb_stok',['cutoff_id' => $idc])->num_rows();
+                            ?></span>
                         </span>
                     </a>
                     <b class="arrow"></b>
