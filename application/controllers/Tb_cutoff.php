@@ -135,6 +135,18 @@ class Tb_cutoff extends CI_Controller
             redirect(site_url('tb_cutoff'));
         }
     }
+
+    function sinkron_stok($idold,$idnew){       
+        $this->db->query("INSERT INTO tb_stok_cutoff (id_barang, stok, jml_baik, jml_rusak, jml_hilang, cutoff_id)
+                       SELECT id_barang, stok, jml_baik, jml_rusak, jml_hilang, cutoff_id
+                       FROM tb_stok
+                       WHERE cutoff_id = {$idold}");
+        $this->db->query("INSERT INTO tb_stok (id_barang, stok, jml_baik, jml_rusak, jml_hilang, cutoff_id)
+                        SELECT id_barang, stok, jml_baik, 0, 0, {$idnew}
+                        FROM tb_stok_cutoff");  
+        $this->session->set_flashdata('message', 'Data Stok Berhasil di sinkron');
+        redirect($_SERVER['HTTP_REFERER']);    
+    }
     
     public function delete($id) 
     {

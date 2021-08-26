@@ -45,9 +45,11 @@
                                 <td><?= $tb_cutoff->status == 1 ? '<span class="label label-success arrowed arrowed-right"> Active</span>' : '<span class="label label-danger arrowed">Non Active</span>' ?></td>
                                 <td>
                                     <?php $cek = $this->db->get_where('tb_stok',['cutoff_id' => $tb_cutoff->id_cutoff])->num_rows(); ?>
-                                    <?php if($cek == 1){ ?>
-                                    <a href="<?= base_url('tb_cutoff/sinkron_stok/'.$this->session->userdata('idc_old').'/'.$this->session->userdata('idc_now'))?>"></a>
-                                    <?php }?>
+                                    <?php if($tb_cutoff->status == '1' && $cek == '0'):?>
+                                        <a class="btn btn-info btn-sm btn-round" href="<?= base_url('tb_cutoff/sinkron_stok/'.$this->session->userdata('idc_old').'/'.$this->session->userdata('idc_now'))?>"><i class="fa fa-refresh"></i> Sinkron Stok</a>
+                                    <?php elseif($tb_cutoff->status == 1 && $cek > 0):?>
+                                        <a class="btn btn-success btn-sm btn-round" href="#"><i class="fa fa-check text-red" aria-hidden="true"></i> </a>
+                                    <?php endif;?>
                                 </td>
                                 <td style="text-align:center" width="300px">
                                     <div class="btn-group btn-corner">

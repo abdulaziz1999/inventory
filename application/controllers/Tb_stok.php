@@ -24,11 +24,13 @@ class Tb_stok extends CI_Controller
 
     public function index()
     {
+        $idc = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
         $this->db->join('tb_barang tb','tb.id_barang = tb_stok.id_barang');
         $this->db->join('tb_satuan st','st.id_satuan = tb.satuan');
         $this->db->join('tb_kategori k','tb.kategori = k.id_kategori');
         $this->db->join('tb_brand br','tb.brand = br.id_brand');
         $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
+        $this->db->where(['tb_stok.cutoff_id' => $idc]);
         $tb_stok = $this->Tb_stok_model->get_all();
 
         $data = array(
