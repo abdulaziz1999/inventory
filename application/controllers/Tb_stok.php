@@ -31,12 +31,12 @@ class Tb_stok extends CI_Controller
         $this->db->join('tb_brand br','tb.brand = br.id_brand');
         $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
         $this->db->where(['tb_stok.cutoff_id' => $idc]);
-        
+
         $tb_stok = $this->Tb_stok_model->get_all();
 
         $data = array(
             'tb_stok_data'  => $tb_stok,
-            'jmlstok'       => $this->db->get('tb_stok')->num_rows()
+            'jmlstok'       => $this->db->get_where('tb_stok',['cutoff_id' => $idc])->num_rows()
         );
 
         $this->template->load('template','stok/tb_stok_list', $data);
