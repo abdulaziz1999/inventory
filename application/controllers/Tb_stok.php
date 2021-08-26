@@ -31,6 +31,7 @@ class Tb_stok extends CI_Controller
         $this->db->join('tb_brand br','tb.brand = br.id_brand');
         $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
         $this->db->where(['tb_stok.cutoff_id' => $idc]);
+        
         $tb_stok = $this->Tb_stok_model->get_all();
 
         $data = array(
