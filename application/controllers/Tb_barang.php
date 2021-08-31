@@ -120,9 +120,11 @@ class Tb_barang extends CI_Controller
         
         $this->db->select_max('id_barang','idmax');
         $idmax = $this->db->get('tb_barang')->row()->idmax;
+        $idcutoff = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
         $data1 = [
             'id_barang' => $idmax,
-            'stok'      => ''
+            'stok'      => '',
+            'cutoff_id' => $idcutoff
         ];
             $this->db->insert('tb_stok',$data1);
             
