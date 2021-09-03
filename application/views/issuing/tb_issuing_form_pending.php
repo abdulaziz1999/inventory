@@ -38,6 +38,13 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td>No Permintaan <?= form_error('no_permintaan') ?></td>
+                                    <td>
+                                        <input type="text" class="form-control" name="no_permintaan" id="no_permintaan" required
+                                            autocomplete="off" placeholder="No Permintaan" value="<?= $no_permintaan; ?>" />
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>Customer <?= form_error('picker') ?></td>
                                     <td>
                                         <select class="form-control" name="picker" id="picker" required>

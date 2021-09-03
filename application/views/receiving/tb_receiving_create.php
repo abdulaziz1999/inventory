@@ -29,8 +29,14 @@
                                     </td>
                                 <tr>
                                     <td>No PO <?= form_error('no_ref') ?></td>
-                                    <td><input type="text" class="form-control" name="no_ref" id="no_ref" required
+                                    <td><input type="text" class="form-control" name="no_ref" id="no_ref" <?= $level == 'operator' ? '' : 'required'?>
                                             autocomplete="off" placeholder="No Ref" value="<?= $no_ref; ?>" />
+                                    </td>
+                                <tr>
+                                    <td>Nota Supplier <?= form_error('nota_supplier') ?></td>
+                                    <td>
+                                        <input type="text" class="form-control" name="nota_supplier" id="nota_supplier" <?= $level == 'admin' || $level == 'staff' ? '' : 'required'?>
+                                            autocomplete="off" placeholder="Nota Supplier" value="<?= $nota_supplier; ?>" />
                                     </td>
                                 <tr>
                                     <td>Supplier <?= form_error('supplier') ?></td>

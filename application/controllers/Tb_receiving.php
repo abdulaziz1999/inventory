@@ -54,9 +54,9 @@ class Tb_receiving extends CI_Controller
     public function index()
     {
         $tb_receiving = $this->Tb_receiving_model->get_all();
-
         $data = array(
-            'tb_receiving_data' => $tb_receiving
+            'tb_receiving_data' => $tb_receiving,
+            'level'             => $this->session->userdata('level')
         );
 
         $this->template->load('template','receiving/tb_receiving_list', $data);
@@ -89,6 +89,7 @@ class Tb_receiving extends CI_Controller
             'tgl'           => set_value('tgl'),
             'no_ref'        => set_value('no_ref'),
             'supplier'      => set_value('supplier'),
+            'nota_supplier' => set_value('nota_supplier'),
             'remarks'       => set_value('remarks'),
             'barang'        => $this->db->get('tb_barang')->result(),
             'nama_proyek'   => set_value('nama_proyek'),
@@ -96,6 +97,7 @@ class Tb_receiving extends CI_Controller
             'nm_proyek'     => @$this->db->get('tb_proyek'),
             'nm_suplier'    => @$this->db->get('tb_suplier'),
             'nm_pemesan'    => @$this->db->get('tb_pemesan'),
+            'level'         => $this->session->userdata('level')
 	);
         $this->template->load('template','receiving/tb_receiving_create', $data);
     }
@@ -108,6 +110,7 @@ class Tb_receiving extends CI_Controller
             'tgl'           => $this->input->post('tgl',TRUE),
             'no_ref'        => $this->input->post('no_ref',TRUE),
             'supplier'      => $this->input->post('supplier',TRUE),
+            'nota_supplier' => $this->input->post('nota_supplier',TRUE),
             'remarks'       => $this->input->post('remarks',TRUE),
             'nama_proyek'   => $this->input->post('nama_proyek',TRUE),
             'ket'           => $this->input->post('ket',TRUE),
@@ -149,6 +152,7 @@ class Tb_receiving extends CI_Controller
                 'tgl'           => set_value('tgl', $row->tgl),
                 'no_ref'        => set_value('no_ref', $row->no_ref),
                 'supplier'      => set_value('supplier', $row->supplier),
+                'nota_supplier' => set_value('nota_supplier', $row->nota_supplier),
                 'remarks'       => set_value('remarks', $row->remarks),
                 'nama_proyek'   => set_value('nama_proyek',$row->nama_proyek),
                 'ket'           => set_value('ket',$row->ket), 
@@ -158,6 +162,7 @@ class Tb_receiving extends CI_Controller
                 'nm_proyek'     => @$this->db->get('tb_proyek'),
                 'nm_suplier'    => @$this->db->get('tb_suplier'),
                 'nm_pemesan'    => @$this->db->get('tb_pemesan'),
+                'level'         => $this->session->userdata('level')
 	    );
             if($this->session->userdata('level') == 'superuser' || $this->session->userdata('level') == 'admin'){
                 $this->template->load('template','receiving/tb_receiving_form', $data);
@@ -178,6 +183,7 @@ class Tb_receiving extends CI_Controller
 		        'tgl'           => $this->input->post('tgl',TRUE),
 		        'no_ref'        => $this->input->post('no_ref',TRUE),
 		        'supplier'      => $this->input->post('supplier',TRUE),
+		        'nota_supplier' => $this->input->post('nota_supplier',TRUE),
                 'remarks'       => $this->input->post('remarks',TRUE),
                 'nama_proyek'   => $this->input->post('nama_proyek',TRUE),
                 'ket'           => $this->input->post('ket',TRUE),

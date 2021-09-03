@@ -25,9 +25,9 @@ class Tb_issuing extends CI_Controller
     public function index()
     {
         $tb_issuing = $this->Tb_issuing_model->get_all();
-
         $data = array(
-            'tb_issuing_data' => $tb_issuing
+            'tb_issuing_data' => $tb_issuing,
+            'level'           => $this->session->userdata('level')
         );
 
         $this->template->load('template','issuing/tb_issuing_list', $data);
@@ -59,6 +59,7 @@ class Tb_issuing extends CI_Controller
             'id_issuing'    => set_value('id_issuing'),
             'tgl'           => set_value('tgl'),
             'no_ref'        => set_value('no_ref'),
+            'no_permintaan' => set_value('no_permintaan'),
             'picker'        => set_value('picker'),
             'remarks'       => set_value('remarks'),
             'nama_proyek'   => set_value('nama_proyek'),
@@ -66,6 +67,7 @@ class Tb_issuing extends CI_Controller
             'nm_proyek'     => @$this->db->get('tb_proyek'),
             'nm_customer'   => @$this->db->get('tb_customer'),
             'nm_pemesan'    => @$this->db->get('tb_pemesan'),
+            'level'         => $this->session->userdata('level')
 	);
         $this->template->load('template','issuing/tb_issuing_create', $data);
     }
@@ -76,6 +78,7 @@ class Tb_issuing extends CI_Controller
             $data = array(
                 'tgl'           => $this->input->post('tgl',TRUE),
                 'no_ref'        => $this->input->post('no_ref',TRUE),
+                'no_permintaan' => $this->input->post('no_permintaan',TRUE),
                 'picker'        => $this->input->post('picker',TRUE),
                 'remarks'       => $this->input->post('remarks',TRUE),
                 'nama_proyek'   => $this->input->post('nama_proyek',TRUE),
@@ -116,6 +119,7 @@ class Tb_issuing extends CI_Controller
                 'id_issuing'    => set_value('id_issuing', $row->id_issuing),
                 'tgl'           => set_value('tgl', $row->tgl),
                 'no_ref'        => set_value('no_ref', $row->no_ref),
+                'no_permintaan' => set_value('no_permintaan', $row->no_permintaan),
                 'picker'        => set_value('picker', $row->picker),
                 'remarks'       => set_value('remarks', $row->remarks),
                 'nama_proyek'   => set_value('nama_proyek',$row->nama_proyek),
@@ -126,6 +130,7 @@ class Tb_issuing extends CI_Controller
                 'nm_proyek'     => @$this->db->get('tb_proyek'),
                 'nm_customer'   => @$this->db->get('tb_customer'),
                 'nm_pemesan'    => @$this->db->get('tb_pemesan'),
+                'level'         => $this->session->userdata('level')
                 );
             if($this->session->userdata('level') == 'superuser' || $this->session->userdata('level') == 'admin'){
                 $this->template->load('template','issuing/tb_issuing_form', $data);
@@ -144,6 +149,7 @@ class Tb_issuing extends CI_Controller
             $data = array(
             'tgl'           => $this->input->post('tgl',TRUE),
             'no_ref'        => $this->input->post('no_ref',TRUE),
+            'no_permintaan' => $this->input->post('no_permintaan',TRUE),
             'picker'        => $this->input->post('picker',TRUE),
             'remarks'       => $this->input->post('remarks',TRUE),
             'nama_proyek'   => $this->input->post('nama_proyek',TRUE),

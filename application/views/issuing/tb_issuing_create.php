@@ -32,8 +32,15 @@
                                 <tr>
                                     <td>No Invoice <?= form_error('no_ref') ?></td>
                                     <td>
-                                        <input type="text" class="form-control" name="no_ref" id="no_ref" required
+                                        <input type="text" class="form-control" name="no_ref" id="no_ref" <?= $level == 'operator' ? '' : 'required'?>
                                             placeholder="No Ref" value="<?= $no_ref; ?>" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>No Permintaan <?= form_error('no_permintaan') ?></td>
+                                    <td>
+                                        <input type="text" class="form-control" name="no_permintaan" id="no_permintaan" <?= $level == 'admin' || $level == 'staff' ? '' : 'required'?>
+                                            autocomplete="off" placeholder="No Permintaan" value="<?= $no_permintaan; ?>" />
                                     </td>
                                 </tr>
                                 <tr>

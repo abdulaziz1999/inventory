@@ -37,6 +37,13 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td>Nota Supplier <?= form_error('nota_supplier') ?></td>
+                                    <td>
+                                        <input type="text" class="form-control" name="nota_supplier" id="nota_supplier" required
+                                            autocomplete="off" placeholder="Nota Supplier" value="<?= $nota_supplier; ?>" />
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>Supplier <?= form_error('supplier') ?></td>
                                     <td>
                                         <select class="form-control" name="supplier" id="supplier" required>
