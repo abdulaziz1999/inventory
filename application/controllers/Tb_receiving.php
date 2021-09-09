@@ -248,16 +248,24 @@ class Tb_receiving extends CI_Controller
 
     //Simpan ke list pending
     function simpan_pending($uri){
-        $data = [
-            'id_receiving'  => $uri,
-            'id_barang'     => $this->input->post('barang', TRUE),
-            'jumlah'        => $this->input->post('jumlah', TRUE)
-        ];
-        
-        $this->db->insert('tb_receiving_temp',$data);
+        $cek = $this->db->get_where('tb_receiving_temp',['id_receiving' => $uri, 'id_barang' => $this->input->post('barang', TRUE)]);
+        $jml = $cek->row()->jumlah;
+        if($cek->num_rows() == 1){
+            $data = [
+                'jumlah'        => $jml+$this->input->post('jumlah', TRUE)
+            ];
+            $this->db->update('tb_receiving_temp',$data,['id_receiving' => $uri, 'id_barang' => $this->input->post('barang', TRUE)]);
+        }else{
+            $data = [
+                'id_receiving'  => $uri,
+                'id_barang'     => $this->input->post('barang', TRUE),
+                'jumlah'        => $this->input->post('jumlah', TRUE)
+            ];
+            $this->db->insert('tb_receiving_temp',$data);
+        }
 
         if($this->db->affected_rows() > 0){
-            $this->session->set_flashdata('sukses', "Barang Masuk Berhasil Ditambahkan");
+            $this->session->set_flashdata('sukses', "Barang Masuk Berhasil Ditambahkan List Pending");
             redirect($_SERVER['HTTP_REFERER']);
         }else{
             $this->session->set_flashdata('gagal', "Barang Masuk Gagal Ditambahkan");
@@ -342,16 +350,24 @@ class Tb_receiving extends CI_Controller
     }
 
     function simpanBrangBarcodePending($uri,$idbarang,$jumlah){
-        $data = [
-            'id_receiving'  => $uri,
-            'id_barang'     => $idbarang,
-            'jumlah'        => $jumlah
-        ];
-        
-        $this->db->insert('tb_receiving_temp',$data);
+        $cek = $this->db->get_where('tb_receiving_temp',['id_receiving' => $uri, 'id_barang' => $idbarang]);
+        if($cek->num_rows() == 1){
+            $data = [
+                'jumlah'        => $jml+$jumlah
+            ];
+            $this->db->update('tb_receiving_temp',$data,['id_receiving' => $uri, 'id_barang' => $idbarang]);
+        }else{
+            $data = [
+                'id_receiving'  => $uri,
+                'id_barang'     => $idbarang,
+                'jumlah'        => $jumlah
+            ];
+            
+            $this->db->insert('tb_receiving_temp',$data);
+        }
 
         if($this->db->affected_rows() > 0){
-            $this->session->set_flashdata('sukses', "Barang Masuk Berhasil Ditambahkan");
+            $this->session->set_flashdata('sukses', "Barang Masuk Berhasil Ditambahkan Di list Pending");
             redirect($_SERVER['HTTP_REFERER']);
         }else{
             $this->session->set_flashdata('gagal', "Barang Masuk Gagal Ditambahkan");

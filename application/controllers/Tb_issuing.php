@@ -200,15 +200,29 @@ class Tb_issuing extends CI_Controller
     function simpan_pending($uri){
         $idbarang   = $this->input->post('barang', TRUE);
         $jmlout     = $this->input->post('jumlah', TRUE);
+
+        $cek = $this->db->get_where('tb_issuing_temp',['id_issuing' => $uri, 'id_barang' => $idbarang]);
+        $jml = $cek->row()->jumlah;
+        if($cek->num_rows() == 1){
             $data = [
-                'id_issuing'    => $uri,
-                'id_barang'     => $idbarang,
-                'jumlah'        => $jmlout
+                'jumlah'        => $jml+$jmlout
             ];
-            
-        $this->db->insert('tb_issuing_temp',$data);
-        $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
-        redirect($_SERVER['HTTP_REFERER']);
+            $this->db->update('tb_issuing_temp',$data,['id_issuing' => $uri, 'id_barang' => $idbarang]);
+        }else{
+            $data = [
+                'id_issuing'  => $uri,
+                'id_barang'   => $idbarang,
+                'jumlah'      => $jmlout
+            ];
+            $this->db->insert('tb_issuing_temp',$data);
+        }
+        if($this->db->affected_rows() > 0){
+            $this->session->set_flashdata('sukses', "Barang Berhasil masuk ke list pending");
+            redirect($_SERVER['HTTP_REFERER']);
+        }else{
+            $this->session->set_flashdata('gagal', "Barang Gagal masuk ke list pending");
+            redirect($_SERVER['HTTP_REFERER']);
+        }
     }
 
     //Approve All
@@ -297,16 +311,27 @@ class Tb_issuing extends CI_Controller
     }
 
     function simpanBrangBarcodePending($uri,$id_barang,$jumlah){
-        $cek = $this->db->get_where('tb_issuing_temp',['id_barang' => $id_barang])->num_rows();
+        $cek = $this->db->get_where('tb_issuing_temp',['id_issuing' => $uri, 'id_barang' => $id_barang]);
+        if($cek->num_rows() == 1){
+            $data = [
+                'jumlah'        => $jml+$jumlah
+            ];
+            $this->db->update('tb_issuing_temp',$data,['id_issuing' => $uri, 'id_barang' => $id_barang]);
+        }else{
             $data = [
                 'id_issuing'    => $uri,
                 'id_barang'     => $id_barang,
                 'jumlah'        => $jumlah
             ];
-            
             $this->db->insert('tb_issuing_temp',$data);
-        $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
-        redirect($_SERVER['HTTP_REFERER']);
+        }
+        if($this->db->affected_rows() > 0){
+            $this->session->set_flashdata('sukses', "Barang Berhasil masuk ke list pending");
+            redirect($_SERVER['HTTP_REFERER']);
+        }else{
+            $this->session->set_flashdata('gagal', "Barang Gagal masuk ke list pending");
+            redirect($_SERVER['HTTP_REFERER']);
+        }
     }
 
     public function deleteitem($id) 
