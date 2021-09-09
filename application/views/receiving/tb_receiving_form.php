@@ -215,6 +215,7 @@
                                         <td><?= "Rp. ".rupiah($tb_receiving->jml*$tb_receiving->harga_jual) ?> <span class="label label-lg label-warning arrowed">Pending</span></td>
                                         <td>
                                             <div class="btn-group btn-corner">
+                                                <a href="#" class="btn btn-sm btn-primary" id="click" data-toggle="modal" data-target="#myModalEdit" onclick="updateJml(<?= $tb_receiving->id_pending?>)"><i class="fa fa-pencil"></i> Edit</a>
                                                 <?= anchor(site_url('tb_receiving/deletePending/'.$tb_receiving->id_pending.'/'.$this->uri->segment(3)),'<i class="fa fa-trash-o"></i> Hapus','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); ?>
                                             </div>
                                         </td>
@@ -255,7 +256,7 @@
                         <div class="col-md-12">
                             <label for="barang">Nama Barang :</label>
                             <div class="form-group">
-                                <select class="form-control col-md-12" type="text" name="barang" required>
+                                <select class="form-control col-md-12" id="js-example-basic-single" type="text" name="barang" required>
                                     <option value="" selected disabled>Nama Barang - [ Stok ] </option>
                                     <?php foreach($barang as $row){?>
                                     <option value="<?= $row->id_barang?>">
@@ -282,6 +283,23 @@
                 <button type="button" class="btn btn-sm btn-round btn-danger" data-dismiss="modal">Close</button>
             </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fide" id="myModalEdit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header bg-info">
+                <h4 class="modal-title">Edit Jumlah Barang Barang <button type="button" class="close"
+                        data-dismiss="modal">&times;</button></h4>
+
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" id="modal-body"></div>  
         </div>
     </div>
 </div>

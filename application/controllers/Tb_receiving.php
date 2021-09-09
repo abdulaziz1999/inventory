@@ -399,6 +399,69 @@ class Tb_receiving extends CI_Controller
         }
     }
 
+    function updatejumlah(){
+        $id = $this->input->post('id');
+        $pending = $this->db->get_where('tb_receiving_temp',['id_pending' => $id])->row();
+        $barang = $this->db->get('tb_barang')->result();
+        ?>
+        <form action="<?= base_url('tb_receiving/update_pending/'.$id)?>" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="barang">Nama Barang :</label>
+                            <div class="form-group">
+                                <select class="form-control col-md-12" id="js-example-basic-single" type="text" name="barang" required>
+                                    <option value="" selected disabled>Nama Barang - [ Stok ] </option>
+                                    <?php foreach($barang as $row){?>
+                                    <option value="<?= $row->id_barang?>" <?= $pending->id_barang == $row->id_barang ? 'selected' : '' ?> >
+                                        <?= $row->nama_barang?> _ [ <?= $this->db->get_where('tb_stok',['id_barang' => $row->id_barang])->row()->stok?> 
+                                        <?php $s = $this->db->get_where('tb_barang',['id_barang' => $row->id_barang])->row()->satuan; echo $this->db->get_where('tb_satuan',['id_satuan' => $s])->row()->nama_satuan;?> ]
+                                    </option>
+                                    <?php }?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="jumlah">Jumlah Barang :</label>
+                            <div class="form-group">
+                                <input class="col-md-12" type="number" name="jumlah" value="<?= $pending->jumlah?>" autocomplete="off"
+                                    placeholder="Jumlah Barang" required>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-sm btn-round btn-success">Save</button>
+                <button type="button" class="btn btn-sm btn-round btn-danger" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+            <script>
+                $(document).ready(function() {
+                    $('#js-example-basic-single').select2();
+                    const cap = document.querySelector('.select2-container');
+                    cap.setAttribute('style','width:100%'); 
+            });
+            </script>
+        <?php
+    }
+
+
+    function update_pending($id){
+        $data = [
+            'id_barang' => $this->input->post('barang'), 
+            'jumlah'    => $this->input->post('jumlah')
+        ];
+        $this->db->update('tb_receiving_temp',$data,['id_pending' => $id]);
+        if($this->db->affected_rows() > 0){
+            $this->session->set_flashdata('sukses', "Update data barang berhasil");
+            redirect($_SERVER['HTTP_REFERER']);
+        }else{
+            $this->session->set_flashdata('gagal', "Update data barang gagal");
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
     public function _rules() 
     {
             $this->form_validation->set_rules('tgl', 'tgl', 'trim|required');

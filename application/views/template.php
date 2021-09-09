@@ -50,6 +50,8 @@
 		<script src="<?= base_url()?>aceadmin/assets/js/html5shiv.min.js"></script>
 		<script src="<?= base_url()?>aceadmin/assets/js/respond.min.js"></script>
 	<![endif]-->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 
 <body class="no-skin">
@@ -708,7 +710,7 @@
                             <div class="col-xs-2 text-center ">
                                 <div class="kotak-barcode mb-4">
                                     <div  class="bg-white p-2" style="border:1px solid #000;padding:10px;"> 
-                                            <?= "<img alt='Barcode Generator TEC-IT' src='https://barcode.tec-it.com/barcode.ashx?data=" . $kode . "&code=EAN13&multiplebarcodes=true&translate-esc=true&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&qunit=Mm&quiet=0' />" ?><br>
+                                            <?= "<img alt='Barcode Generator TEC-IT' width='100%' src='https://barcode.tec-it.com/barcode.ashx?data=" . $kode . "&code=EAN13&multiplebarcodes=true&translate-esc=true&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&qunit=Mm&quiet=0' />" ?><br>
                                     </div>
                                         <h5 class="text-center mb-1 mt-2" style="color:#000;"><strong>` + nama + `</strong></h5>
                                         <h5 class="text-center font-weight-normal mb-1" style="color:#000;">Rp. <?= rupiah($harga) ?></h5>
@@ -809,7 +811,56 @@
     });
     </script>
     <?php endif;?>
+    
+    <?php if($this->uri->segment(1) == "tb_receiving"): ?>
+        <script>
+            $(document).ready(function() {
+                $('#js-example-basic-single').select2();
+                const cap = document.querySelector('.select2-container');
+                cap.setAttribute('style','width:100%'); 
 
+            });
+                function updateJml(id) {
+                    $.ajax({
+                        url: '<?= base_url()?>/tb_receiving/updatejumlah',
+                        type: 'POST',
+                        data: {id: id},
+                        cache: false,
+                        beforeSend: function () {
+                            $('#modal-body').html('<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>');
+                        },
+                        success: function (html) {
+                            $('#modal-body').html(html);
+                        }
+                    })
+                }
+        </script>
+    <?php endif;?>
+
+    <?php if($this->uri->segment(1) == "tb_issuing"): ?>
+        <script>
+            $(document).ready(function() {
+                $('#js-example-basic-single').select2();
+                const cap = document.querySelector('.select2-container');
+                cap.setAttribute('style','width:100%'); 
+
+            });
+                function updateJml(id) {
+                    $.ajax({
+                        url: '<?= base_url()?>/tb_issuing/updatejumlah',
+                        type: 'POST',
+                        data: {id: id},
+                        cache: false,
+                        beforeSend: function () {
+                            $('#modal-body').html('<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>');
+                        },
+                        success: function (html) {
+                            $('#modal-body').html(html);
+                        }
+                    })
+                }
+        </script>
+    <?php endif;?>
 
     <?php if($this->uri->segment(1) == "laporan_opname"): ?>
     <?php if($this->input->get('idc', TRUE) != NULL): ?>

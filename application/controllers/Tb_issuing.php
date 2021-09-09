@@ -225,7 +225,7 @@ class Tb_issuing extends CI_Controller
                 if($issuing >= 0){
                     $data = [
                         'id_issuing'    => $uri,
-                        'id_barang'     => $id->id_barang ,
+                        'id_barang'     => $id->id_barang,
                         'jumlah'        => $id->jumlah
                     ];                
                     $data2 = ['stok' => $issuing];
@@ -233,14 +233,20 @@ class Tb_issuing extends CI_Controller
                     $this->db->update('tb_stok', $data2,['id_barang' =>$id->id_barang]);
                     $this->db->delete('tb_issuing_temp',['id_pendings' => $idmax]);
 
-                    $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
-                    redirect($_SERVER['HTTP_REFERER']);
+                    
                 }elseif($stok == 0 || $sisa <= 0){
-                    $this->session->set_flashdata('gagal', "Jumlah barang tidak mencukupi");
-                    redirect($_SERVER['HTTP_REFERER']);
+                    
                 }
                 $x++;
             }        
+            
+            if($this->db->affected_rows() > 0){
+                $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
+                redirect($_SERVER['HTTP_REFERER']);
+            }else{
+                $this->session->set_flashdata('gagal', "Jumlah barang tidak mencukupi");
+                redirect($_SERVER['HTTP_REFERER']);
+            }
     }    
 
     //Delete barang Pending
@@ -291,13 +297,14 @@ class Tb_issuing extends CI_Controller
     }
 
     function simpanBrangBarcodePending($uri,$id_barang,$jumlah){
+        $cek = $this->db->get_where('tb_issuing_temp',['id_barang' => $id_barang])->num_rows();
             $data = [
                 'id_issuing'    => $uri,
                 'id_barang'     => $id_barang,
                 'jumlah'        => $jumlah
             ];
             
-        $this->db->insert('tb_issuing_temp',$data);
+            $this->db->insert('tb_issuing_temp',$data);
         $this->session->set_flashdata('sukses', "Barang Berhasil dikeluarkan");
         redirect($_SERVER['HTTP_REFERER']);
     }
@@ -330,6 +337,69 @@ class Tb_issuing extends CI_Controller
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('tb_issuing'));
+        }
+    }
+
+    function updatejumlah(){
+        $id = $this->input->post('id');
+        $pending = $this->db->get_where('tb_issuing_temp',['id_pending' => $id])->row();
+        $barang = $this->db->get('tb_barang')->result();
+        ?>
+        <form action="<?= base_url('tb_issuing_temp/update_pending/'.$id)?>" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="barang">Nama Barang :</label>
+                            <div class="form-group">
+                                <select class="form-control col-md-12" id="js-example-basic-single" type="text" name="barang" required>
+                                    <option value="" selected disabled>Nama Barang - [ Stok ] </option>
+                                    <?php foreach($barang as $row){?>
+                                    <option value="<?= $row->id_barang?>" <?= $pending->id_barang == $row->id_barang ? 'selected' : '' ?> >
+                                        <?= $row->nama_barang?> _ [ <?= $this->db->get_where('tb_stok',['id_barang' => $row->id_barang])->row()->stok?> 
+                                        <?php $s = $this->db->get_where('tb_barang',['id_barang' => $row->id_barang])->row()->satuan; echo $this->db->get_where('tb_satuan',['id_satuan' => $s])->row()->nama_satuan;?> ]
+                                    </option>
+                                    <?php }?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="jumlah">Jumlah Barang :</label>
+                            <div class="form-group">
+                                <input class="col-md-12" type="number" name="jumlah" value="<?= $pending->jumlah?>" autocomplete="off"
+                                    placeholder="Jumlah Barang" required>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-sm btn-round btn-success">Save</button>
+                <button type="button" class="btn btn-sm btn-round btn-danger" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+            <script>
+                $(document).ready(function() {
+                    $('#js-example-basic-single').select2();
+                    const cap = document.querySelector('.select2-container');
+                    cap.setAttribute('style','width:100%'); 
+            });
+            </script>
+        <?php
+    }
+
+
+    function update_pending($id){
+        $data = [
+            'id_barang' => $this->input->post('barang'), 
+            'jumlah'    => $this->input->post('jumlah')
+        ];
+        $this->db->update('tb_issuing_temp',$data,['id_pendings' => $id]);
+        if($this->db->affected_rows() > 0){
+            $this->session->set_flashdata('sukses', "Update data barang berhasil");
+            redirect($_SERVER['HTTP_REFERER']);
+        }else{
+            $this->session->set_flashdata('gagal', "Update data barang gagal");
+            redirect($_SERVER['HTTP_REFERER']);
         }
     }
 
