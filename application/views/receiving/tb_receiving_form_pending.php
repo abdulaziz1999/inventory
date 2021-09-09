@@ -210,7 +210,7 @@
                                         <td><?= "Rp. ".rupiah($tb_receiving->jml*$tb_receiving->harga_jual) ?> <span class="label label-lg label-warning arrowed">Pending</span></td>
                                         <td>
                                             <div class="btn-group btn-corner">
-                                            <a href="#" class="btn btn-sm btn-primary" id="click" data-toggle="modal" data-target="#myModalEdit" onclick="updateJml(<?= $tb_receiving->id_pending?>)"><i class="fa fa-pencil"></i> Edit</a>
+                                            <a href="#" class="btn btn-sm btn-primary" id="click" data-toggle="modal" data-target="#myModalEdit" onclick="updateJml(<?= @$tb_receiving->id_pending?>)"><i class="fa fa-pencil"></i> Edit</a>
                                                 <?= anchor(site_url('tb_receiving/deletePending/'.$tb_receiving->id_pending.'/'.$this->uri->segment(3)),'<i class="fa fa-trash-o"></i> Hapus','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); ?>
                                             </div>
                                         </td>

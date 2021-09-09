@@ -216,7 +216,7 @@
                                     <td><?= $issuing->jml ?></td>
                                     <td><?= "Rp. ".rupiah($issuing->jumlah*$issuing->harga_jual) ?></td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-primary" id="click" data-toggle="modal" data-target="#myModalEdit" onclick="updateJml(<?= $tb_receiving->id_pending?>)"><i class="fa fa-pencil"></i> Edit</a>
+                                        <a href="#" class="btn btn-sm btn-primary" id="click" data-toggle="modal" data-target="#myModalEdit" onclick="updateJml(<?= @$tb_receiving->id_pending?>)"><i class="fa fa-pencil"></i> Edit</a>
                                         <?= anchor(site_url('tb_issuing/deletePending/'.$issuing->id_pendings.'/'.$this->uri->segment(3)),'<i class="fa fa-trash-o"></i> Hapus','class="btn btn-danger btn-sm btn-round" title="delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); ?>
                                     </td>
 
