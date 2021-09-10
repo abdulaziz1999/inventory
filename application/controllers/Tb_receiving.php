@@ -351,6 +351,7 @@ class Tb_receiving extends CI_Controller
 
     function simpanBrangBarcodePending($uri,$idbarang,$jumlah){
         $cek = $this->db->get_where('tb_receiving_temp',['id_receiving' => $uri, 'id_barang' => $idbarang]);
+        $jml = $cek->row()->jumlah;
         if($cek->num_rows() == 1){
             $data = [
                 'jumlah'        => $jml+$jumlah
