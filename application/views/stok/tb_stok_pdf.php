@@ -51,16 +51,16 @@
         <table class="word-table" style="margin-bottom: 10px">
             <tr align="center" bgcolor="#2eb3ff">
                 <td><b id="j">No</b></td>	
-				<td width="180"><b id="j">Nama Barang</b></td>	
-				<td width="90"><b id="j">Kategori Barang</b></td>	
-				<td width="90"><b id="j">Harga Beli</b></td>	
-				<td width="90"><b id="j">Harga Jual</b></td>	
-				<td width="90"><b id="j">Stok Barang</b></td>	
-				<td width="90"><b id="j">Jumlah Baik</b></td>	
-				<td width="90"><b id="j">Jumlah Rusak</b></td>	
-				<td width="90"><b id="j">Jumlah Hilang</b></td>	
-				<td width="90"><b id="j">Minimal Stok</b></td>	
-				<td width="90"><b id="j">Nama Unit</b></td>	
+				<td><b id="j">Nama Barang</b></td>	
+				<td><b id="j">Kategori Barang</b></td>	
+				<td><b id="j">Harga Beli</b></td>	
+				<td><b id="j">Harga Jual</b></td>	
+				<td><b id="j">Stok Barang</b></td>	
+				<td><b id="j">Jumlah Baik</b></td>	
+				<td><b id="j">Jumlah Rusak</b></td>	
+				<td><b id="j">Jumlah Hilang</b></td>	
+				<td><b id="j">Minimal Stok</b></td>	
+				<td><b id="j">Nama Unit</b></td>	
             </tr><?php
             foreach ($tb_stok_data as $row)
             {

@@ -2,7 +2,8 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-
+    use PhpOffice\PhpSpreadsheet\Spreadsheet;
+    use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Tb_stok extends CI_Controller
 {
     
@@ -211,8 +212,8 @@ class Tb_stok extends CI_Controller
 
             //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
             xlsWriteNumber($tablebody, $kolombody++, $nourut);
-	        xlsWriteLabel($tablebody, $kolombody++, $data->nama_barang);
-	        xlsWriteLabel($tablebody, $kolombody++, $data->nama_kategori);
+	        xlsWriteLabel($tablebody, $kolombody++,  $data->nama_barang);
+	        xlsWriteLabel($tablebody, $kolombody++,  $data->nama_kategori);
 	        xlsWriteNumber($tablebody, $kolombody++, $data->harga_beli);
 	        xlsWriteNumber($tablebody, $kolombody++, $data->harga_jual);
 	        xlsWriteNumber($tablebody, $kolombody++, $data->stok);
@@ -220,7 +221,7 @@ class Tb_stok extends CI_Controller
 	        xlsWriteNumber($tablebody, $kolombody++, $data->jml_rusak);
 	        xlsWriteNumber($tablebody, $kolombody++, $data->jml_hilang);
 	        xlsWriteNumber($tablebody, $kolombody++, $data->min_stok);
-	        xlsWriteLabel($tablebody, $kolombody++, $data->nama_unit);
+	        xlsWriteLabel($tablebody, $kolombody++,  $data->nama_unit);
 
 	        $tablebody++;
             $nourut++;
@@ -274,23 +275,13 @@ class Tb_stok extends CI_Controller
     }
 
     function excelphp(){
-        $idta = $this->db->get_where('tb_tahunajar',['id_unit' => $this->session->userdata('id_lembaga'),'status' => 'active'])->row()->id_tahunajar;
-        $this->db->join('tb_detail_proker dp','dp.proker_id = tb_proker.id_proker');
-        $this->db->join('tb_belanja b','b.proker_id_b = dp.proker_id','left');
-        $this->db->group_by('id_proker');
-        $data_proker = $this->db->select('tb_proker.id_proker,dp.*,tb_proker.*,sum(jumlah) as Jml,sum(bos) as Bos, sum(yysn) as Yysn,sum(sponsorship) as Spon')->get_where('tb_proker',['nama_unit' => $this->session->userdata('id_lembaga'),'idtahunajar' => $idta])->result();
         
-        $this->db->join('tb_proker r','r.id_proker = tb_belanja.proker_id_b');
-        $sumAngg = $this->db->select('sum(jumlah) as jml')->get_where('tb_belanja',['nama_unit' =>$this->session->userdata('id_lembaga'),'idtahunajar' => $idta])->row()->jml;
-        
-        $this->db->join('tb_proker r','r.id_proker = tb_belanja.proker_id_b');
-        $sumBos = $this->db->select('sum(bos) as jml')->get_where('tb_belanja',['nama_unit' =>$this->session->userdata('id_lembaga'),'idtahunajar' => $idta])->row()->jml;
-        
-        $this->db->join('tb_proker r','r.id_proker = tb_belanja.proker_id_b');
-        $sumYysn = $this->db->select('sum(yysn) as jml')->get_where('tb_belanja',['nama_unit' =>$this->session->userdata('id_lembaga'),'idtahunajar' => $idta])->row()->jml;
-
-        $this->db->join('tb_proker r','r.id_proker = tb_belanja.proker_id_b');
-        $sumSpon = $this->db->select('sum(sponsorship) as jml')->get_where('tb_belanja',['nama_unit' =>$this->session->userdata('id_lembaga'),'idtahunajar' => $idta])->row()->jml;
+        $this->db->join('tb_barang tb','tb.id_barang = tb_stok.id_barang');
+        $this->db->join('tb_satuan st','st.id_satuan = tb.satuan');
+        $this->db->join('tb_kategori k','tb.kategori = k.id_kategori');
+        $this->db->join('tb_brand br','tb.brand = br.id_brand');
+        $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
+        $tb_stok = $this->db->get('tb_stok')->result();
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -334,74 +325,62 @@ class Tb_stok extends CI_Controller
             ], 
         );
 
-        $col = 6+count($data_proker);
-        $colBody = $col - 1;
-        $sheet->mergeCells('A'.$col.':P'.$col);
-        $sheet->getStyle('A'.$col.':T'.$col)->applyFromArray($styleTh);
-        $sheet->setCellValue('A'.$col, 'TOTAL');
-        $sheet->setCellValue('Q'.$col, xrupiah($sumAngg));
-        $sheet->setCellValue('R'.$col, xrupiah($sumBos));
-        $sheet->setCellValue('S'.$col, xrupiah($sumYysn));
-        $sheet->setCellValue('T'.$col, xrupiah($sumSpon));
-
         //Merge Cell Judul
-        $sheet->mergeCells('A1:T1');
-        $sheet->mergeCells('A2:T2');
-        $sheet->mergeCells('A3:T3');
-        $sheet->getStyle('A1:T1')->applyFromArray($styleJudul);
-        $sheet->getStyle('A2:T2')->applyFromArray($styleJudul);
-        $sheet->getStyle('A3:T3')->applyFromArray($styleJudul);
-
-        //Merge Cell Header
-        $sheet->mergeCells('A4:A5');
-        $sheet->mergeCells('B4:B5');
-        $sheet->mergeCells('C4:C5');
-        $sheet->mergeCells('D4:D5');
-        $sheet->mergeCells('E4:P4');
-        $sheet->mergeCells('Q4:Q5');
-        $sheet->mergeCells('R4:T4');
+        $sheet->mergeCells('A1:K1');
+        $sheet->mergeCells('A2:K2');
+        $sheet->mergeCells('A3:K3');
+        $sheet->getStyle('A1:K1')->applyFromArray($styleJudul);
+        $sheet->getStyle('A2:K2')->applyFromArray($styleJudul);
+        $sheet->getStyle('A3:K3')->applyFromArray($styleJudul);
 
         //bgColor
-        $sheet->getStyle('A4:T5')->applyFromArray($styleTh);
-        $sheet->getStyle('A6:T'.$colBody)->applyFromArray($styleTbody);
+        $sheet->getStyle('A4:K4')->applyFromArray($styleTh);
         
         //Judul Laporan
-        $sheet->setCellValue('A1', 'Ledger Program Kerja '.$this->app_model->nama_lembaga($this->session->userdata('id_lembaga')));
-        $sheet->setCellValue('A2', 'Tahun Ajar '.@$this->app_model->ta_aktif());
+        $sheet->setCellValue('A1', 'Stok Barang');
+        // $sheet->setCellValue('A2', 'Tahun Ajar '.@$this->app_model->ta_aktif());
 
         //Header Table
-        $sheet->setCellValue('A4', 'NO');
-        $sheet->setCellValue('B4', 'NAMA PROKER');
-        $sheet->setCellValue('C4', 'NAMA KEGIATAN');
-        $sheet->setCellValue('D4', 'PJ / KETUA PANITIA');
-        $sheet->setCellValue('E4', 'WAKTU PELAKSANAAN**');
-        $sheet->setCellValue('Q4', 'TOTAL ANGGARAN');
-        $sheet->setCellValue('R4', 'SUMBER DANA');
-        $sheet->setCellValue('R5', 'BOS');
-        $sheet->setCellValue('S5', 'YAYASAN');
-        $sheet->setCellValue('T5', 'SPONSORSHIP');
+        
+        $sheet->setCellValue('A4','No'); 
+        $sheet->setCellValue('B4','Nama Barang'); 
+        $sheet->setCellValue('C4','Kategori Barang'); 
+        $sheet->setCellValue('D4','Harga beli');
+        $sheet->setCellValue('E4','Harga jual'); 
+        $sheet->setCellValue('F4','Stok');
+        $sheet->setCellValue('G4','Jumlah Baik');
+        $sheet->setCellValue('H4','Jumlah Rusak');
+        $sheet->setCellValue('I4','Jumlah Hilang');
+        $sheet->setCellValue('J4','Minimal Stok');
+        $sheet->setCellValue('K4','Nama Unit'); 
 
-        //Header Bulan Table
-        $sheet->setCellValue('E5', medium_bulan(7));
-        $sheet->setCellValue('F5', medium_bulan(8));
-        $sheet->setCellValue('G5', medium_bulan(9));
-        $sheet->setCellValue('H5', medium_bulan(10));
-        $sheet->setCellValue('I5', medium_bulan(11));
-        $sheet->setCellValue('J5', medium_bulan(12));
-        $sheet->setCellValue('K5', medium_bulan(1));
-        $sheet->setCellValue('L5', medium_bulan(2));
-        $sheet->setCellValue('M5', medium_bulan(3));
-        $sheet->setCellValue('N5', medium_bulan(4));
-        $sheet->setCellValue('O5', medium_bulan(5));
-        $sheet->setCellValue('P5', medium_bulan(6));
+        
 
-        $range = range("A", "T");
+        $no = 1;
+		$x = 5;
+		foreach($tb_stok as $data)
+		{
+			$sheet->setCellValue('A'.$x, $no++);
+			$sheet->setCellValue('B'.$x, $data->nama_barang);
+			$sheet->setCellValue('C'.$x, $data->nama_kategori);
+			$sheet->setCellValue('D'.$x, $data->harga_beli);
+			$sheet->setCellValue('E'.$x, $data->harga_jual);
+			$sheet->setCellValue('F'.$x, $data->stok);
+			$sheet->setCellValue('G'.$x, $data->jml_baik);
+			$sheet->setCellValue('H'.$x, $data->jml_rusak);
+			$sheet->setCellValue('I'.$x, $data->jml_hilang);
+			$sheet->setCellValue('J'.$x, $data->min_stok);
+			$sheet->setCellValue('K'.$x, $data->nama_unit);
+			$x++;
+		}
+
+        $range = range("A", "K");
         foreach($range as $r){
             $sheet->getColumnDimension($r)->setAutoSize(true);
         }
 
         $writer = new Xlsx($spreadsheet);
-        $filename = 'Laporan Rekap Program Kerja '.$this->app_model->nama_lembaga($this->session->userdata('id_lembaga'));
+        $filename = 'Laporan Stok Barang';
         
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
