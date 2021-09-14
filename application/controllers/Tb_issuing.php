@@ -202,8 +202,8 @@ class Tb_issuing extends CI_Controller
         $jmlout     = $this->input->post('jumlah', TRUE);
 
         $cek = $this->db->get_where('tb_issuing_temp',['id_issuing' => $uri, 'id_barang' => $idbarang]);
-        $jml = $cek->row()->jumlah;
         if($cek->num_rows() == 1){
+            $jml = @$cek->row()->jumlah;
             $data = [
                 'jumlah'        => $jml+$jmlout
             ];
@@ -312,8 +312,8 @@ class Tb_issuing extends CI_Controller
 
     function simpanBrangBarcodePending($uri,$id_barang,$jumlah){
         $cek = $this->db->get_where('tb_issuing_temp',['id_issuing' => $uri, 'id_barang' => $id_barang]);
-        $jml = $cek->row()->jumlah;
         if($cek->num_rows() == 1){
+            $jml = $cek->row()->jumlah;
             $data = [
                 'jumlah'        => $jml+$jumlah
             ];
