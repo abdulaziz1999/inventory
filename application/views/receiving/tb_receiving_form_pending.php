@@ -179,8 +179,10 @@
                             </table>
                     <hr>
                         <?php if($b_pending->num_rows() > 0):?>
-                            <h3 class="table-header text-center"><strong>Data Barang Masuk Pending</strong>
-                            </h3>
+                            <h3 class="table-header text-center"><strong>Data Barang Masuk Pending</strong></h3>
+                            <?php if($this->session->userdata('level') == 'superuser' || $this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'staff'){?>
+                                <?= $length ? anchor(site_url('tb_receiving/approve_all/'.$length.'/'.$this->uri->segment(3)),'<i class="fa fa-cloud-upload"></i> Approve','title="approve" class="btn btn-success btn-round btn-sm" style="float:right; margin-right:9px; margin-top:3px;" onclick="javasciprt: return confirm(\'Anda Yakin ingin approve ?\')"') : '' ?>
+                            <?php }?>
                             <table class="table table-hover table-striped" id="mytable1">
                                 <thead>
                                     <tr>

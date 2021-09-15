@@ -182,7 +182,7 @@
                         <?php $length = $this->db->get_where('tb_receiving_temp',['id_receiving' => $this->uri->segment(3)])->num_rows();?>
                         <?php //if($length > 0):?>
                             <h3 class="table-header text-center"><strong>Data Barang Masuk Pending</strong>
-                            <?php if($this->session->userdata('level') == 'superuser' || $this->session->userdata('level') == 'admin'){?>
+                            <?php if($this->session->userdata('level') == 'superuser' || $this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'staff'){?>
                                 <?= $length ? anchor(site_url('tb_receiving/approve_all/'.$length.'/'.$this->uri->segment(3)),'<i class="fa fa-cloud-upload"></i> Approve','title="approve" class="btn btn-success btn-round btn-sm" style="float:right; margin-right:9px; margin-top:3px;" onclick="javasciprt: return confirm(\'Anda Yakin ingin approve ?\')"') : '' ?>
                             <?php }?>
                             </h3>
