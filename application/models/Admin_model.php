@@ -9,7 +9,8 @@ class Admin_model extends CI_Model
     function barang_max(){
                     $this->db->join('tb_stok s','s.id_barang = tb_barang.id_barang');
                     $this->db->order_by('stok','desc');
-                    $this->db->limit(5);
+                    $this->db->group_by('s.id_barang');
+                    $this->db->limit(7);
             $query= $this->db->get('tb_barang');
             return $query;
     }
@@ -17,7 +18,8 @@ class Admin_model extends CI_Model
     function barang_min(){
                 $this->db->join('tb_stok s','s.id_barang = tb_barang.id_barang');
                 $this->db->order_by('stok','asc');
-                $this->db->limit(5);
+                $this->db->group_by('s.id_barang');
+                $this->db->limit(7);
             $query= $this->db->get('tb_barang');
             return $query;
     }
