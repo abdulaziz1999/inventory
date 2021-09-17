@@ -248,8 +248,8 @@ class Tb_issuing extends CI_Controller
                     $this->db->delete('tb_issuing_temp',['id_pendings' => $idmax]);
 
                     
-                }elseif($stok == 0 || $sisa <= 0){
-                    
+                }elseif($issuing == 0 || $issuing <= 0){
+                    $this->session->set_flashdata('gagal', "Barang Tidak cukup");
                 }
                 $x++;
             }        
