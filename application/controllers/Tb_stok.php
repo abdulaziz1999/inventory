@@ -275,13 +275,13 @@ class Tb_stok extends CI_Controller
     }
 
     function excelphp(){
-        
+        $idc = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
         $this->db->join('tb_barang tb','tb.id_barang = tb_stok.id_barang');
         $this->db->join('tb_satuan st','st.id_satuan = tb.satuan');
         $this->db->join('tb_kategori k','tb.kategori = k.id_kategori');
         $this->db->join('tb_brand br','tb.brand = br.id_brand');
         $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
-        $tb_stok = $this->db->get('tb_stok')->result();
+        $tb_stok = $this->db->get_where('tb_stok',['cutoff_id' => $idc])->result();
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
