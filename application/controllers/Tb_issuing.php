@@ -368,7 +368,7 @@ class Tb_issuing extends CI_Controller
 
     function updatejumlah(){
         $id = $this->input->post('id');
-        $pending = $this->db->get_where('tb_issuing_temp',['id_pending' => $id])->row();
+        $pending = $this->db->get_where('tb_issuing_temp',['id_pendings' => $id])->row();
         $barang = $this->db->get('tb_barang')->result();
         ?>
         <form action="<?= base_url('tb_issuing_temp/update_pending/'.$id)?>" method="post">
