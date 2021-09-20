@@ -229,7 +229,7 @@
                     <b class="arrow"></b>
                 </li>
             <?php }?>
-            <?php if($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'staff'){?>
+            <?php if($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'staff' || $this->session->userdata('level') == 'superuser'){?>
                 <li class="<?php if($this->uri->segment(1) == 'tb_kategori'){ echo "active open"; }
                     elseif($this->uri->segment(1) == 'tb_brand'){ echo "active open"; }
                     elseif($this->uri->segment(1) == 'tb_satuan'){ echo "active open"; }
@@ -342,7 +342,7 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
-            <?php if($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'staff' || $this->session->userdata('level') == 'operator'){?>
+            <?php if($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'staff' || $this->session->userdata('level') == 'operator' || $this->session->userdata('level') == 'superuser'){?>
                 <li
                     class="<?php if($this->uri->segment(1) == 'tb_stok' && $this->uri->segment(2) == ''){ echo "active"; }else{ echo "";}?>">
                     <a href="<?= base_url('tb_stok'); ?>">
@@ -369,7 +369,7 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
-            <?php if($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'staff'){?>
+            <?php if($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'staff' || $this->session->userdata('level') == 'superuser'){?>
                 <li class="<?php if($this->uri->segment(1) == 'laporan_opname'){ echo "active"; }else{ echo "";}?>">
                     <a href="<?= base_url('laporan_opname'); ?>">
                         <i class="menu-icon fa fa-folder-open"></i>
