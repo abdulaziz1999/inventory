@@ -4,7 +4,7 @@
         <div class='col-xs-12'>
             <div class='box'>
                 <div class='box-header'>
-                    <h3 class='box-title'>Tb_stok Read1</h3>
+                    <h3 class='box-title'>Tb_stok Read</h3>
                     <table class="table table-bordered">
                         <tr>
                             <td>Stok</td>
