@@ -96,7 +96,7 @@
             <td><?= @rupiah($row->harga_jual)?></td>
             <td><?= @$row->nama_satuan?></td>
             <td><?= @$row->jumlah?></td>
-            <td><?php @$sum += $row->jml*$row->harga_jual; echo @rupiah( $row->jml*$row->harga_jual)?></td>
+            <td><?php @$sum += $row->jumlah*$row->harga_jual; echo @rupiah( $row->jumlah*$row->harga_jual)?></td>
         </tr>
         <?php endforeach;?>
 		<tfoot>
