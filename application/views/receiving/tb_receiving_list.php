@@ -60,7 +60,7 @@
                                 ?>
                                 <tr>
                                     <td><?= ++$start ?></td>
-                                    <td><?= $tb_receiving->tgl ?></td>
+                                    <td><?= date_indo($tb_receiving->tgl) ?></td>
                                     <td><?= $tb_receiving->no_ref ?></td>
                                     <td>
                                         <?= @$this->db->get_where('tb_suplier',['id_suplier' => $tb_receiving->supplier])->row()->nama_suplier ?>
