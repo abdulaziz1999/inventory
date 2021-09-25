@@ -61,7 +61,7 @@
                                 ?>
                                     <tr>
                                         <td><?= ++$start ?></td>
-                                        <td><?= $tb_issuing->tgl ?></td>
+                                        <td><?= date_indo($tb_issuing->tgl) ?></td>
                                         <td><?= $tb_issuing->no_ref ?></td>
                                         <td>
                                             <?= @$this->db->get_where('tb_customer',['id_customer' => $tb_issuing->picker])->row()->nama_customer ?>
