@@ -82,7 +82,6 @@
     <table class="word-table" style="margin-bottom: 10px">
         <tr align="center"  class="text-white">
             <td height="32"><b id="j">#</b></td>
-            <td ><b id="j">No.Barang</b></td>
 			<td ><b id="j">Nama Barang</b></td>
             <td ><b id="j">Kode Barcode</b></td>
             <td ><b id="j">Harga Jual</b></td>
@@ -93,7 +92,6 @@
         <?php $sum=0; $no=1; foreach($sup->result() as $row):?>
         <tr>
             <td><?= $no++ ?></td>
-            <td><?= @$row->part_number?></td>
             <td><?= @$row->nama_barang?></td>
             <td><?= @$row->kode_barcode?></td>
             <td><?= @rupiah($row->harga_jual)?></td>
