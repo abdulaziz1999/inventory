@@ -102,7 +102,7 @@
         <?php endforeach;?>
         <tfoot>
             <tr>
-                <td colspan="7" align="center" ><b id="j">Total</b></td>
+                <td colspan="6" align="center" ><b id="j">Total</b></td>
                 <td id="total" ><?= @rupiah($sum) ?></td>
             </tr>
         </tfoot>
