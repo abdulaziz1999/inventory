@@ -53,10 +53,16 @@ class Tb_receiving extends CI_Controller
 
     public function index()
     {
-        $tb_receiving = $this->Tb_receiving_model->get_all();
+        if($this->input->get('idc')){
+            $tb_receiving = $this->Tb_receiving_model->get_cutoff($this->input->get('idc'));
+        }else{
+            $tb_receiving = $this->Tb_receiving_model->get_all();
+        }
+
         $data = array(
             'tb_receiving_data' => $tb_receiving,
-            'level'             => $this->session->userdata('level')
+            'level'             => $this->session->userdata('level'),
+            'cutoff'            => $this->db->get('tb_cutoff')
         );
 
         $this->template->load('template','receiving/tb_receiving_list', $data);

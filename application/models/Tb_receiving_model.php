@@ -23,6 +23,12 @@ class Tb_receiving_model extends CI_Model
         return $this->db->get_where($this->table,['idcutoff' => $idcutoff])->result();
     }
 
+    function get_cutoff($idc)
+    {
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get_where($this->table,['idcutoff' => $idc])->result();
+    }
+
     // get data by id
     function get_by_id($id)
     {
