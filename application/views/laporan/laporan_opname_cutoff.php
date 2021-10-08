@@ -4,7 +4,7 @@
             <i class="ace-icon fa fa-home home-icon"></i>
             <a href="<?= base_url('admin'); ?>">Dashboard</a>
         </li>
-        <li class="active">Laporan Barang Masuk By Date</li>
+        <li class="active">Laporan Stok Opname By Date</li>
     </ul>
 </div>
 <!-- Main content -->
@@ -13,7 +13,7 @@
         <div class='col-xs-12'>
             <div class='box'>
                 <div class='box-header'>
-                    <h3 class='box-title'>Laporan Barang Masuk</h3>
+                    <h3 class='box-title'>Laporan Stok Opname</h3>
                     <div class='box box-primary'>
                         <form action="" method="get">
                             <div class="row">
@@ -21,7 +21,7 @@
                                     <div class="form-group">
                                         <label>Tanggal Cut Off</label>
                                         <select class="form-control" name="idc" id="unit_id">
-                                            <option value="" selected disabled>----Pilih Unit----</option>
+                                            <option value="" selected disabled>----Pilih Cutoff----</option>
                                             <?php foreach($cutoff->result() as $key):?>
                                             <option
                                                 <?php if($this->input->get('idc', TRUE) == $key->id_cutoff) { echo 'selected';}?>
