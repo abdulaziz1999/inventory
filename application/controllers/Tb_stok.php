@@ -362,7 +362,7 @@ class Tb_stok extends CI_Controller
         
         //Judul Laporan
         $sheet->setCellValue('A1', 'Stok Barang');
-        $sheet->setCellValue('A2', 'Cut Off '.date_indo($tglcutoff->start).'-'.date_indo($tglcutoff->end));
+        $sheet->setCellValue('A2', 'Cut Off '.date_indo($tglcutoff->start).' Sampai '.date_indo($tglcutoff->end));
 
         //Header Table
         
@@ -404,7 +404,7 @@ class Tb_stok extends CI_Controller
         }
 
         $writer = new Xlsx($spreadsheet);
-        $filename = 'Laporan Stok Barang Cut Off '.date_indo($tglcutoff->start).'-'.date_indo($tglcutoff->end);
+        $filename = 'Laporan Stok Barang Cut Off '.date_indo($tglcutoff->start).' - '.date_indo($tglcutoff->end);
         
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
