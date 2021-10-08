@@ -37,6 +37,7 @@ class Tb_stok extends CI_Controller
 
         $data = array(
             'tb_stok_data'  => $tb_stok,
+            'cutoff'        => $this->db->get('tb_cutoff'),
             'jmlstok'       => $this->db->get_where('tb_stok',['cutoff_id' => $idc])->num_rows()
         );
 
