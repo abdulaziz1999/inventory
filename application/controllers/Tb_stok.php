@@ -288,13 +288,24 @@ class Tb_stok extends CI_Controller
     }
 
     function excelphp(){
-        $idc = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
-        $this->db->join('tb_barang tb','tb.id_barang = tb_stok.id_barang');
-        $this->db->join('tb_satuan st','st.id_satuan = tb.satuan');
-        $this->db->join('tb_kategori k','tb.kategori = k.id_kategori');
-        $this->db->join('tb_brand br','tb.brand = br.id_brand');
-        $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
-        $tb_stok = $this->db->get_where('tb_stok',['cutoff_id' => $idc])->result();
+        if($this->input->get('idc')){
+            $this->db->join('tb_barang tb','tb.id_barang = tb_stok.id_barang');
+            $this->db->join('tb_satuan st','st.id_satuan = tb.satuan');
+            $this->db->join('tb_kategori k','tb.kategori = k.id_kategori');
+            $this->db->join('tb_brand br','tb.brand = br.id_brand');
+            $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
+            $tb_stok = $this->db->get_where('tb_stok',['cutoff_id' => $this->input->get('idc')])->result();
+            $tglcutoff = $this->db->get_where('tb_cutoff',['id_cutoff' => $this->input->get('idc')])->row();
+        }else{
+            $idc = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
+            $this->db->join('tb_barang tb','tb.id_barang = tb_stok.id_barang');
+            $this->db->join('tb_satuan st','st.id_satuan = tb.satuan');
+            $this->db->join('tb_kategori k','tb.kategori = k.id_kategori');
+            $this->db->join('tb_brand br','tb.brand = br.id_brand');
+            $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
+            $tb_stok = $this->db->get_where('tb_stok',['cutoff_id' => $idc])->result();
+            $tglcutoff = $this->db->get_where('tb_cutoff',['id_cutoff' => $idc])->row();
+        }
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -351,7 +362,7 @@ class Tb_stok extends CI_Controller
         
         //Judul Laporan
         $sheet->setCellValue('A1', 'Stok Barang');
-        // $sheet->setCellValue('A2', 'Tahun Ajar '.@$this->app_model->ta_aktif());
+        $sheet->setCellValue('A2', 'Cut Off '.date_indo($tglcutoff->start).'-'.date_indo($tglcutoff->end));
 
         //Header Table
         
@@ -393,7 +404,7 @@ class Tb_stok extends CI_Controller
         }
 
         $writer = new Xlsx($spreadsheet);
-        $filename = 'Laporan Stok Barang';
+        $filename = 'Laporan Stok Barang Cut Off '.date_indo($tglcutoff->start).'-'.date_indo($tglcutoff->end);
         
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
