@@ -41,7 +41,6 @@
                             <div class="col-lg-2"></div>
                         </div>
                     </form>
-                    <hr>
                     <?= anchor('tb_receiving/create/','<i class="fa fa-plus"></i> Tambah',array('class'=>'btn btn-primary btn-sm btn-round'));?><br>
                     <!-- <?= anchor(site_url('tb_receiving/excel'), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-primary btn-sm"'); ?>
                     <?= anchor(site_url('tb_receiving/word'), '<i class="fa fa-file-word-o"></i> Word', 'class="btn btn-primary btn-sm"'); ?>
@@ -101,15 +100,17 @@
                                     </td>
                                     <td><?= @$tb_receiving->ket ?></td>
                                     <td style="text-align:center" width="300px">
+                                    <?php if($cutoffactive == 1 || $cutoffactive == ''):?>
                                         <div class="btn-group btn-corner">
                                             <?php 
-                                    echo anchor(site_url('tb_receiving/read/'.$tb_receiving->id_receiving),'<i class="fa fa-eye"></i> Detail',array('title'=>'detail','class'=>'btn btn-info btn-sm')); 
-                                    echo '&nbsp;&nbsp;'; 
-                                    echo anchor(site_url('tb_receiving/update/'.$tb_receiving->id_receiving),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-success btn-sm')); 
-                                    echo '&nbsp;&nbsp;'; 
-                                    // echo anchor(site_url('tb_receiving/delete/'.$tb_receiving->id_receiving),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
-                                    ?>
+                                                echo anchor(site_url('tb_receiving/read/'.$tb_receiving->id_receiving),'<i class="fa fa-eye"></i> Detail',array('title'=>'detail','class'=>'btn btn-info btn-sm')); 
+                                                echo '&nbsp;&nbsp;'; 
+                                                echo anchor(site_url('tb_receiving/update/'.$tb_receiving->id_receiving),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-success btn-sm')); 
+                                                echo '&nbsp;&nbsp;'; 
+                                                // echo anchor(site_url('tb_receiving/delete/'.$tb_receiving->id_receiving),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+                                                ?>
                                         </div>
+                                    <?php endif;?>
                                     </td>
                                 </tr>
                                 <?php

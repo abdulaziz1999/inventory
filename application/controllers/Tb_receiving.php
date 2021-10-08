@@ -55,14 +55,17 @@ class Tb_receiving extends CI_Controller
     {
         if($this->input->get('idc')){
             $tb_receiving = $this->Tb_receiving_model->get_cutoff($this->input->get('idc'));
+            $cutoffactive   = $this->db->get_where('tb_cutoff',['id_cutoff' => $this->input->get('idc')])->row()->status;
         }else{
             $tb_receiving = $this->Tb_receiving_model->get_all();
+            $cutoffactive   = '';
         }
 
         $data = array(
             'tb_receiving_data' => $tb_receiving,
             'level'             => $this->session->userdata('level'),
-            'cutoff'            => $this->db->get('tb_cutoff')
+            'cutoff'            => $this->db->get('tb_cutoff'),
+            'cutoffactive'      => $cutoffactive
         );
 
         $this->template->load('template','receiving/tb_receiving_list', $data);
