@@ -34,7 +34,7 @@
                                 <div class="btn-group btn-corner">
                                     <button type="submit" class="btn tampil btn-sm btn-primary"
                                         style="margin-right:3px;"><i class="fa fa-eye"></i> Filter</button>
-                                    <a href="<?= site_url('tb_barang') ?>" class="btn btn-sm btn-danger">
+                                    <a href="<?= site_url('tb_issuing') ?>" class="btn btn-sm btn-danger">
                                         <i class="fa fa-remove"></i> Reset</a>
                                 </div>
                             </div>
