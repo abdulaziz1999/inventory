@@ -14,6 +14,33 @@
             <div class='box'>
                 <div class='box-header'>
                     <br>
+                    <form action="" method="get">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                        <select class="form-control" name="idc" id="unit_id">
+                                            <option value="" selected disabled>----Pilih Cut Off----</option>
+                                            <?php foreach($cutoff->result() as $key):?>
+                                            <option
+                                                <?php if($this->input->get('idc', TRUE) == $key->id_cutoff) { echo 'selected';}?>
+                                                value="<?= $key->id_cutoff?>">
+                                                <?= date_indo($key->start)?> - <?= date_indo($key->end)?> - <?= $key->status == 1 ? ' <b>AKTIF</b>' : ''?>
+                                            </option>
+                                            <?php endforeach;?>
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="btn-group btn-corner">
+                                    <button type="submit" class="btn tampil btn-sm btn-primary"
+                                        style="margin-right:3px;"><i class="fa fa-eye"></i> Filter</button>
+                                    <a href="<?= site_url('tb_barang') ?>" class="btn btn-sm btn-danger">
+                                        <i class="fa fa-remove"></i> Reset</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-2"></div>
+                        </div>
+                    </form>
                     <?= anchor('tb_issuing/create/','<i class="fa fa-plus"></i> Tambah',array('class'=>'btn btn-sm btn-round btn-primary'));?><br>
                     <!-- <?= anchor(site_url('tb_issuing/excel'), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-primary btn-sm"'); ?>
                     <?= anchor(site_url('tb_issuing/word'), '<i class="fa fa-file-word-o"></i> Word', 'class="btn btn-primary btn-sm"'); ?>
@@ -74,15 +101,17 @@
                                         </td>
                                         <td><?= $tb_issuing->ket ?></td>
                                         <td style="text-align:center" width="300px">
+                                        <?php if($cutoffactive == 1 || $cutoffactive == ''):?>
                                             <div class="btn-group btn-corner">
                                                 <?php 
-                                    echo anchor(site_url('tb_issuing/read/'.$tb_issuing->id_issuing),'<i class="fa fa-eye"></i> Detail',array('title'=>'detail','class'=>'btn btn-info btn-sm')); 
-                                    echo '&nbsp;&nbsp;'; 
-                                    echo anchor(site_url('tb_issuing/update/'.$tb_issuing->id_issuing),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-success btn-sm')); 
-                                    echo '&nbsp;&nbsp;'; 
-                                    // echo anchor(site_url('tb_issuing/delete/'.$tb_issuing->id_issuing),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
-                                    ?>
+                                                    echo anchor(site_url('tb_issuing/read/'.$tb_issuing->id_issuing),'<i class="fa fa-eye"></i> Detail',array('title'=>'detail','class'=>'btn btn-info btn-sm')); 
+                                                    echo '&nbsp;&nbsp;'; 
+                                                    echo anchor(site_url('tb_issuing/update/'.$tb_issuing->id_issuing),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-success btn-sm')); 
+                                                    echo '&nbsp;&nbsp;'; 
+                                                    // echo anchor(site_url('tb_issuing/delete/'.$tb_issuing->id_issuing),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+                                                 ?>
                                             </div>
+                                        <?php endif;?>
                                         </td>
                                     </tr>
                                     <?php

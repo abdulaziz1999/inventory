@@ -24,10 +24,19 @@ class Tb_issuing extends CI_Controller
 
     public function index()
     {
-        $tb_issuing = $this->Tb_issuing_model->get_all();
+        if($this->input->get('idc')){
+            $tb_issuing     = $this->Tb_issuing_model->get_cutoff($this->input->get('idc'));
+            $cutoffactive   = $this->db->get_where('tb_cutoff',['id_cutoff' => $this->input->get('idc')])->row()->status;
+        }else{
+            $tb_issuing = $this->Tb_issuing_model->get_all();
+            $cutoffactive = '';
+        }
+
         $data = array(
             'tb_issuing_data' => $tb_issuing,
-            'level'           => $this->session->userdata('level')
+            'level'           => $this->session->userdata('level'),
+            'cutoff'          => $this->db->get('tb_cutoff'),
+            'cutoffactive'    => $cutoffactive
         );
 
         $this->template->load('template','issuing/tb_issuing_list', $data);
