@@ -42,7 +42,7 @@
                         </div>
                     </form>
                     <!--  //echo anchor('tb_stok/create/','Create',array('class'=>'btn btn-danger btn-sm'));?> -->
-                    <?= anchor(site_url('tb_stok/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-sm btn-round btn-danger btn-sm" target="_blank"'); ?>
+                    <!-- <?= anchor(site_url('tb_stok/pdf'), '<i class="fa fa-file-pdf-o"></i> PDF', 'class="btn btn-sm btn-round btn-danger btn-sm" target="_blank"'); ?> -->
                     <?= anchor(site_url('tb_stok/excelphp'), ' <i class="fa fa-file-excel-o"></i> Excel', 'class="btn btn-round btn-success btn-sm"'); ?>
                     <!-- <?= anchor(site_url('tb_stok/word'), '<i class="fa fa-file-word-o"></i> Word', 'class="btn btn-primary btn-sm"'); ?> -->
                     <h3 class="table-header text-center"><strong>Data Stok Barang</strong></h3>
