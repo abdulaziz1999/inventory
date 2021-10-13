@@ -77,6 +77,7 @@
                                         <th>Pemesan</th>
                                         <th>Nama Proyek</th>
                                         <th>Keterangan</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -100,6 +101,16 @@
                                             <?= @$this->db->get_where('tb_proyek',['id_proyek' => $tb_issuing->nama_proyek])->row()->nama_proyek ?>
                                         </td>
                                         <td><?= $tb_issuing->ket ?></td>
+                                        <td>
+                                            <?php 
+                                            $cek = $this->db->get_where('tb_issuing_item',['id_issuing' => $tb_issuing->id_issuing])->num_rows(); 
+                                            $cek2 = $this->db->get_where('tb_issuing_temp',['id_issuing' => $tb_issuing->id_issuing])->num_rows(); 
+                                            if($cek > 1 && $cek2 == 0){?>
+                                                <span class="label label-lg label-primary arrowed-right">Sudah di Approve</span>
+                                            <?php }else{ ?>
+                                                <span class="label label-lg label-warning arrowed-right">Belum di Approve</span>
+                                            <?php }?>
+                                        </td>
                                         <td style="text-align:center" width="300px">
                                         <?php if($cutoffactive == 1 || $cutoffactive == ''):?>
                                             <div class="btn-group btn-corner">
