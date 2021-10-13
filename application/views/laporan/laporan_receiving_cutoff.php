@@ -82,7 +82,7 @@
                                 <th>No PO</th>
                                 <th>Supplier</th>
                                 <th>Pemesan</th>
-                                <th>Total</th>
+                                <th>Total Pembelian</th>
                             </tr>
                         </thead>
                     </table>

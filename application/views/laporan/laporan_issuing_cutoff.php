@@ -82,7 +82,8 @@
                                 <th>No Invoice</th>
                                 <th>Customer</th>
                                 <th>Pemesan</th>
-                                <th>Total</th>
+                                <th>Total Beli</th>
+                                <th>Total Penjualan</th>
                             </tr>
                         </thead>
                     </table>

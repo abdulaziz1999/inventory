@@ -99,7 +99,7 @@ class Laporan_issuing extends CI_Controller{
         }elseif($k == TRUE){
             $this->db->where('kategori =', $k);
         }
-        $get =	$this->db->select('tgl,no_ref,nama_customer,nama_pemesan,harga_beli,harga_jual,sum(harga_jual*jumlah) as total')->group_by('i.id_issuing')->get('tb_barang');
+        $get =	$this->db->select('tgl,no_ref,nama_customer,nama_pemesan,harga_beli,harga_jual,sum(harga_jual*jumlah) as total,sum(harga_beli*jumlah) as total_beli')->group_by('i.id_issuing')->get('tb_barang');
 
         $data = array();
         $no = 1;
@@ -111,6 +111,7 @@ class Laporan_issuing extends CI_Controller{
                 $row->no_ref,
                 $row->nama_customer,
                 $row->nama_pemesan,
+                "Rp. ".number_format($row->total_beli,0,"","."),
                 "Rp. ".number_format($row->total,0,"","."),
             ];
         }
