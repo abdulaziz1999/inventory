@@ -951,7 +951,7 @@
             buttons: [
 
             ],
-            ajax: '<?= base_url('') ?>laporan/ajax2/<?= $this->input->get('idc', TRUE) ."/".$this->input->get('u', TRUE) ?>',
+            ajax: '<?= base_url('') ?>laporan_stok/ajax2/<?= $this->input->get('idc', TRUE) ."/".$this->input->get('u', TRUE) ?>',
             scrollY: 250,
             info: false,
             deferRender: true,

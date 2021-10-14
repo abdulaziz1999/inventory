@@ -79,7 +79,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal</th>
-                                <th>No PO</th>
                                 <th>Nama Item</th>
                                 <th>Kategori</th>
                                 <th>Satuan Unit</th>

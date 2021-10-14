@@ -81,7 +81,7 @@ class Laporan_stok extends CI_Controller{
         $length = intval($this->input->get("length"));
         // $this->My_model->dataLog('Laporan Stok dengan filter dari '.$s.' sampai '.$e.' unit : '.$u);
                
-                $this->db->join('tb_stok st','tb_barang.id_barang = st.id_barang');
+                $this->db->join('tb_stok st','tb_barang.id_barang = st.id_barang','left');
                 $this->db->join('tb_satuan s','tb_barang.satuan = s.id_satuan');
                 $this->db->join('tb_kategori k','tb_barang.kategori = k.id_kategori');
                 $this->db->join('tb_brand br','tb_barang.brand = br.id_brand');
@@ -96,20 +96,26 @@ class Laporan_stok extends CI_Controller{
                 }elseif($k == TRUE){
                     $this->db->where('kategori =', $k);
                 }
-        $get =	$this->db->select('*')->group_by('r.id_receiving')->get('tb_barang');
+        $get =	$this->db->select('*,sum(r.jumlah) as t_pembelian,sum(is.jumlah) as t_penjualan')->group_by('nama_barang')->get('tb_barang');
 
         $data = array();
         $no = 1; 
 
         foreach($get->result() as $row){
+            $jml_stok = $row->stok+($row->t_pembelian-$row->t_penjualan);
+            $harga_rata2 = $row->harga_jual;
             $data[] = [
                 $no++,
                 $row->tgl,
-                $row->no_ref,
                 $row->nama_barang,
-                $row->supplier,
-                $row->remarks,
-                "Rp. ".number_format(0,0,"","."),
+                $row->nama_kategori,
+                $row->nama_satuan,
+                $row->stok,
+                $row->t_pembelian,
+                $row->t_penjualan,
+                $jml_stok,
+                rupiah($harga_rata2),
+                rupiah($harga_rata2*$jml_stok),
             ];
         }
 
