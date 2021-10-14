@@ -103,7 +103,7 @@ class Laporan_stok extends CI_Controller{
 
         foreach($get->result() as $row){
             $jml_stok = $row->stok+($row->t_pembelian-$row->t_penjualan);
-            $harga_rata2 = 4500;
+            $harga_rata2 = $row->harga_beli;
             $data[] = [
                 $no++,
                 $row->tgl,
