@@ -33,6 +33,7 @@ class Tb_stok extends CI_Controller
             $this->db->join('tb_brand br','tb.brand = br.id_brand');
             $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
             $this->db->where(['tb_stok.cutoff_id' => $this->input->get('idc')]);
+            $this->db->group_by('tb.id_barang');
             $tb_stok = $this->Tb_stok_model->get_all();
             $cutoffactive   = $this->db->get_where('tb_cutoff',['id_cutoff' => $this->input->get('idc')])->row()->status;
         }else{
@@ -42,6 +43,7 @@ class Tb_stok extends CI_Controller
             $this->db->join('tb_brand br','tb.brand = br.id_brand');
             $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
             $this->db->where(['tb_stok.cutoff_id' => $idc]);
+            $this->db->group_by('tb.id_barang');
             $tb_stok = $this->Tb_stok_model->get_all();
             $cutoffactive   = '';
         }
