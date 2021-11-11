@@ -96,7 +96,7 @@ class Laporan_stok extends CI_Controller{
                 }elseif($k == TRUE){
                     $this->db->where('kategori =', $k);
                 }
-        $get =	$this->db->select('*,sum(r.jumlah) as t_pembelian,sum(is.jumlah) as t_penjualan')->group_by('nama_barang')->get('tb_barang');
+        $get =	$this->db->select('*,sum(r.jumlah) as t_pembelian,sum(is.jumlah) as t_penjualan,tb_barang.id_barang')->group_by('nama_barang')->get('tb_barang');
 
         $data = array();
         $no = 1; 
@@ -104,13 +104,14 @@ class Laporan_stok extends CI_Controller{
         foreach($get->result() as $row){
             $jml_stok = $row->stok+($row->t_pembelian-$row->t_penjualan);
             $harga_rata2 = $row->harga_beli;
+            $stok = $this->db->get_where('tb_stok',['id_barang' =>$row->id_barang ,'cutoff_id' => $idc-1])->row()->stok;
             $data[] = [
                 $no++,
                 $row->tgl,
                 $row->nama_barang,
                 $row->nama_kategori,
                 $row->nama_satuan,
-                $row->stok,
+                $stok,
                 $row->t_pembelian,
                 $row->t_penjualan,
                 $jml_stok,
