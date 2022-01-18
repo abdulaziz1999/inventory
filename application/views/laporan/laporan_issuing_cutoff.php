@@ -48,12 +48,10 @@
                                         <label style="color: white">-</label><br>
                                         <div class="btn-group btn-corner">
                                             <button type="submit" class="btn tampil btn-sm  btn-primary">Tampil</button>
-                                            <a href="<?php echo site_url('laporan') ?>"
-                                                class="btn btn-sm btn-default">Reset</a>
-                                            <?php if($this->input->get('s') == true):?>
-                                            <a href="<?php echo site_url('laporan_issuing/issuing_report/') ?><?= $this->input->get('s')?>/<?= $this->input->get('e')?>"
-                                                class="btn btn-sm btn-warning fa fa-print" target="_blank">Print</a>
+                                            <?php if($this->input->get('idc') == true):?>
+                                                <a href="<?php echo site_url('laporan_issuing/excelphp/') ?><?= $this->input->get('idc')?>/<?= $this->input->get('u')?>" class="btn btn-sm btn-success fa fa-file-excel-o" target="_blank">Excel</a>&nbsp;
                                             <?php endif;?>
+                                            <a href="<?php echo site_url('laporan') ?>" class="btn btn-sm btn-default">Reset</a>
                                         </div>
                                     </div>
                                 </div>

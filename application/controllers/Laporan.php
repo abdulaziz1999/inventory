@@ -1,4 +1,6 @@
 <?php
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Laporan extends CI_Controller{
 
     function __construct(){
@@ -133,5 +135,120 @@ class Laporan extends CI_Controller{
 		$html = $this->load->view('laporan/laporan_rev_pdf',$data,true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
+    }
+
+    function excelphp($idc=false, $u=false){
+        $cutoff = $this->db->get_where('tb_cutoff',['id_cutoff' => $idc])->row();
+        $this->My_model->dataLog('Laporan pembelian dengan filter dari '.date_indo($cutoff->start).' sampai '.date_indo($cutoff->end).' unit : '.$u);
+                $this->db->join('tb_stok st','tb_barang.id_barang = st.id_barang');
+                $this->db->join('tb_satuan s','tb_barang.satuan = s.id_satuan');
+                $this->db->join('tb_kategori k','tb_barang.kategori = k.id_kategori');
+                $this->db->join('tb_brand br','tb_barang.brand = br.id_brand');
+                $this->db->join('tb_receiving_item r','tb_barang.id_barang = r.id_barang');
+                $this->db->join('tb_receiving r2','r.id_receiving = r2.id_receiving');
+                $this->db->join('tb_suplier sup','r2.supplier = sup.id_suplier');
+                $this->db->join('tb_pemesan p','r2.remarks = p.id_pemesan');
+                $this->db->where('r2.idcutoff', $idc);
+                if($u == TRUE){
+                    $this->db->where('unit_id =', $u);
+                }elseif($k == TRUE){
+                    $this->db->where('kategori =', $k);
+                }
+        $get =	$this->db->select('tgl,no_ref,nama_suplier,nama_pemesan,harga_beli,harga_jual,sum(harga_beli*jumlah) as total')->group_by('r.id_receiving')->get('tb_barang')->result();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $styleTh = array (
+            'font' => [
+                'bold' => true,
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => [
+                    'argb' => 'B7B7B7',
+                ],
+            ], 
+            'alignment' => [
+                'horizontal'    => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical'      => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ], 
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                ],
+            ],
+        );
+
+        $styleTbody = array (
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                ],
+            ],
+        );
+
+        $styleJudul = array (
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal'    => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical'      => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ], 
+        );
+
+        //Merge Cell Judul
+        $sheet->mergeCells('A1:F1');
+        $sheet->mergeCells('A2:F2');
+        $sheet->mergeCells('A3:F3');
+        $sheet->getStyle('A1:F1')->applyFromArray($styleJudul);
+        $sheet->getStyle('A2:F2')->applyFromArray($styleJudul);
+        $sheet->getStyle('A3:F3')->applyFromArray($styleJudul);
+
+        //bgColor
+        $sheet->getStyle('A4:F4')->applyFromArray($styleTh);
+        
+        //Judul Laporan
+        $sheet->setCellValue('A1', 'Pembelian');
+        $sheet->setCellValue('A2', 'Cut Off '.date_indo($cutoff->start).' Sampai '.date_indo($cutoff->end));
+
+        //Header Table
+        
+        $sheet->setCellValue('A4','No'); 
+        $sheet->setCellValue('B4','Tanggal'); 
+        $sheet->setCellValue('C4','No PO'); 
+        $sheet->setCellValue('D4','Supplier');
+        $sheet->setCellValue('E4','Pemesan'); 
+        $sheet->setCellValue('F4','Total Pembelian');
+
+        
+
+        $no = 1;
+		$x = 5;
+		foreach($get as $data)
+		{
+			$sheet->setCellValue('A'.$x, $no++);
+			$sheet->setCellValue('B'.$x, $data->tgl);
+			$sheet->setCellValue('C'.$x, $data->no_ref);
+			$sheet->setCellValue('D'.$x, $data->nama_suplier);
+			$sheet->setCellValue('E'.$x, $data->nama_pemesan);
+			$sheet->setCellValue('F'.$x, "Rp. ".number_format($data->total,0,"","."));
+			$x++;
+		}
+
+        $range = range("A", "F");
+        foreach($range as $r){
+            $sheet->getColumnDimension($r)->setAutoSize(true);
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'Laporan Barang Masuk '.date_indo($cutoff->start).' - '.date_indo($cutoff->end);
+        
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
     }
 }
