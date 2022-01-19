@@ -138,7 +138,7 @@ class Laporan_issuing extends CI_Controller{
 		$mpdf->Output();
     }
 
-    function excelphp($idc=false, $u=false){
+    function excelphp($idc=false, $u=false, $k=false){
         $cutoff = $this->db->get_where('tb_cutoff',['id_cutoff' => $idc])->row();
         $this->My_model->dataLog('Laporan pembelian dengan filter dari '.date_indo($cutoff->start).' sampai '.date_indo($cutoff->end).' unit : '.$u);
         $this->db->join('tb_stok st','tb_barang.id_barang = st.id_barang');
@@ -232,7 +232,7 @@ class Laporan_issuing extends CI_Controller{
 			$sheet->setCellValue('A'.$x, $no++);
 			$sheet->setCellValue('B'.$x, $data->tgl);
 			$sheet->setCellValue('C'.$x, $data->no_ref);
-			$sheet->setCellValue('D'.$x, $data->nama_suplier);
+			$sheet->setCellValue('D'.$x, $data->nama_customer);
 			$sheet->setCellValue('E'.$x, $data->nama_pemesan);
 			$sheet->setCellValue('F'.$x, "Rp. ".number_format($data->total,0,"","."));
 			$x++;
