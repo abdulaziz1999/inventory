@@ -21,7 +21,7 @@
                     <table class="table table-bordered">
                         <tr>
                             <td>Tgl</td>
-                            <td><?= $tgl; ?></td>
+                            <td><?= date_indo($tgl); ?></td>
                         </tr>
                         <tr>
                             <td>No Ref</td>
@@ -29,11 +29,15 @@
                         </tr>
                         <tr>
                             <td>Supplier</td>
-                            <td><?= $supplier; ?></td>
+                            <td><?= @$this->db->get_where('tb_suplier',['id_suplier' => $supplier])->row()->nama_suplier; ?></td>
                         </tr>
                         <tr>
                             <td>Remarks</td>
-                            <td><?= $remarks; ?></td>
+                            <td><?= @$this->db->get_where('tb_pemesan',['id_pemesan' => $remarks])->row()->nama_pemesan; ?></td>
+                        </tr>
+                        <tr>
+                            <td>NAma Proyek</td>
+                            <td><?= @$this->db->get_where('tb_proyek',['id_proyek' => $nama_proyek])->row()->nama_proyek; ?></td>
                         </tr>
                         <tr>
                             <td colspan="2">
@@ -42,6 +46,44 @@
                             </td>
                         </tr>
                     </table>
+                    <hr>
+                    <h3 class="table-header text-center"><strong>Data Barang Masuk</strong>
+                            </h3>
+                            <table class="table table-hover table-striped" id="mytable">
+                                <thead>
+                                    <tr>
+                                        <th width="80px">No</th>
+                                        <th>Nama Barang</th>
+                                        <th>Kode Barcode</th>
+                                        <th>Harga Beli</th>
+                                        <th>Harga Jual</th>
+                                        <th>Jumlah</th>
+                                        <th>Harga Jual x Jumlah</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                            $start = 0;
+                            foreach ($b_receiving->result() as $tb_receiving)
+                            {
+                                ?>
+                                    <tr>
+                                        <td><?= ++$start ?></td>
+                                        <td>
+                                            <?= $tb_receiving->nama_barang; ?>
+                                        </td>
+                                        <td><?= $tb_receiving->kode_barcode ?></td>
+                                        <td><?= "Rp. ".rupiah($tb_receiving->harga_beli) ?></td>
+                                        <td><?= "Rp. ".rupiah($tb_receiving->harga_jual) ?></td>
+                                        <td><?= $tb_receiving->jml ?></td>
+                                        <td><?= "Rp. ".rupiah($tb_receiving->jml*$tb_receiving->harga_jual) ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                            }
+                            ?>
+                                </tbody>
+                            </table>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
