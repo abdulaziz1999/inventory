@@ -44,8 +44,10 @@
                                 <div class="btn-group btn-corner">
                                     <button type="submit" class="btn tampil btn-sm btn-primary"
                                         style="margin-right:3px;"><i class="fa fa-eye"></i> Filter</button>
-                                    <a href="<?= site_url('tb_barang') ?>" class="btn btn-sm btn-danger">
+                                    <a href="<?= site_url('tb_barang') ?>" class="btn btn-sm btn-danger" style="margin-right:3px;">
                                         <i class="fa fa-remove"></i> Reset</a>
+                                    <a href="<?= site_url('tb_barang/excelphp/'.$this->input->get('k', TRUE).'/'.$this->input->get('u', TRUE)) ?>" class="btn btn-sm btn-success">
+                                        <i class="fa fa-remove"></i> Excel</a>
                                 </div>
                             </div>
                             <div class="col-lg-2"></div>
@@ -82,6 +84,9 @@
                     <h3 class="table-header text-center"><strong>Table Master Barang</strong></h3>
                 </div>
                 <div class='box-body'>
+                    <?php if($this->input->get('k') == true):?>
+                        <a href="<?php echo site_url('tb_barang/excelphp/') ?><?= $this->input->get('k')?>/<?= $this->input->get('u')?>" class="btn btn-sm btn-success fa fa-file-excel-o" target="_blank">Excel</a>&nbsp;
+                    <?php endif;?>
                     <div class="table-responsive">
                         <table class="table table-hover table-striped " id="mytable">
                             <thead>
