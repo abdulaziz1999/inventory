@@ -74,6 +74,8 @@ class Tb_receiving extends CI_Controller
     public function read($id) 
     {
         $row = $this->Tb_receiving_model->get_by_id($id);
+        $this->db->join('tb_barang tb','tb.id_barang = tb_receiving_item.id_barang');
+        $data_Receiving = $this->db->select('*,sum(jumlah) as jml')->group_by('nama_barang')->get_where('tb_receiving_item',['id_receiving' => $row->id_receiving]);
         if ($row) {
             $data = array(
                 'id_receiving' => $row->id_receiving,
@@ -81,6 +83,8 @@ class Tb_receiving extends CI_Controller
                 'no_ref' => $row->no_ref,
                 'supplier' => $row->supplier,
                 'remarks' => $row->remarks,
+                'nama_proyek' => $row->nama_proyek,
+                'b_receiving'   => $data_Receiving,
 	    );
             $this->template->load('template','receiving/tb_receiving_read', $data);
         } else {
