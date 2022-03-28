@@ -121,6 +121,8 @@
                                                 // echo anchor(site_url('tb_receiving/delete/'.$tb_receiving->id_receiving),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
                                                 ?>
                                         </div>
+                                        <?php else:?>
+                                                <a href="<?= base_url('tb_receiving/read/'.$tb_receiving->id_receiving)?>" title="detail" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a>
                                     <?php endif;?>
                                     </td>
                                 </tr>
