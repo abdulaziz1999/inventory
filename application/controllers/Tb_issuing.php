@@ -45,6 +45,8 @@ class Tb_issuing extends CI_Controller
     public function read($id) 
     {
         $row = $this->Tb_issuing_model->get_by_id($id);
+        $this->db->join('tb_barang tb','tb.id_barang = tb_issuing_item.id_barang');
+        $data_Issuing = $this->db->select('*,sum(jumlah) as jml')->group_by('nama_barang')->get_where('tb_issuing_item',['id_issuing' => $row->id_issuing]);
         if ($row) {
             $data = array(
                 'id_issuing' => $row->id_issuing,
@@ -52,6 +54,8 @@ class Tb_issuing extends CI_Controller
                 'no_ref' => $row->no_ref,
                 'picker' => $row->picker,
                 'remarks' => $row->remarks,
+                'nama_proyek' => $row->nama_proyek,
+                'b_issuing'   => $data_Issuing,
 	    );
             $this->template->load('template','issuing/tb_issuing_read', $data);
         } else {
