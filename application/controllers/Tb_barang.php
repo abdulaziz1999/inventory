@@ -2,7 +2,8 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-
+    use PhpOffice\PhpSpreadsheet\Spreadsheet;
+    use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Tb_barang extends CI_Controller
 {
     
@@ -337,6 +338,123 @@ class Tb_barang extends CI_Controller
             'start' => 0
         );
         $this->load->view('tb_barang_pdf',$data);
+    }
+
+    function excelphp($kategori=false,$unit=false){
+        if($kategori == TRUE && $unit == TRUE){
+            $this->db->where(['kategori' => $kategori,'unit_id' => $unit]);                           
+        }elseif($kategori == TRUE && $unit == FALSE){
+            $this->db->where(['kategori' => $kategori]);                                                
+        }elseif($kategori == FALSE && $unit == TRUE){
+            $this->db->where(['unit_id' => $unit]);                                                
+        }
+        $tb_barang_data = @$this->db->get('tb_barang')->result();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $styleTh = array (
+            'font' => [
+                'bold' => true,
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => [
+                    'argb' => 'B7B7B7',
+                ],
+            ], 
+            'alignment' => [
+                'horizontal'    => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical'      => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ], 
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                ],
+            ],
+        );
+
+        $styleTbody = array (
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                ],
+            ],
+        );
+
+        $styleJudul = array (
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal'    => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical'      => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ], 
+        );
+
+        //Merge Cell Judul
+        $sheet->mergeCells('A1:J1');
+        $sheet->mergeCells('A2:J2');
+        $sheet->mergeCells('A3:J3');
+        $sheet->getStyle('A1:J1')->applyFromArray($styleJudul);
+        $sheet->getStyle('A2:J2')->applyFromArray($styleJudul);
+        $sheet->getStyle('A3:J3')->applyFromArray($styleJudul);
+
+        //bgColor
+        $sheet->getStyle('A4:J4')->applyFromArray($styleTh);
+        
+        //Judul Laporan
+        $sheet->setCellValue('A1', 'Master Barang');
+        if($this->db->get_where('tb_kategori',['id_kategori' => $kategori])->row()->nama_kategori){
+            $sheet->setCellValue('A2', 'Kategori '.@$this->db->get_where('tb_kategori',['id_kategori' => $kategori])->row()->nama_kategori.' Unit '.@$this->db->get_where('tb_unit',['id_unit' => $unit])->row()->nama_unit);
+        }else{
+            $sheet->setCellValue('A2', '');
+        }
+
+        //Header Table
+        $sheet->setCellValue('A4','No'); 
+        $sheet->setCellValue('B4','Part Number'); 
+        $sheet->setCellValue('C4','Kode Barcode'); 
+        $sheet->setCellValue('D4','Nama Barang');
+        $sheet->setCellValue('E4','Kategori'); 
+        $sheet->setCellValue('F4','Brand');
+        $sheet->setCellValue('G4','Satuan');
+        $sheet->setCellValue('H4','Harga Beli');
+        $sheet->setCellValue('I4','Harga Jual');
+        $sheet->setCellValue('J4','Unit');
+
+        
+
+        $no = 1;
+		$x = 5;
+		foreach($tb_barang_data as $tb_barang)
+		{
+			$sheet->setCellValue('A'.$x, $no++);
+			$sheet->setCellValue('B'.$x, $tb_barang->part_number);
+			$sheet->setCellValue('C'.$x, $tb_barang->kode_barcode);
+			$sheet->setCellValue('D'.$x, $tb_barang->nama_barang);
+			$sheet->setCellValue('E'.$x, $this->db->get_where('tb_kategori',['id_kategori' => $tb_barang->kategori])->row()->nama_kategori);
+			$sheet->setCellValue('F'.$x, $this->db->get_where('tb_brand',['id_brand' => $tb_barang->brand])->row()->nama_brand);
+			$sheet->setCellValue('G'.$x, $this->db->get_where('tb_satuan',['id_satuan' => $tb_barang->satuan])->row()->nama_satuan);
+			$sheet->setCellValue('H'.$x, "Rp. ".number_format($tb_barang->harga_beli,0,"","."));
+			$sheet->setCellValue('I'.$x, "Rp. ".number_format($tb_barang->harga_jual,0,"","."));
+			$sheet->setCellValue('J'.$x, $this->db->get_where('tb_unit',['id_unit' => $tb_barang->unit_id])->row()->nama_unit);
+			$x++;
+		}
+
+        $range = range("A", "J");
+        foreach($range as $r){
+            $sheet->getColumnDimension($r)->setAutoSize(true);
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'Master Barang';
+        
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
     }
 
 }
