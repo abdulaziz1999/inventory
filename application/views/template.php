@@ -967,6 +967,7 @@
     <?php if($this->input->get('idc', TRUE) != NULL): ?>
     <script>
     $(document).ready(function() {
+        $("#table").DataTable();
         // $('#table1').dataTable({
         //     dom: 'Bfrtip',
         //     buttons: [
@@ -980,18 +981,18 @@
         //     searching: true,
         // });
 
-        $('#table').dataTable({
-            dom: 'Bfrtip',
-            buttons: [
+        // $('#table').dataTable({
+        //     dom: 'Bfrtip',
+        //     buttons: [
 
-            ],
-            ajax: '<?= base_url('') ?>laporan/ajax2/<?= $this->input->get('idc', TRUE) ."/".$this->input->get('u', TRUE) ?>',
-            scrollY: 250,
-            info: false,
-            deferRender: true,
-            scroller: true,
-            searching: true,
-        });
+        //     ],
+        //     ajax: '<?= base_url('') ?>laporan/ajax2/<?= $this->input->get('idc', TRUE) ."/".$this->input->get('u', TRUE) ?>',
+        //     scrollY: 250,
+        //     info: false,
+        //     deferRender: true,
+        //     scroller: true,
+        //     searching: true,
+        // });
     });
     </script>
     <?php endif; ?>
@@ -1001,6 +1002,7 @@
     <?php if($this->input->get('idc', TRUE) != NULL): ?>
     <script>
     $(document).ready(function() {
+        $("#table").DataTable();
         // $('#table1').dataTable({
         //     dom: 'Bfrtip',
         //     buttons: [
@@ -1014,18 +1016,18 @@
         //     searching: true,
         // });
 
-        $('#table').dataTable({
-            dom: 'Bfrtip',
-            buttons: [
+        // $('#table').dataTable({
+        //     dom: 'Bfrtip',
+        //     buttons: [
 
-            ],
-            ajax: '<?= base_url('') ?>laporan_issuing/ajax2/<?= $this->input->get('idc', TRUE)."/".$this->input->get('u', TRUE) ?>',
-            scrollY: 250,
-            info: false,
-            deferRender: true,
-            scroller: true,
-            searching: true,
-        });
+        //     ],
+        //     ajax: '<?= base_url('') ?>laporan_issuing/ajax2/<?= $this->input->get('idc', TRUE)."/".$this->input->get('u', TRUE) ?>',
+        //     scrollY: 250,
+        //     info: false,
+        //     deferRender: true,
+        //     scroller: true,
+        //     searching: true,
+        // });
     });
     </script>
     <?php endif; ?>
