@@ -83,6 +83,30 @@
                                 <th>Total Pembelian</th>
                             </tr>
                         </thead>
+                        <?php if(isset($barang_masuk)):?>
+                            <tbody>
+                            <?php $no = 1;
+                            $sum = 0;
+                            foreach ($barang_masuk->result() as $d): 
+                                $sum += $d->total;
+                            ?>    
+                            <tr>
+                                <td><?= $no++ ?></td>
+                                <td><?= date_indo($d->tgl)?></td>
+                                <td><?= $d->no_ref?></td>
+                                <td><?= $d->nama_suplier?></td>
+                                <td><?= $d->nama_pemesan?></td>
+                                <td><?= rupiah($d->total)?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="5">Total</th>
+                                    <th><?= rupiah($sum)?></th>
+                                </tr>
+                            </tfoot>
+                        </tbody>
+                        <?php endif;?>
                     </table>
                 </div>
             </div>
