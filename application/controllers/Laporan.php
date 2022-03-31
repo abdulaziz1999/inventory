@@ -19,6 +19,7 @@ class Laporan extends CI_Controller{
         $start = $this->input->get('s', TRUE);
         $end = $this->input->get('e', TRUE);
         $idc = $this->input->get('idc', TRUE);
+        $u = $this->input->get('u', TRUE);
         $data['unit'] = @$this->db->get('tb_unit');
         $data['cutoff'] = @$this->db->get('tb_cutoff');
         $data['tgl'] = $this->db->get_where('tb_cutoff',['id_cutoff' => $idc])->row();
@@ -29,7 +30,24 @@ class Laporan extends CI_Controller{
             $end = date('Y-m-d h:i:s');
         }
 
+        if($this->input->get("idc")){
+            $this->db->join('tb_stok st','tb_barang.id_barang = st.id_barang');
+            $this->db->join('tb_satuan s','tb_barang.satuan = s.id_satuan');
+            $this->db->join('tb_kategori k','tb_barang.kategori = k.id_kategori');
+            $this->db->join('tb_brand br','tb_barang.brand = br.id_brand');
+            $this->db->join('tb_receiving_item r','tb_barang.id_barang = r.id_barang');
+            $this->db->join('tb_receiving r2','r.id_receiving = r2.id_receiving');
+            $this->db->join('tb_suplier sup','r2.supplier = sup.id_suplier');
+            $this->db->join('tb_pemesan p','r2.remarks = p.id_pemesan');
+            $this->db->where('r2.idcutoff', $idc);
+            if($u == TRUE){
+                $this->db->where('unit_id =', $this->input->get("u"));
+            }
+            $data['barang_masuk'] =	$this->db->select('tgl,no_ref,nama_suplier,nama_pemesan,harga_beli,harga_jual,(harga_beli*jumlah) as total')->group_by('r.id_receiving')->get('tb_barang');
+        }
+
         $this->template->load('template', 'laporan/laporan_receiving_cutoff',$data);
+        
     }
 
     function ajax($s, $e, $u=false,$k=false){
@@ -101,7 +119,7 @@ class Laporan extends CI_Controller{
                 }elseif($k == TRUE){
                     $this->db->where('kategori =', $k);
                 }
-        $get =	$this->db->select('tgl,no_ref,nama_suplier,nama_pemesan,harga_beli,harga_jual,sum(harga_beli*jumlah) as total')->group_by('r.id_receiving')->get('tb_barang');
+        $get =	$this->db->select('tgl,no_ref,nama_suplier,nama_pemesan,jumlah,harga_beli,harga_jual,harga_beli*jumlah as total')->group_by('r.id_receiving')->get('tb_barang');
 
         $data = array();
         $no = 1;
