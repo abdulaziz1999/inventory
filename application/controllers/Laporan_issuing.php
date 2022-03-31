@@ -19,6 +19,7 @@ class Laporan_issuing extends CI_Controller{
         $start = $this->input->get('s', TRUE);
         $end = $this->input->get('e', TRUE);
         $idc = $this->input->get('idc', TRUE);
+        $u = $this->input->get('u', TRUE);
         $data['unit'] = @$this->db->get('tb_unit');
         $data['cutoff'] = @$this->db->get('tb_cutoff');
         $data['tgl'] = $this->db->get_where('tb_cutoff',['id_cutoff' => $idc])->row();
@@ -27,6 +28,23 @@ class Laporan_issuing extends CI_Controller{
         }else{
             $start = date('Y-m-d h:i:s');
             $end = date('Y-m-d h:i:s');
+        }
+
+        if($idc){
+            $this->db->join('tb_stok st','tb_barang.id_barang = st.id_barang');
+            $this->db->join('tb_satuan s','tb_barang.satuan = s.id_satuan');
+            $this->db->join('tb_kategori k','tb_barang.kategori = k.id_kategori');
+            $this->db->join('tb_brand br','tb_barang.brand = br.id_brand');
+            $this->db->join('tb_issuing_item i','tb_barang.id_barang = i.id_barang');
+            $this->db->join('tb_issuing i2','i.id_issuing = i2.id_issuing');
+            $this->db->join('tb_customer c','i2.picker = c.id_customer');
+            $this->db->join('tb_pemesan p','i2.remarks = p.id_pemesan');
+            $this->db->where('i2.idcutoff', $idc);
+            if($u == TRUE){
+                $this->db->where('unit_id =', $u);
+            }
+        $data['barang_keluar'] = $this->db->select('tgl,no_ref,nama_customer,nama_pemesan,harga_beli,harga_jual,(harga_jual*jumlah) as total,(harga_beli*jumlah) as total_beli')->group_by('i.id_issuing')->get('tb_barang');
+
         }
 
         $this->template->load('template', 'laporan/laporan_issuing_cutoff',$data);
