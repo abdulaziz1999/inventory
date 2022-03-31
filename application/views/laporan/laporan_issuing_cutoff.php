@@ -84,6 +84,34 @@
                                 <th>Total Penjualan</th>
                             </tr>
                         </thead>
+                        <?php if(isset($barang_keluar)):?>
+                            <tbody>
+                            <?php $no = 1;
+                            $sum = 0;
+                            $sum_beli = 0;
+                            foreach ($barang_keluar->result() as $d): 
+                                $sum += $d->total;
+                                $sum_beli += $d->total_beli;
+                            ?>    
+                            <tr>
+                                <td><?= $no++ ?></td>
+                                <td><?= date_indo($d->tgl)?></td>
+                                <td><?= $d->no_ref?></td>
+                                <td><?= $d->nama_customer?></td>
+                                <td><?= $d->nama_pemesan?></td>
+                                <td><?= rupiah($d->total_beli)?></td>
+                                <td><?= rupiah($d->total)?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="5">Total</th>
+                                <th><?= rupiah($sum_beli)?></th>
+                                <th><?= rupiah($sum)?></th>
+                            </tr>
+                        </tfoot>
+                        <?php endif;?>
                     </table>
                 </div>
             </div>
