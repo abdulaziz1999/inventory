@@ -86,9 +86,7 @@
                         <?php if(isset($barang_masuk)):?>
                             <tbody>
                             <?php $no = 1;
-                            $sum = 0;
                             foreach ($barang_masuk->result() as $d): 
-                                $sum += $d->total;
                             ?>    
                             <tr>
                                 <td><?= $no++ ?></td>
@@ -102,7 +100,7 @@
                             <tfoot>
                                 <tr>
                                     <th colspan="5">Total</th>
-                                    <th><?= rupiah($sum)?></th>
+                                    <th><?= rupiah(array_sum(array_column($barang_masuk->result(), 'total')))?></th>
                                 </tr>
                             </tfoot>
                         </tbody>
