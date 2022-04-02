@@ -25,7 +25,8 @@
                                             <?php foreach($cutoff->result() as $key):?>
                                             <option
                                                 <?php if($this->input->get('idc', TRUE) == $key->id_cutoff) { echo 'selected';}?>
-                                                value="<?= $key->id_cutoff?>"><?= date_indo($key->start)?> - <?= date_indo($key->end)?></option>
+                                                value="<?= $key->id_cutoff?>"><?= date_indo($key->start)?> -
+                                                <?= date_indo($key->end)?></option>
                                             <?php endforeach;?>
                                         </select>
                                     </div>
@@ -85,11 +86,54 @@
                                 <th>Stok Awal</th>
                                 <th>Total Pembelian</th>
                                 <th>Total Penjualan</th>
-                                <th>Jumlah Stock</th>
+                                <th>Total Sisa Stok Stock</th>
                                 <th>Harga Rata-rata</th>
-                                <th>Total Stock</th>
+                                <th>Total Harga Stock</th>
                             </tr>
                         </thead>
+                        <?php if($this->input->get('idc', TRUE)):?>
+                        <tbody>
+                            <?php $no = 1; foreach ($stok->result() as $d): 
+                                $t_penjualan = @$this->db->get_where('tb_issuing_item',['id_barang' => $d->id_barang])->row()->jumlah;
+                                $t_pembelian = @$this->db->get_where('tb_receiving_item',['id_barang' => $d->id_barang])->row()->jumlah;
+
+                                $jml_stok_sisa = $d->stok == 0 ? '' : $d->stok+($t_pembelian-$t_penjualan);
+                                if($jml_stok_sisa != ''){
+                                    $total_harga_stok = $d->harga_beli*$jml_stok_sisa;
+                                }
+                                $kategori = $this->db->get_where('tb_kategori',['id_kategori' => $d->kategori])->row()->nama_kategori;
+                                @$sum_harga2 += $d->harga_beli;
+                                @$sum_total_harga_stok += $total_harga_stok;
+                                ?>
+                                <?php if($d->stok == 0):?>
+                                <?php else:?>
+                            <tr>
+                                <td><?= $no++ ?></td>
+                                <td></td>
+                                <td><?= $d->nama_barang ?></td>
+                                <td></td>
+                                <td></td>
+                                <td><?= $d->stok ?></td>
+                                <td><?= $t_pembelian?></td>
+                                <td><?= $t_penjualan?></td>
+                                <td>
+                                    <?= $jml_stok_sisa?>
+                                </td>
+                                <td><?= rupiah($d->harga_beli)?></td>
+                                <td><?= rupiah(@$total_harga_stok)?></td>
+                            </tr>
+                            <?php endif;?>
+                            <?php endforeach; ?>
+                            
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="9" class="text-center">Total Harga Stok Barang</th>
+                                <th><?= rupiah(@$sum_harga2) ?></th>
+                                <th><?= rupiah(@$sum_total_harga_stok) ?></th>
+                            </tr>
+                        </tfoot>
+                        <?php endif;?>
                     </table>
                 </div>
             </div>
