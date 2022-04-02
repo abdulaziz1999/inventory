@@ -110,11 +110,13 @@
                                 @$tgliss = $this->db->get_where('tb_issuing',['id_issuing' => $iditemiss])->row()->tgl;
                                 $iditemrev = @$this->db->get_where('tb_receiving_item',['id_barang' => $d->id_barang])->row()->id_itemr;
                                 @$tglrev = $this->db->get_where('tb_receiving',['id_receiving' => $iditemrev])->row()->tgl;
+
+                                @$tgl = $tgliss ? $tgliss : $tglrev
                                 ?>
                                 <?php if($d->stok != 0):?>
                                 <tr>
                                     <td><?= $no++ ?></td>
-                                    <td><?= $tgl = $tgliss ? $tgliss : $tglrev ?></td>
+                                    <td><?= $tgl ? date_indo($tgl) : ''?></td>
                                     <td><?= $d->nama_barang ?></td>
                                     <td><?= $kategori?></td>
                                     <td><?= $satuan?></td>
