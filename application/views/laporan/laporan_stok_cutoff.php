@@ -102,26 +102,31 @@
                                     $total_harga_stok = $d->harga_beli*$jml_stok_sisa;
                                 }
                                 $kategori = $this->db->get_where('tb_kategori',['id_kategori' => $d->kategori])->row()->nama_kategori;
+                                $satuan = $this->db->get_where('tb_satuan',['id_satuan' => $d->satuan])->row()->nama_satuan;
                                 @$sum_harga2 += $d->harga_beli;
                                 @$sum_total_harga_stok += $total_harga_stok;
+
+                                $iditemiss = @$this->db->get_where('tb_issuing_item',['id_barang' => $d->id_barang])->row()->id_itemiss;
+                                @$tgliss = $this->db->get_where('tb_issuing',['id_issuing' => $iditemiss])->row()->tgl;
+                                $iditemrev = @$this->db->get_where('tb_receiving_item',['id_barang' => $d->id_barang])->row()->id_itemr;
+                                @$tglrev = $this->db->get_where('tb_receiving',['id_receiving' => $iditemrev])->row()->tgl;
                                 ?>
-                                <?php if($d->stok == 0):?>
-                                <?php else:?>
-                            <tr>
-                                <td><?= $no++ ?></td>
-                                <td></td>
-                                <td><?= $d->nama_barang ?></td>
-                                <td></td>
-                                <td></td>
-                                <td><?= $d->stok ?></td>
-                                <td><?= $t_pembelian?></td>
-                                <td><?= $t_penjualan?></td>
-                                <td>
-                                    <?= $jml_stok_sisa?>
-                                </td>
-                                <td><?= rupiah($d->harga_beli)?></td>
-                                <td><?= rupiah(@$total_harga_stok)?></td>
-                            </tr>
+                                <?php if($d->stok != 0):?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><?= $tgl = $tgliss ? $tgliss : $tglrev ?></td>
+                                    <td><?= $d->nama_barang ?></td>
+                                    <td><?= $kategori?></td>
+                                    <td><?= $satuan?></td>
+                                    <td><?= $d->stok ?></td>
+                                    <td><?= $t_pembelian?></td>
+                                    <td><?= $t_penjualan?></td>
+                                    <td>
+                                        <?= $jml_stok_sisa?>
+                                    </td>
+                                    <td><?= rupiah($d->harga_beli)?></td>
+                                    <td><?= rupiah(@$total_harga_stok)?></td>
+                                </tr>
                             <?php endif;?>
                             <?php endforeach; ?>
                             
