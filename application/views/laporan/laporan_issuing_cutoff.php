@@ -107,8 +107,8 @@
                         <tfoot>
                             <tr>
                                 <th colspan="5">Total</th>
-                                <th><?= rupiah($sum_beli)?></th>
-                                <th><?= rupiah($sum)?></th>
+                                <th><?= rupiah(array_sum(array_column($barang_keluar->result(), 'total_beli')))?></th>
+                                <th><?= rupiah(array_sum(array_column($barang_keluar->result(), 'total')))?></th>
                             </tr>
                         </tfoot>
                         <?php endif;?>
