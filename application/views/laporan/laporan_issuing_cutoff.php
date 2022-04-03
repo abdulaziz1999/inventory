@@ -113,6 +113,11 @@
                         </tfoot>
                         <?php endif;?>
                     </table>
+                    <?php if(empty($barang_keluar)):?>
+                    <div class="bg-info well-lg rounded text-center">
+                        <b>Untuk Menampilkan Data Silahkan Pilih Cut Off dan Unit Terlebih Dahulu</b>
+                    </div>
+                    <?php endif;?>
                 </div>
             </div>
         </div>
