@@ -47,11 +47,11 @@
                                     <div class="form-group">
                                         <label style="color: white">-</label><br>
                                         <div class="btn-group btn-corner">
-                                            <button type="submit" class="btn tampil btn-sm  btn-primary">Tampil</button>
+                                            <button type="submit" class="btn tampil btn-sm  btn-primary" style="margin-right:3px;"> <i class="fa fa-search"></i> <b>Tampil</b></button>
                                             <?php if($this->input->get('idc') == true):?>
-                                                <a href="<?php echo site_url('laporan_issuing/excelphp/') ?><?= $this->input->get('idc')?>/<?= $this->input->get('u')?>" class="btn btn-sm btn-success fa fa-file-excel-o" target="_blank">Excel</a>&nbsp;
+                                                <a href="<?php echo site_url('laporan_issuing/excelphp/') ?><?= $this->input->get('idc')?>/<?= $this->input->get('u')?>" class="btn btn-sm btn-success fa fa-file-excel-o"  style="margin-right:3px;" target="_blank"> <b>Excel</b></a>&nbsp;
                                             <?php endif;?>
-                                            <a href="<?php echo site_url('laporan') ?>" class="btn btn-sm btn-default">Reset</a>
+                                            <a href="<?php echo site_url('laporan') ?>" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i> <b>Reset</b></a>
                                         </div>
                                     </div>
                                 </div>
