@@ -93,23 +93,27 @@
                         </thead>
                         <?php if($this->input->get('idc', TRUE)):?>
                         <tbody>
-                            <?php $no = 1; foreach ($stok->result() as $d): 
-                                $t_penjualan = @$this->db->get_where('tb_issuing_item',['id_barang' => $d->id_barang])->row()->jumlah;
-                                $t_pembelian = @$this->db->get_where('tb_receiving_item',['id_barang' => $d->id_barang])->row()->jumlah;
+                            <?php 
+                            $no = 1; 
+                            $sum_harga2 = 0;
+                            $sum_total_harga_stok =0;
+                            foreach ($stok->result() as $d): 
+                                $t_penjualan = @$this->db->select('sum(jumlah) as qty')->get_where('tb_issuing_item',['id_barang' => $d->id_barang])->row()->qty;
+                                $t_pembelian = @$this->db->select('sum(jumlah) as qty')->get_where('tb_receiving_item',['id_barang' => $d->id_barang])->row()->qty;
 
                                 $jml_stok_sisa = $d->stok == 0 ? '' : $d->stok+($t_pembelian-$t_penjualan);
                                 if($jml_stok_sisa != ''){
                                     $total_harga_stok = $d->harga_beli*$jml_stok_sisa;
                                 }
-                                $kategori = $this->db->get_where('tb_kategori',['id_kategori' => $d->kategori])->row()->nama_kategori;
-                                $satuan = $this->db->get_where('tb_satuan',['id_satuan' => $d->satuan])->row()->nama_satuan;
-                                @$sum_harga2 += $d->harga_beli;
-                                @$sum_total_harga_stok += $total_harga_stok;
+                                $kategori = $this->db->select('nama_kategori')->get_where('tb_kategori',['id_kategori' => $d->kategori])->row()->nama_kategori;
+                                $satuan = $this->db->select('nama_satuan')->get_where('tb_satuan',['id_satuan' => $d->satuan])->row()->nama_satuan;
+                                $sum_harga2 += $d->harga_beli;
+                                $sum_total_harga_stok += $total_harga_stok;
 
-                                $iditemiss = @$this->db->get_where('tb_issuing_item',['id_barang' => $d->id_barang])->row()->id_itemiss;
-                                @$tgliss = $this->db->get_where('tb_issuing',['id_issuing' => $iditemiss])->row()->tgl;
-                                $iditemrev = @$this->db->get_where('tb_receiving_item',['id_barang' => $d->id_barang])->row()->id_itemr;
-                                @$tglrev = $this->db->get_where('tb_receiving',['id_receiving' => $iditemrev])->row()->tgl;
+                                $iditemiss = @$this->db->select('id_itemiss')->get_where('tb_issuing_item',['id_barang' => $d->id_barang])->row()->id_itemiss;
+                                $tgliss = @$this->db->select('tgl')->get_where('tb_issuing',['id_issuing' => $iditemiss])->row()->tgl;
+                                $iditemrev = @$this->db->select('id_item')->get_where('tb_receiving_item',['id_barang' => $d->id_barang])->row()->id_item;
+                                $tglrev = @$this->db->select('tgl')->get_where('tb_receiving',['id_receiving' => $iditemrev])->row()->tgl;
 
                                 @$tgl = $tgliss ? $tgliss : $tglrev
                                 ?>
@@ -131,7 +135,6 @@
                                 </tr>
                             <?php endif;?>
                             <?php endforeach; ?>
-                            
                         </tbody>
                         <tfoot>
                             <tr>
@@ -142,6 +145,11 @@
                         </tfoot>
                         <?php endif;?>
                     </table>
+                    <?php if(!$this->input->get('idc', TRUE)):?>
+                    <div class="bg-info well-lg rounded text-center">
+                        <b>Untuk Menampilkan Data Silahkan Pilih Cut Off dan Unit Terlebih Dahulu</b>
+                    </div>
+                    <?php endif;?>
                 </div>
             </div>
         </div>
