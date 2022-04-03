@@ -4,7 +4,7 @@
             <i class="ace-icon fa fa-home home-icon"></i>
             <a href="<?= base_url('admin'); ?>">Dashboard</a>
         </li>
-        <li class="active">Laporan Barang Masuk By Date</li>
+        <li class="active">Laporan Kartu Stok</li>
     </ul>
 </div>
 <!-- Main content -->
@@ -13,7 +13,7 @@
         <div class='col-xs-12'>
             <div class='box'>
                 <div class='box-header'>
-                    <h3 class='box-title'>Laporan Barang Masuk</h3>
+                    <h3 class='box-title'>Laporan Kartu Stok</h3>
                     <div class='box box-primary'>
                         <form action="" method="get">
                             <div class="row">
@@ -108,7 +108,7 @@
                                 <th rowspan="2" class="text-center">Supplier/Customer </th>
                                 <th colspan="3" class="text-center">Saldo awal</th>
                                 <th colspan="3" class="text-center">Pembelian</th>
-                                <th colspan="3" class="text-center">Pembelian</th>
+                                <th colspan="3" class="text-center">Penjualan</th>
                                 <th colspan="3" class="text-center">Stock Akhir</th>
                             </tr>
                             <tr>
@@ -126,7 +126,54 @@
                                 <th>Harga Total</th>
                             </tr>
                         </thead>
+                        <?php if($this->input->get('idc', TRUE)):?>
+                        <tbody>
+                            <?php $no = 1; foreach ($stok->result() as $d): 
+                            $qty_penjualan = @$this->db->select('sum(jumlah) as qty')->get_where('tb_issuing_item',['id_barang' => $d->id_barang])->row()->qty;
+                            $qty_pembelian = @$this->db->select('sum(jumlah) as qty')->get_where('tb_receiving_item',['id_barang' => $d->id_barang])->row()->qty;
+
+                            $jml_stok_sisa = $d->stok == 0 ? '' : $d->stok+($qty_pembelian-$qty_penjualan);
+                            if($jml_stok_sisa != ''){
+                                $total_harga_stok = $d->harga_beli*$jml_stok_sisa;
+                            }
+
+                            $iditemiss = @$this->db->select('id_itemiss')->get_where('tb_issuing_item',['id_barang' => $d->id_barang])->row()->id_itemiss;
+                            $tgliss = @$this->db->select('*')->get_where('tb_issuing',['id_issuing' => $iditemiss])->row();
+                            $customer = @$this->db->select('nama_customer')->get_where('tb_customer',['id_customer' => $tgliss->picker])->row()->nama_customer;
+
+                            $iditemrev = @$this->db->select('id_item')->get_where('tb_receiving_item',['id_barang' => $d->id_barang])->row()->id_item;
+                            $tglrev = @$this->db->select('*')->get_where('tb_receiving',['id_receiving' => $iditemrev])->row();
+                            $supplier = @$this->db->select('nama_pemesan')->get_where('tb_pemesan',['id_pemesan' => $tglrev->supplier])->row()->nama_pemesan;
+
+                            @$tgl = $tgliss->tgl ? $tgliss->tgl : $tglrev->tgl
+                            ?>
+                            <tr>
+                                <td class="text-center"><?= $no++?></td>
+                                <td class="text-center"><?= $tgl ? date_indo($tgl) : '-' ?></td>
+                                <td class="text-center"><?= $tgliss->no_permintaan ? $tgliss->no_permintaan : $tglrev->nota_supplier?></td> 
+                                <td class="text-center"><?= $customer ? $customer : $supplier?></td>
+                                <td class="text-right"><?= $d->stok?></td>
+                                <td class="text-right"><?= rupiah($d->harga_beli)?></td>
+                                <td class="text-right"><?= rupiah($d->stok*$d->harga_beli)?></td>
+                                <td class="text-right"><?= $qty_pembelian?></td>
+                                <td class="text-right"><?= rupiah($d->harga_beli)?></td>
+                                <td class="text-right"><?= rupiah($qty_pembelian*$d->harga_beli)?></td>
+                                <td class="text-right"><?= $qty_penjualan?></td>
+                                <td class="text-right"><?= rupiah($d->harga_beli)?></td>
+                                <td class="text-right"><?= rupiah($qty_penjualan*$d->harga_beli)?></td>
+                                <td class="text-right"><?= $jml_stok_sisa?></td>
+                                <td class="text-right"><?= rupiah($d->harga_beli)?></td>
+                                <td class="text-right"><?= rupiah($jml_stok_sisa*$d->harga_beli)?></td>
+                            </tr>
+                        </tbody>
+                        <?php endforeach;?>
+                        <?php endif;?>
                     </table>
+                    <?php if(!$this->input->get('idc', TRUE)):?>
+                    <div class="bg-info well-lg rounded text-center">
+                        <b>Untuk Menampilkan Data Silahkan Pilih Cut Off , Nama Barang , Kategori Barang dan Unit Terlebih Dahulu</b>
+                    </div>
+                    <?php endif;?>
                 </div>
             </div>
         </div>
