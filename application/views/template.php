@@ -900,6 +900,7 @@
     <?php if($this->input->get('s', TRUE) != NULL): ?>
     <script>
     $(document).ready(function() {
+        $("#table").DataTable();
         // $('#table').dataTable({
         //     dom: 'Bfrtip',
         //     buttons: [
@@ -912,18 +913,18 @@
         //     scroller: true,
         //     searching: true,
         // });
-        $('#table').dataTable({
-            dom: 'Bfrtip',
-            buttons: [
+        // $('#table').dataTable({
+        //     dom: 'Bfrtip',
+        //     buttons: [
 
-            ],
-            ajax: '<?= base_url('') ?>laporan_card/ajax2<?= $this->input->get('idc', TRUE)."/".$this->input->get('u', TRUE)."/".$this->input->get('k', TRUE)."/".$this->input->get('i', TRUE) ?>',
-            scrollY: 250,
-            info: false,
-            deferRender: true,
-            scroller: true,
-            searching: true,
-        });
+        //     ],
+        //     ajax: '<?= base_url('') ?>laporan_card/ajax2<?= $this->input->get('idc', TRUE)."/".$this->input->get('u', TRUE)."/".$this->input->get('k', TRUE)."/".$this->input->get('i', TRUE) ?>',
+        //     scrollY: 250,
+        //     info: false,
+        //     deferRender: true,
+        //     scroller: true,
+        //     searching: true,
+        // });
     });
     </script>
     <?php endif; ?>
