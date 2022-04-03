@@ -48,9 +48,9 @@
                                     <div class="form-group">
                                         <label style="color: white">-</label><br>
                                         <div class="btn-group btn-corner">
-                                            <button type="submit" class="btn tampil btn-sm btn-primary">Tampil</button>
+                                            <button type="submit" class="btn tampil btn-sm btn-primary" style="margin-right:3px;"> <i class="fa fa-search"></i> Tampil</button>
                                             <a href="<?php echo site_url('laporan_stok') ?>"
-                                                class="btn btn-sm btn-default">Reset</a>
+                                                class="btn btn-sm btn-danger"> <i class="fa fa-remove"></i> Reset</a>
                                             <?php if($this->input->get('s') == true):?>
                                             <a href="<?php echo site_url('laporan/receiving_report/') ?><?= $this->input->get('s')?>/<?= $this->input->get('e')?>"
                                                 class="btn btn-sm btn-warning fa fa-print" target="_blank">Print</a>
@@ -108,7 +108,7 @@
                                 $kategori = $this->db->select('nama_kategori')->get_where('tb_kategori',['id_kategori' => $d->kategori])->row()->nama_kategori;
                                 $satuan = $this->db->select('nama_satuan')->get_where('tb_satuan',['id_satuan' => $d->satuan])->row()->nama_satuan;
                                 $sum_harga2 += $d->harga_beli;
-                                $sum_total_harga_stok += $total_harga_stok;
+                                @$sum_total_harga_stok += $total_harga_stok;
 
                                 $iditemiss = @$this->db->select('id_itemiss')->get_where('tb_issuing_item',['id_barang' => $d->id_barang])->row()->id_itemiss;
                                 $tgliss = @$this->db->select('tgl')->get_where('tb_issuing',['id_issuing' => $iditemiss])->row()->tgl;
