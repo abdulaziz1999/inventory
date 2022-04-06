@@ -57,7 +57,7 @@
                                     <th>Harga Beli</th>
                                     <th>Harga Jual</th>
                                     <th>Jumlah</th>
-                                    <th>Harga Jual x Jumlah</th>
+                                    <th class="text-right">Harga Jual x Jumlah</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,10 +72,10 @@
                                         <?= $issuing->nama_barang; ?>
                                     </td>
                                     <td><?= $issuing->kode_barcode ?></td>
-                                    <td><?= "Rp. ".rupiah($issuing->harga_beli) ?></td>
-                                    <td><?= "Rp. ".rupiah($issuing->harga_jual) ?></td>
-                                    <td><?= $issuing->jml ?></td>
-                                    <td><?= "Rp. ".rupiah($issuing->jumlah*$issuing->harga_jual) ?></td>
+                                    <td class="text-right"><?= rupiah($issuing->harga_beli) ?></td>
+                                    <td class="text-right"><?= rupiah($issuing->harga_jual) ?></td>
+                                    <td class="text-right"><?= $issuing->jml ?></td>
+                                    <td class="text-right"><?= rupiah($issuing->jumlah*$issuing->harga_jual) ?></td>
                                 </tr>
                                 <?php
                           }
