@@ -94,13 +94,13 @@
                                 <td><?= $d->no_ref?></td>
                                 <td><?= $d->nama_suplier?></td>
                                 <td><?= $d->nama_pemesan?></td>
-                                <td><?= rupiah($d->total)?></td>
+                                <td class="text-right"><?= rupiah($d->total)?></td>
                             </tr>
                             <?php endforeach; ?>
                             <tfoot>
                                 <tr>
                                     <th colspan="5">Total</th>
-                                    <th><?= rupiah(array_sum(array_column($barang_masuk->result(), 'total')))?></th>
+                                    <th class="text-right"><?= rupiah(array_sum(array_column($barang_masuk->result(), 'total')))?></th>
                                 </tr>
                             </tfoot>
                         </tbody>
