@@ -58,7 +58,7 @@
                                         <th>Harga Beli</th>
                                         <th>Harga Jual</th>
                                         <th>Jumlah</th>
-                                        <th>Harga Jual x Jumlah</th>
+                                        <th class="text-right">Harga Jual x Jumlah</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,10 +73,10 @@
                                             <?= $tb_receiving->nama_barang; ?>
                                         </td>
                                         <td><?= $tb_receiving->kode_barcode ?></td>
-                                        <td><?= "Rp. ".rupiah($tb_receiving->harga_beli) ?></td>
-                                        <td><?= "Rp. ".rupiah($tb_receiving->harga_jual) ?></td>
-                                        <td><?= $tb_receiving->jml ?></td>
-                                        <td><?= "Rp. ".rupiah($tb_receiving->jml*$tb_receiving->harga_jual) ?>
+                                        <td class="text-right"><?= rupiah($tb_receiving->harga_beli) ?></td>
+                                        <td class="text-right"><?= rupiah($tb_receiving->harga_jual) ?></td>
+                                        <td class="text-right"><?= $tb_receiving->jml ?></td>
+                                        <td class="text-right"><?= rupiah($tb_receiving->jml*$tb_receiving->harga_jual) ?>
                                         </td>
                                     </tr>
                                     <?php
