@@ -99,16 +99,16 @@
                                 <td><?= $d->no_ref?></td>
                                 <td><?= $d->nama_customer?></td>
                                 <td><?= $d->nama_pemesan?></td>
-                                <td><?= rupiah($d->total_beli)?></td>
-                                <td><?= rupiah($d->total)?></td>
+                                <td class="text-right"><?= rupiah($d->total_beli)?></td>
+                                <td class="text-right"><?= rupiah($d->total)?></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th colspan="5">Total</th>
-                                <th><?= rupiah(array_sum(array_column($barang_keluar->result(), 'total_beli')))?></th>
-                                <th><?= rupiah(array_sum(array_column($barang_keluar->result(), 'total')))?></th>
+                                <th class="text-right"><?= rupiah(array_sum(array_column($barang_keluar->result(), 'total_beli')))?></th>
+                                <th class="text-right"><?= rupiah(array_sum(array_column($barang_keluar->result(), 'total')))?></th>
                             </tr>
                         </tfoot>
                         <?php endif;?>
