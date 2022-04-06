@@ -130,8 +130,8 @@
                                     <td>
                                         <?= $jml_stok_sisa?>
                                     </td>
-                                    <td><?= rupiah($d->harga_beli)?></td>
-                                    <td><?= rupiah(@$total_harga_stok)?></td>
+                                    <td class="text-right"><?= rupiah($d->harga_beli)?></td>
+                                    <td class="text-right"><?= rupiah(@$total_harga_stok)?></td>
                                 </tr>
                             <?php endif;?>
                             <?php endforeach; ?>
@@ -139,8 +139,8 @@
                         <tfoot>
                             <tr>
                                 <th colspan="9" class="text-center">Total Harga Stok Barang</th>
-                                <th><?= rupiah(@$sum_harga2) ?></th>
-                                <th><?= rupiah(@$sum_total_harga_stok) ?></th>
+                                <th class="text-right"><?= rupiah(@$sum_harga2) ?></th>
+                                <th class="text-right"><?= rupiah(@$sum_total_harga_stok) ?></th>
                             </tr>
                         </tfoot>
                         <?php endif;?>
