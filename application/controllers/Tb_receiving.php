@@ -571,6 +571,12 @@ class Tb_receiving extends CI_Controller
 		$mpdf->Output();
     }
 
+    public function pdf($uri)
+    {
+        $data['sup'] = $this->Tb_receiving_model->get_sup($uri); 
+		$this->load->view('receiving/tb_receiving_pdf',$data);
+    }
+
     public function pdf_rev()
     {
 
