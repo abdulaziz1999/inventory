@@ -88,7 +88,10 @@
             <td ><b id="j">Jumlah</b></td>
             <td ><b id="j">Total</b></td>
         </tr>
-        <?php $sum=0; $no=1; foreach($sup->result() as $row):?>
+        <?php $sum=0; $no=1; foreach($sup->result() as $row):
+            $total = $row->harga_jual * $row->jumlah;
+            $sum += $total;
+            ?>
         <tr>
             <td><?= $no++ ?></td>
             <td><?= @$row->nama_barang?></td>
@@ -96,13 +99,13 @@
             <td><?= @rupiah($row->harga_jual)?></td>
             <td><?= @$row->nama_satuan?></td>
             <td><?= @$row->jumlah?></td>
-            <td><?php @$sum += $row->jumlah*$row->harga_jual; echo @rupiah( $row->jumlah*$row->harga_jual)?></td>
+            <td align="right"><?= @rupiah($total)?></td>
         </tr>
         <?php endforeach;?>
 		<tfoot>
             <tr>
                 <td colspan="6" align="center" ><b id="j">Total</b></td>
-                <td id="total" ><?= @rupiah($sum) ?></td>
+                <td id="total" align="right"><?= @rupiah($sum) ?></td>
             </tr>
         </tfoot>
     </table>
