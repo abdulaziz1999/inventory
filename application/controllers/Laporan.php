@@ -172,7 +172,7 @@ class Laporan extends CI_Controller{
                 }elseif($k == TRUE){
                     $this->db->where('kategori =', $k);
                 }
-        $get =	$this->db->select('tgl,no_ref,nama_suplier,nama_pemesan,harga_beli,harga_jual,sum(harga_beli*jumlah) as total')->group_by('r.id_receiving')->get('tb_barang')->result();
+        $get =	$this->db->select('tgl,no_ref,nama_suplier,nama_pemesan,harga_beli,harga_jual,(harga_beli*jumlah) as total')->group_by('r.id_receiving')->get('tb_barang')->result();
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
