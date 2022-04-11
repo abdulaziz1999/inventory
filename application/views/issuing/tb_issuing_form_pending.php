@@ -127,7 +127,7 @@
                             <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                                 data-target="#myModal" class="btn btn-primary round btn-sm" style="margin-right:3px;"><i
                                     class="fa fa-plus"></i> Tambah</button>
-                            <a href="<?= site_url('tb_issuing/report_iss_picker/') ?><?= $this->uri->segment(3)?>"
+                            <a href="<?= site_url('tb_issuing/pdf/') ?><?= $this->uri->segment(3)?>"
                                 class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-file-pdf-o"></i> Print
                                 pdf</a>
                         </div>
