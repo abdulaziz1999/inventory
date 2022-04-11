@@ -521,6 +521,12 @@ class Tb_issuing extends CI_Controller
 		$mpdf->Output();
     }
 
+    public function pdf($uri)
+    {
+        $data['sup'] = $this->Tb_issuing_model->get_picker($uri);
+		$this->load->view('issuing/tb_issuing_pdf',$data);
+    }
+
 }
 
 /* End of file Tb_issuing.php */
