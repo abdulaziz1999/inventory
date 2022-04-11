@@ -85,7 +85,11 @@
                             $start = 0;
                             foreach ($tb_receiving_data as $tb_receiving)
                             {
-                                ?>
+                                $cek = $this->db->get_where('tb_receiving_item',['id_receiving' => $tb_receiving->id_receiving])->num_rows(); 
+                                $cek2 = $this->db->get_where('tb_receiving_temp',['id_receiving' => $tb_receiving->id_receiving])->num_rows(); 
+                                if($level == 'admin'){
+                                    if($cek > 1 && $cek2 == 0){  
+                            ?>
                                 <tr>
                                     <td><?= ++$start ?></td>
                                     <td><?= date_indo($tb_receiving->tgl) ?></td>
@@ -102,8 +106,6 @@
                                     <td><?= @$tb_receiving->ket ?></td>
                                     <td>
                                         <?php 
-                                        $cek = $this->db->get_where('tb_receiving_item',['id_receiving' => $tb_receiving->id_receiving])->num_rows(); 
-                                        $cek2 = $this->db->get_where('tb_receiving_temp',['id_receiving' => $tb_receiving->id_receiving])->num_rows(); 
                                         if($cek > 1 && $cek2 == 0){?>
                                             <span class="label label-lg label-primary arrowed-right">Sudah di Approve</span>
                                         <?php }else{ ?>
@@ -127,6 +129,49 @@
                                     </td>
                                 </tr>
                                 <?php
+                                    }
+                                }else{
+                                 ?>
+                                 <tr>
+                                    <td><?= ++$start ?></td>
+                                    <td><?= date_indo($tb_receiving->tgl) ?></td>
+                                    <td><?= $tb_receiving->no_ref ?></td>
+                                    <td>
+                                        <?= @$this->db->get_where('tb_suplier',['id_suplier' => $tb_receiving->supplier])->row()->nama_suplier ?>
+                                    </td>
+                                    <td>
+                                        <?= @$this->db->get_where('tb_pemesan',['id_pemesan' => $tb_receiving->remarks])->row()->nama_pemesan ?>
+                                    </td>
+                                    <td>
+                                        <?= @$this->db->get_where('tb_proyek',['id_proyek' => $tb_receiving->nama_proyek])->row()->nama_proyek ?>
+                                    </td>
+                                    <td><?= @$tb_receiving->ket ?></td>
+                                    <td>
+                                        <?php 
+                                        if($cek > 1 && $cek2 == 0){?>
+                                            <span class="label label-lg label-primary arrowed-right">Sudah di Approve</span>
+                                        <?php }else{ ?>
+                                            <span class="label label-lg label-warning arrowed-right">Belum di Approve</span>
+                                        <?php }?>
+                                    </td>
+                                    <td style="text-align:center" width="300px">
+                                    <?php if($cutoffactive == 1 || $cutoffactive == ''):?>
+                                        <div class="btn-group btn-corner">
+                                            <?php 
+                                                echo anchor(site_url('tb_receiving/read/'.$tb_receiving->id_receiving),'<i class="fa fa-eye"></i> Detail',array('title'=>'detail','class'=>'btn btn-info btn-sm')); 
+                                                echo '&nbsp;&nbsp;'; 
+                                                echo anchor(site_url('tb_receiving/update/'.$tb_receiving->id_receiving),'<i class="fa fa-pencil-square-o"></i> Update',array('title'=>'edit','class'=>'btn btn-success btn-sm')); 
+                                                echo '&nbsp;&nbsp;'; 
+                                                // echo anchor(site_url('tb_receiving/delete/'.$tb_receiving->id_receiving),'<i class="fa fa-trash-o"></i> Delete','title="delete" class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+                                                ?>
+                                        </div>
+                                        <?php else:?>
+                                                <a href="<?= base_url('tb_receiving/read/'.$tb_receiving->id_receiving)?>" title="detail" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a>
+                                    <?php endif;?>
+                                    </td>
+                                </tr>
+                                 <?php   
+                                }
                             }
                             ?>
                             </tbody>
