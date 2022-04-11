@@ -124,7 +124,7 @@
                         <div class="btn-group btn-corner">
                             <a href="#" class="btn btn-sm btn-primary" id="click" data-toggle="modal" data-target="#myModal"
                                 style="margin-right:3px;"><i class="fa fa-plus"></i> Tambah</a>
-                            <a href="<?= site_url('tb_receiving/report_rev_supplier/') ?><?= $this->uri->segment(3)?>"
+                            <a href="<?= site_url('tb_receiving/pdf/') ?><?= $this->uri->segment(3)?>"
                                 class="btn btn-sm btn-warning" target="_blank">
                                 <i class="fa fa-file-pdf-o"></i> Print Pdf</a>
                         </div>
