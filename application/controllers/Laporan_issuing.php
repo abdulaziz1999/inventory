@@ -119,7 +119,7 @@ class Laporan_issuing extends CI_Controller{
         }elseif($k == TRUE){
             $this->db->where('kategori =', $k);
         }
-        $get =	$this->db->select('tgl,no_ref,nama_customer,nama_pemesan,harga_beli,harga_jual,sum(harga_jual*jumlah) as total,sum(harga_beli*jumlah) as total_beli')->group_by('i.id_issuing')->get('tb_barang');
+        $get =	$this->db->select('tgl,no_ref,nama_customer,nama_pemesan,harga_beli,harga_jual,(harga_jual*jumlah) as total,(harga_beli*jumlah) as total_beli')->group_by('i.id_issuing')->get('tb_barang');
 
         $data = array();
         $no = 1;
@@ -173,7 +173,7 @@ class Laporan_issuing extends CI_Controller{
         }elseif($k == TRUE){
             $this->db->where('kategori =', $k);
         }
-        $get =	$this->db->select('tgl,no_ref,nama_customer,nama_pemesan,harga_beli,harga_jual,sum(harga_jual*jumlah) as total,sum(harga_beli*jumlah) as total_beli')->group_by('i.id_issuing')->get('tb_barang')->result();
+        $get =	$this->db->select('tgl,no_ref,nama_customer,nama_pemesan,harga_beli,harga_jual,(harga_jual*jumlah) as total,(harga_beli*jumlah) as total_beli')->group_by('i.id_issuing')->get('tb_barang')->result();
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
