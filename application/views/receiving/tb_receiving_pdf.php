@@ -89,7 +89,10 @@
             <td ><b id="j">Jumlah</b></td>
             <td ><b id="j">Total</b></td>
         </tr>
-        <?php $sum=0; $no=1; foreach($sup->result() as $row):?>
+        <?php $sum=0; $no=1; foreach($sup->result() as $row):
+            $total = $row->jml*$row->harga_jual;
+            $sum += $total;
+            ?>
         <tr>
             <td><?= $no++ ?></td>
             <td><?= @$row->nama_barang?></td>
@@ -97,13 +100,13 @@
             <td><?= @rupiah($row->harga_jual)?></td>
             <td><?= @$row->nama_satuan?></td>
             <td><?= @$row->jml?></td>
-            <td id="loop"><?php @$sum += $row->jml*$row->harga_jual; echo @rupiah($row->jml*$row->harga_jual)?></td>
+            <td align="right"><?= @rupiah($total)?></td>
         </tr>
         <?php endforeach;?>
         <tfoot>
             <tr>
                 <td colspan="6" align="center" ><b id="j">Total</b></td>
-                <td id="total" ><?= @rupiah($sum) ?></td>
+                <td id="total" align="right"><?= @rupiah($sum) ?></td>
             </tr>
         </tfoot>
     </table>
@@ -126,14 +129,4 @@
     </table>
 </body>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-       var TotalValue = 0;
-       $("tr #loop").each(function(index,value){
-         currentRow = parseFloat($(this).text());
-         TotalValue += currentRow
-       });
-       document.getElementById('total').innerHTML = TotalValue;
-});
-</script>
 </html>
