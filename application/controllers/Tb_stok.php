@@ -60,12 +60,22 @@ class Tb_stok extends CI_Controller
 
     public function warning()
     {
-        $this->db->join('tb_barang tb','tb.id_barang = tb_stok.id_barang');
-        $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
-        $tb_stok = $this->Tb_stok_model->get_all();
+        $idc = $this->db->get_where('tb_cutoff',['status' => '1'])->row()->id_cutoff;
+        if($this->input->get('idc')){
+            $this->db->join('tb_barang tb','tb.id_barang = tb_stok.id_barang');
+            $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
+            $this->db->where(['tb_stok.cutoff_id' => $this->input->get('idc')]);
+            $tb_stok = $this->db->get('tb_stok')->result();
+        }else{
+            $this->db->join('tb_barang tb','tb.id_barang = tb_stok.id_barang');
+            $this->db->join('tb_unit u','u.id_unit = tb.unit_id');
+            $this->db->where(['tb_stok.cutoff_id' => $idc]);
+            $tb_stok = $this->db->get('tb_stok')->result();
+        }
         $this->db->join('tb_barang tb','tb.id_barang = st.id_barang');
                 $this->db->where("`stok` <= min_stok");
         $count = $this->db->get('tb_stok st')->num_rows();
+
         $data = array(
             'tb_stok_data'  => $tb_stok
         );

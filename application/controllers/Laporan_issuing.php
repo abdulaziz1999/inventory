@@ -217,6 +217,16 @@ class Laporan_issuing extends CI_Controller{
             ], 
         );
 
+        $styleTotal = array (
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal'    => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical'      => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ], 
+        );
+
         //Merge Cell Judul
         $sheet->mergeCells('A1:F1');
         $sheet->mergeCells('A2:F2');
@@ -240,7 +250,7 @@ class Laporan_issuing extends CI_Controller{
         $sheet->setCellValue('D4','Supplier');
         $sheet->setCellValue('E4','Pemesan'); 
         $sheet->setCellValue('F4','Total Pembelian');
-
+        
         
 
         $no = 1;
@@ -252,14 +262,18 @@ class Laporan_issuing extends CI_Controller{
 			$sheet->setCellValue('C'.$x, $data->no_ref);
 			$sheet->setCellValue('D'.$x, $data->nama_customer);
 			$sheet->setCellValue('E'.$x, $data->nama_pemesan);
-			$sheet->setCellValue('F'.$x, "Rp. ".number_format($data->total,0,"","."));
+			$sheet->setCellValue('F'.$x, $data->total);
 			$x++;
 		}
+        $sheet->mergeCells('A'.$x.':E'.$x);
+        $sheet->getStyle('A'.$x.':E'.$x)->applyFromArray($styleTotal);
+        $sheet->setCellValue('A'.$x, 'Total');
 
         $range = range("A", "F");
         foreach($range as $r){
             $sheet->getColumnDimension($r)->setAutoSize(true);
         }
+        $sheet->setCellValue('F'.$x, rupiah(array_sum(array_column($get, 'total'))));
 
         $writer = new Xlsx($spreadsheet);
         $filename = 'Laporan Barang Masuk '.date_indo($cutoff->start).' - '.date_indo($cutoff->end);

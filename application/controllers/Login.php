@@ -27,6 +27,7 @@ class Login extends CI_Controller{
                 $this->session->set_userdata('username',$row->username);
                 $this->session->set_userdata('level',$row->level);
                 $this->session->set_userdata('nama',$row->nama);
+                $this->session->set_userdata('idunit',$row->idunit);
                 $this->session->set_userdata('true','oke');
             }
             if ($this->session->userdata('true') == TRUE) {

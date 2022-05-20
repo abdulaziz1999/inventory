@@ -43,8 +43,8 @@
                                     <td>
                                         <?= $this->db->get_where('tb_barang',['id_barang' => $tb_stok->id_barang])->row()->nama_barang ?>
                                     </td>
-                                    <td><?= "Rp. ".number_format($tb_stok->harga_beli,0,"",".") ?></td>
-                                    <td><?= "Rp. ".number_format($tb_stok->harga_jual,0,"",".") ?></td>
+                                    <td><?= rupiah($tb_stok->harga_beli) ?></td>
+                                    <td><?= rupiah($tb_stok->harga_jual) ?></td>
                                     <td>
                                         <span class="badge badge-danger">
                                             <?= $tb_stok->stok ?>

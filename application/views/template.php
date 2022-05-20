@@ -217,7 +217,7 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
-            <?php if($this->session->userdata('level') == 'admin' ){?>
+            <?php if($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'superuser' ){?>
                 <li class="<?php if($this->uri->segment(1) == 'tb_cutoff'){ echo "active"; }else{ echo "";}?>">
                     <a href="<?= base_url('tb_cutoff'); ?>">
                         <i class="menu-icon fa fa-cut"></i>
@@ -364,7 +364,7 @@
                         <span class="menu-text">
                             Warning Stok
                             <span
-                                class="badge badge-danger"><?= $this->db->join('tb_barang tb','tb.id_barang = st.id_barang')->where("`stok` <= min_stok")->get('tb_stok st')->num_rows();?></span>
+                                class="badge badge-danger"><?= $this->db->join('tb_barang tb','tb.id_barang = st.id_barang')->where("`stok` <= min_stok")->where("`st.cutoff_id` = $idc")->get('tb_stok st')->num_rows();?></span>
                         </span>
                     </a>
                     <b class="arrow"></b>
