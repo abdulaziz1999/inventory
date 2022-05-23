@@ -340,13 +340,16 @@ class Tb_barang extends CI_Controller
         $this->load->view('tb_barang_pdf',$data);
     }
 
-    function excelphp($kategori=false,$unit=false){
-        if($kategori == TRUE && $unit == TRUE){
+    function excelphp(){
+        $kategori = $this->input->get('kategori');
+        $unit = $this->input->get('unit');
+        if($kategori && $unit){
             $this->db->where(['kategori' => $kategori,'unit_id' => $unit]);                           
-        }elseif($kategori == TRUE && $unit == FALSE){
+        }elseif($kategori){
             $this->db->where(['kategori' => $kategori]);                                                
-        }elseif($kategori == FALSE && $unit == TRUE){
+        }elseif($unit){
             $this->db->where(['unit_id' => $unit]);                                                
+        }else{        
         }
         $tb_barang_data = @$this->db->get('tb_barang')->result();
 
@@ -405,8 +408,8 @@ class Tb_barang extends CI_Controller
         
         //Judul Laporan
         $sheet->setCellValue('A1', 'Master Barang');
-        if($this->db->get_where('tb_kategori',['id_kategori' => $kategori])->row()->nama_kategori){
-            $sheet->setCellValue('A2', 'Kategori '.@$this->db->get_where('tb_kategori',['id_kategori' => $kategori])->row()->nama_kategori.' Unit '.@$this->db->get_where('tb_unit',['id_unit' => $unit])->row()->nama_unit);
+        if($kategori || $unit){
+            $sheet->setCellValue('A2', 'Kategori '.@$this->db->get_where('tb_kategori',['id_kategori' => $kategori])->row()->nama_kategori.' - Unit '.@$this->db->get_where('tb_unit',['id_unit' => $unit])->row()->nama_unit);
         }else{
             $sheet->setCellValue('A2', '');
         }
@@ -436,8 +439,8 @@ class Tb_barang extends CI_Controller
 			$sheet->setCellValue('E'.$x, $this->db->get_where('tb_kategori',['id_kategori' => $tb_barang->kategori])->row()->nama_kategori);
 			$sheet->setCellValue('F'.$x, $this->db->get_where('tb_brand',['id_brand' => $tb_barang->brand])->row()->nama_brand);
 			$sheet->setCellValue('G'.$x, $this->db->get_where('tb_satuan',['id_satuan' => $tb_barang->satuan])->row()->nama_satuan);
-			$sheet->setCellValue('H'.$x, "Rp. ".number_format($tb_barang->harga_beli,0,"","."));
-			$sheet->setCellValue('I'.$x, "Rp. ".number_format($tb_barang->harga_jual,0,"","."));
+			$sheet->setCellValue('H'.$x, ' '.number_format($tb_barang->harga_beli,0,"","."));
+			$sheet->setCellValue('I'.$x, ' '.number_format($tb_barang->harga_jual,0,"","."));
 			$sheet->setCellValue('J'.$x, $this->db->get_where('tb_unit',['id_unit' => $tb_barang->unit_id])->row()->nama_unit);
 			$x++;
 		}

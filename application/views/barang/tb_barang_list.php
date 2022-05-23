@@ -46,7 +46,7 @@
                                         style="margin-right:3px;"><i class="fa fa-eye"></i> Filter</button>
                                     <a href="<?= site_url('tb_barang') ?>" class="btn btn-sm btn-danger" style="margin-right:3px;">
                                         <i class="fa fa-remove"></i> Reset</a>
-                                    <a href="<?= site_url('tb_barang/excelphp/'.$this->input->get('k', TRUE).'/'.$this->input->get('u', TRUE)) ?>" class="btn btn-sm btn-success">
+                                    <a href="<?= site_url('tb_barang/excelphp/?kategori='.$this->input->get('k', TRUE).'&unit='.$this->input->get('u', TRUE)) ?>" class="btn btn-sm btn-success">
                                         <i class="fa fa-remove"></i> Excel</a>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                 </div>
                 <div class='box-body'>
                     <?php if($this->input->get('k') == true):?>
-                        <a href="<?php echo site_url('tb_barang/excelphp/') ?><?= $this->input->get('k')?>/<?= $this->input->get('u')?>" class="btn btn-sm btn-success fa fa-file-excel-o" target="_blank">Excel</a>&nbsp;
+                        
                     <?php endif;?>
                     <div class="table-responsive">
                         <table class="table table-hover table-striped " id="mytable">

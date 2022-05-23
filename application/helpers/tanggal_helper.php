@@ -307,8 +307,14 @@ if (!function_exists('bulan')) {
     }
 }
 
-if (!function_exists('rupiah')) {
-    function rupiah($data){
-       return "Rp. ".number_format($data,0,"",".");
+    if (!function_exists('rupiah')) {
+        function rupiah($data){
+        return "Rp. ".number_format($data,0,"",".");
+        }
     }
-}
+
+    function xrupiah($angka)
+	{
+		$hasil_rupiah = number_format($angka, 0, ',', '.');
+		return $hasil_rupiah;
+	}
