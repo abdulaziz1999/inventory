@@ -1,4 +1,6 @@
 <?php
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Laporan_stok extends CI_Controller{
 
     function __construct(){
@@ -207,7 +209,7 @@ class Laporan_stok extends CI_Controller{
         
     }
 
-     function receiving_report($s,$e){
+    function receiving_report($s,$e){
         $data['rev'] = $this->model_my->laporan_rev($s,$e); 
 
         $mpdf = new \Mpdf\Mpdf(['format' => 'A4-P','orientation' => 'P']);
@@ -215,4 +217,154 @@ class Laporan_stok extends CI_Controller{
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
     }
+
+    function excel(){
+        $idc = $this->input->get('idc', TRUE);
+        $u = $this->input->get('u', TRUE);
+       
+        $this->db->join('tb_stok st','tb_barang.id_barang = st.id_barang');
+        $this->db->where('cutoff_id', $idc);
+        if($u == TRUE){
+            $this->db->where('unit_id =', $u);
+        }
+        //sum per id barang
+        $get =	$this->db->select('*')->get('tb_barang');
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $styleTh = array (
+            'font' => [
+                'bold' => true,
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => [
+                    'argb' => 'B7B7B7',
+                ],
+            ], 
+            'alignment' => [
+                'horizontal'    => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical'      => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ], 
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                ],
+            ],
+        );
+
+        $styleTbody = array (
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                ],
+            ],
+        );
+
+        $styleJudul = array (
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal'    => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical'      => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ], 
+        );
+
+        $styleTotal = array (
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal'    => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical'      => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ], 
+        );
+
+        //Merge Cell Judul
+        $sheet->mergeCells('A1:K1');
+        $sheet->mergeCells('A2:K2');
+        $sheet->mergeCells('A3:K3');
+        $sheet->getStyle('A1:K1')->applyFromArray($styleJudul);
+        $sheet->getStyle('A2:K2')->applyFromArray($styleJudul);
+        $sheet->getStyle('A3:K3')->applyFromArray($styleJudul);
+
+        //bgColor
+        $sheet->getStyle('A4:K4')->applyFromArray($styleTh);
+        
+        //Judul Laporan
+        $sheet->setCellValue('A1', 'Laporan Stok');
+        // $sheet->setCellValue('A2', 'Cut Off '.date_indo($cutoff->start).' Sampai '.date_indo($cutoff->end));
+
+        //Header Table
+        
+        $sheet->setCellValue('A4','No'); 
+        $sheet->setCellValue('B4','Tanggal'); 
+        $sheet->setCellValue('C4','Nama Item'); 
+        $sheet->setCellValue('D4','Kategori');
+        $sheet->setCellValue('E4','Satuan Unit'); 
+        $sheet->setCellValue('F4','Stok Awal');
+        $sheet->setCellValue('G4','Total Pembelian');
+        $sheet->setCellValue('H4','Total Penjualan');
+        $sheet->setCellValue('I4','Total Sisa Stok Stock');
+        $sheet->setCellValue('J4','Harga Rata-rata');
+        $sheet->setCellValue('K4','Total Harga Stock');
+        
+
+        $no = 1;
+		$x = 5;
+        $sum_harga2 = 0;
+        $sum_total_harga_stok =0;
+		foreach($get->result() as $d)
+		{
+            $t_penjualan = @$this->db->select('sum(jumlah) as qty')->get_where('tb_issuing_item',['id_barang' => $d->id_barang])->row()->qty;
+            $t_pembelian = @$this->db->select('sum(jumlah) as qty')->get_where('tb_receiving_item',['id_barang' => $d->id_barang])->row()->qty;
+            $jml_stok_sisa = $d->stok == 0 ? '' : $d->stok+($t_pembelian-$t_penjualan);
+            if($jml_stok_sisa != ''){
+                $total_harga_stok = $d->harga_beli*$jml_stok_sisa;
+            }
+            $kategori = $this->db->select('nama_kategori')->get_where('tb_kategori',['id_kategori' => $d->kategori])->row()->nama_kategori;
+            $satuan = $this->db->select('nama_satuan')->get_where('tb_satuan',['id_satuan' => $d->satuan])->row()->nama_satuan;
+            $sum_harga2 += $d->harga_beli;
+            @$sum_total_harga_stok += $total_harga_stok;
+            $iditemiss = @$this->db->select('id_itemiss')->get_where('tb_issuing_item',['id_barang' => $d->id_barang])->row()->id_itemiss;
+            $tgliss = @$this->db->select('tgl')->get_where('tb_issuing',['id_issuing' => $iditemiss])->row()->tgl;
+            $iditemrev = @$this->db->select('id_item')->get_where('tb_receiving_item',['id_barang' => $d->id_barang])->row()->id_item;
+            $tglrev = @$this->db->select('tgl')->get_where('tb_receiving',['id_receiving' => $iditemrev])->row()->tgl;
+            @$tgl = $tgliss ? $tgliss : $tglrev;
+			$sheet->setCellValue('A'.$x, $no++);
+			$sheet->setCellValue('B'.$x, $tgl ? date_indo($tgl) : '');
+			$sheet->setCellValue('C'.$x, $d->nama_barang);
+			$sheet->setCellValue('D'.$x, $kategori);
+			$sheet->setCellValue('E'.$x, $satuan);
+			$sheet->setCellValue('F'.$x, $d->stok);
+			$sheet->setCellValue('G'.$x, $t_pembelian);
+			$sheet->setCellValue('H'.$x, $t_penjualan);
+			$sheet->setCellValue('I'.$x, $jml_stok_sisa);
+			$sheet->setCellValue('J'.$x, $d->harga_beli);
+			$sheet->setCellValue('K'.$x, @$total_harga_stok);
+			$x++;
+		}
+        $sheet->mergeCells('A'.$x.':I'.$x);
+        $sheet->getStyle('A'.$x.':I'.$x)->applyFromArray($styleTotal);
+        $sheet->setCellValue('A'.$x, 'Total');
+
+        $range = range("A", "K");
+        foreach($range as $r){
+            $sheet->getColumnDimension($r)->setAutoSize(true);
+        }
+        $sheet->setCellValue('J'.$x, $sum_harga2);
+        $sheet->setCellValue('K'.$x, $sum_total_harga_stok);
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'Laporan Stok '.date('d-m-Y');
+        
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+    }
+
 }
